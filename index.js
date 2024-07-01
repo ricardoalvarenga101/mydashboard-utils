@@ -202,6 +202,7 @@ function strToFloat(str) {
   if (str) {
     return Number(str.replaceAll(".", "").replaceAll(",", "."));
   }
+  return null
 }
 
 module.exports = {
