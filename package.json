@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ricardoalvarenga101/mydashboard-utils/issues"
   },
-  "homepage": "https://github.com/ricardoalvarenga101/mydashboard-utils#readme"
+  "homepage": "https://github.com/ricardoalvarenga101/mydashboard-utils#readme",
+  "dependencies": {
+    "moment-timezone": "^0.5.45"
+  }
 }
