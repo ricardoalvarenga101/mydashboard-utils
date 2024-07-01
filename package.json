@@ -1,0 +1,19 @@
+{
+  "name": "mydashboard-lib",
+  "version": "1.0.0",
+  "description": "Biblioteca de utilidades e constantes myDashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricardoalvarenga101/mydashboard-utils.git"
+  },
+  "author": "Ricardo Alvarenga",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ricardoalvarenga101/mydashboard-utils/issues"
+  },
+  "homepage": "https://github.com/ricardoalvarenga101/mydashboard-utils#readme"
+}
