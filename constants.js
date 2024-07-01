@@ -87,6 +87,7 @@ const EVENTS = {
     PROCESSED: "processed",
     PROCESSING: "processing",
     FAIL: "fail",
+    AWAIT_VALIDATE: "await_validate",
   },
 };
 
