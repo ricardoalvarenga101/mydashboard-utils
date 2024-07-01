@@ -1,5 +1,5 @@
 {
-  "name": "mydashboard-lib",
+  "name": "mydashboard-utils",
   "version": "1.0.0",
   "description": "Biblioteca de utilidades e constantes myDashboard",
   "main": "index.js",

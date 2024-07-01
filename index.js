@@ -1,5 +1,5 @@
 const moment = require("moment-timezone");
-const { CLASS } = require("./constants");
+const constants = require("./constants");
 
 /**
  * Retorna a descrição do mes a partir de seu código
@@ -166,27 +166,27 @@ const getSheetId = (url) => {
 const getTypeByMainSearching = (type) => {
   switch (type) {
     case 13:
-      return CLASS.REIT;
+      return constants.CLASS.REIT;
 
     case 12:
-      return CLASS.STOCK;
+      return constants.CLASS.STOCK;
     case 901:
-      return CLASS.ETF_EUA;
+      return constants.CLASS.ETF_EUA;
 
     case 22:
-      return CLASS.FI_INFRA;
+      return constants.CLASS.FI_INFRA;
     case 24:
-      return CLASS.FIAGRO;
+      return constants.CLASS.FIAGRO;
     case 2:
-      return CLASS.FII;
+      return constants.CLASS.FII;
     case 1:
-      return CLASS.ACAO;
+      return constants.CLASS.ACAO;
     case 6:
-      return CLASS.ETF;
+      return constants.CLASS.ETF;
     case 4:
-      return CLASS.BDR;
+      return constants.CLASS.BDR;
     case 100:
-      return CLASS.CRIPTOMOEDA;
+      return constants.CLASS.CRIPTOMOEDA;
 
     default:
       return null;
@@ -215,5 +215,6 @@ module.exports = {
   getDataRange,
   mountList,
   convertDateTime,
-  getSheetId,  
+  getSheetId,
+  constants 
 };
