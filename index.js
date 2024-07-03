@@ -113,7 +113,8 @@ function composeDateDefaultToShort(dateDefault) {
 function composeDateFromShort(shortDate) {
   const year = shortDate.slice(0, 4);
   const month = shortDate.slice(4, 6);
-  return new Date(year, month - 1, 1).toISOString();
+  const day = shortDate.slice(6, 8);
+  return new Date(year, month - 1, day).toISOString();
 }
 
 /**
