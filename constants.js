@@ -31,6 +31,8 @@ const COLLECTION_NAME = {
   IMPORT: "import",
   SUBSCRIBERS: "subscribe",
   SUBSCRIBERS_EVENTS: "subscribe_events",
+  SPLIT_INPLIT: "split_inplit",
+  AMORTIZATION: 'amortizations'
 };
 
 const CLASS = {
@@ -84,7 +86,7 @@ const TABS = {
 const EVENTS = {
   IMPORT_TRSANSATCION: "import_transaction",
   IMPORT_TRSANSATCION_SHEET: "import_transaction_sheet",
-  IMPORT_TRSANSATCION_SHEET: "split_and_inplit",
+  SPLIT_AND_INPLIT: "split_and_inplit",
   STATUS: {
     AWAIT: "await",
     PROCESSED: "processed",
