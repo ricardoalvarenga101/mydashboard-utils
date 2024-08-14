@@ -1,6 +1,7 @@
 const JOBS = {
   IMPORT_PROCESS: "ImportProcess",
   IMPORT_PROCESS_CLEAN_FAIL: "ImportProcessCleanFail",
+  INPLIT_AND_SPLIT_PROCESS: "SplitAndInplitProcess",
 };
 
 const TRANSACTIONS = {
@@ -83,6 +84,7 @@ const TABS = {
 const EVENTS = {
   IMPORT_TRSANSATCION: "import_transaction",
   IMPORT_TRSANSATCION_SHEET: "import_transaction_sheet",
+  IMPORT_TRSANSATCION_SHEET: "split_and_inplit",
   STATUS: {
     AWAIT: "await",
     PROCESSED: "processed",
