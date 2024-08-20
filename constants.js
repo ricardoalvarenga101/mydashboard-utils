@@ -32,7 +32,8 @@ const COLLECTION_NAME = {
   SUBSCRIBERS: "subscribe",
   SUBSCRIBERS_EVENTS: "subscribe_events",
   SPLIT_INPLIT: "split_inplit",
-  AMORTIZATION: 'amortizations'
+  AMORTIZATION: 'amortizations',
+  WALLET: 'wallet'
 };
 
 const CLASS = {
