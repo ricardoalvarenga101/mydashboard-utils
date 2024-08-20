@@ -2,6 +2,7 @@ const JOBS = {
   IMPORT_PROCESS: "ImportProcess",
   IMPORT_PROCESS_CLEAN_FAIL: "ImportProcessCleanFail",
   INPLIT_AND_SPLIT_PROCESS: "SplitAndInplitProcess",
+  WALLET_PROCESS: "WalletProcess",
 };
 
 const TRANSACTIONS = {
