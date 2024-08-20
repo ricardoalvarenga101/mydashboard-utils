@@ -1,5 +1,5 @@
 const moment = require("moment-timezone");
-const {CLASS} = require("./constants");
+const { CLASS, RENAME_TICKER_GOOGLE_SHEET } = require("./constants");
 
 /**
  * Retorna a descrição do mes a partir de seu código
@@ -37,16 +37,16 @@ function composeRanges(sheetNames, sheetRanges) {
 
 /**
  * Retorna uma range de uma google sheet
- * @param {*} lastRow 
- * @param {*} initialColNameForLastRow 
- * @param {*} initialNumberColForLastRow 
- * @param {*} initialColName 
- * @param {*} initialColNameNumber 
- * @param {*} endColName 
- * @param {*} getRange 
- * @param {*} sheetId 
- * @param {*} sheetName 
- * @returns 
+ * @param {*} lastRow
+ * @param {*} initialColNameForLastRow
+ * @param {*} initialNumberColForLastRow
+ * @param {*} initialColName
+ * @param {*} initialColNameNumber
+ * @param {*} endColName
+ * @param {*} getRange
+ * @param {*} sheetId
+ * @param {*} sheetName
+ * @returns
  */
 async function getDataRange(
   lastRow,
@@ -78,9 +78,9 @@ async function getDataRange(
 
 /**
  * Retorna a ultima linha de uma google sheet
- * @param {*} sheetName 
- * @param {*} docInfo 
- * @returns 
+ * @param {*} sheetName
+ * @param {*} docInfo
+ * @returns
  */
 function getLastRow(sheetName, docInfo) {
   let lastRow = 0;
@@ -95,20 +95,20 @@ function getLastRow(sheetName, docInfo) {
 
 /**
  * Formata a data padrão para uma shortDate <YYYYMMDD>
- * @param {*} dateDefault 
- * @returns 
+ * @param {*} dateDefault
+ * @returns
  */
 function composeDateDefaultToShort(dateDefault) {
-  const year = dateDefault.split("/").pop()
-  const month = dateDefault.split("/")[1]
-  const day = dateDefault.split("/")[0]
-  return `${year}${month}${day}`
+  const year = dateDefault.split("/").pop();
+  const month = dateDefault.split("/")[1];
+  const day = dateDefault.split("/")[0];
+  return `${year}${month}${day}`;
 }
 
 /**
  * Formata uma shortDate em uma data padrão
- * @param {*} shortDate 
- * @returns 
+ * @param {*} shortDate
+ * @returns
  */
 function composeDateFromShort(shortDate) {
   const year = shortDate.slice(0, 4);
@@ -142,8 +142,8 @@ const mountList = (result, array, withDocId = false) => {
 
 /**
  * Converte uma datetime unix para o padrão <YYYY/MM/DD HH:mm:ss>
- * @param {*} date 
- * @returns 
+ * @param {*} date
+ * @returns
  */
 const convertDateTime = (date) => {
   return moment.unix(date).format("YYYY/MM/DD HH:mm:ss");
@@ -151,18 +151,18 @@ const convertDateTime = (date) => {
 
 /**
  * Retorna o id de uma url google sheet
- * @param {*} url 
- * @returns 
+ * @param {*} url
+ * @returns
  */
-const getSheetId = (url) => {  
+const getSheetId = (url) => {
   const split = url.split("/");
   return split[5];
 };
 
 /**
  * Retorna uma classe de um ativo a partir de seu tipo
- * @param {*} type 
- * @returns 
+ * @param {*} type
+ * @returns
  */
 const getTypeByMainSearching = (type) => {
   switch (type) {
@@ -196,15 +196,39 @@ const getTypeByMainSearching = (type) => {
 
 /**
  * Converte um numero string para float
- * @param {*} str 
- * @returns 
+ * @param {*} str
+ * @returns
  */
 function strToFloat(str) {
   if (str) {
     return Number(str.replaceAll(".", "").replaceAll(",", "."));
   }
-  return null
+  return null;
 }
+
+/**
+ * Renomeia um ticker do google sheet
+ * @param {string} ticker
+ * @returns
+ */
+const renameTickerGoogleSheet = (ticker) => {
+  if (ticker in RENAME_TICKER_GOOGLE_SHEET) {
+    return RENAME_TICKER_GOOGLE_SHEET[ticker];
+  }
+  return ticker;
+};
+
+/**
+ * Converte um numero menor igual a 9 em duas casas [09]
+ * @param {*} number
+ * @returns
+ */
+const composeNumberTwoDecimal = (number) => {
+  if (number <= 9) {
+    return `0${number}`;
+  }
+  return number;
+};
 
 module.exports = {
   strToFloat,
@@ -218,4 +242,6 @@ module.exports = {
   mountList,
   convertDateTime,
   getSheetId,
+  renameTickerGoogleSheet,
+  composeNumberTwoDecimal,
 };
