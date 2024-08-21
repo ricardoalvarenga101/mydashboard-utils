@@ -92,8 +92,8 @@ const TABS = {
 
 const EVENTS = {
   IMPORT_TRSANSATCION: "import_transaction",
-  IMPORT_TRSANSATCION_SHEET: "import_transaction_sheet",
-  SPLIT_AND_INPLIT: "split_and_inplit",
+  IMPORT_TRSANSATCION_SHEET: "import_transaction_sheet",  
+  UPDATE_WALLET: "update_wallet",
   STATUS: {
     AWAIT: "await",
     PROCESSED: "processed",
