@@ -3,6 +3,7 @@ const JOBS = {
   IMPORT_PROCESS_CLEAN_FAIL: "ImportProcessCleanFail",
   INPLIT_AND_SPLIT_PROCESS: "SplitAndInplitProcess",
   WALLET_PROCESS: "WalletProcess",
+  RESET_WALLET_PROCESS: "ResetWalletProcess"
 };
 
 const RENAME_TICKER_GOOGLE_SHEET = {
@@ -92,8 +93,8 @@ const TABS = {
 };
 
 const EVENTS = {
-  IMPORT_TRSANSATCION: "import_transaction",
-  IMPORT_TRSANSATCION_SHEET: "import_transaction_sheet",  
+  IMPORT_TRANSATCION: "import_transaction",
+  IMPORT_TRANSATCION_SHEET: "import_transaction_sheet",  
   UPDATE_WALLET: "update_wallet",
   STATUS: {
     AWAIT: "await",
