@@ -41,7 +41,7 @@ const COLLECTION_NAME = {
   SPLIT_INPLIT: "split_inplit",
   AMORTIZATION: "amortizations",
   WALLET: "wallet",
-  FORCED_WALLET_UPDATE: 'forced_wallet_updated'
+  ANOTATIONS: 'anotations'
 };
 
 const CLASS = {
