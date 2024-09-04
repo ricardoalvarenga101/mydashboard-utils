@@ -230,6 +230,56 @@ const composeNumberTwoDecimal = (number) => {
   return number;
 };
 
+/**
+ * Converte um valor para R$
+ * @param {number} value
+ * @param {Boolean} currency indicador se deve manter o $
+ * @param {boolean} isCript indica se é cripto
+ * @returns
+ */
+export function convertCurrencyReal(
+  value,
+  currency = true,
+  isCript = false,
+  customDecimal = 6
+) {
+  if (currency) {
+    return (value || 0).toLocaleString("pt-br", {
+      minimumFractionDigits: isCript ? customDecimal : 2,
+      style: "currency",
+      currency: "BRL",
+    });
+  }
+  return value.toLocaleString("pt-br", {
+    minimumFractionDigits: isCript ? customDecimal : 2,
+  });
+}
+
+/**
+ * Converte um valor para US$
+ * @param {number} value
+ * @param {Boolean} currency indicador se deve manter o $
+ * @param {boolean} isCript indica se é cripto
+ * @returns
+ */
+export function convertCurrencyDolar(
+  value,
+  currency = true,
+  isCript = false,
+  customDecimal = 6
+) {
+  if (currency) {
+    return (value || 0).toLocaleString("en-US", {
+      minimumFractionDigits: isCript ? customDecimal : 2,
+      style: "currency",
+      currency: "USD",
+    });
+  }
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: isCript ? customDecimal : 2,
+  });
+}
+
 module.exports = {
   strToFloat,
   getTypeByMainSearching,
@@ -244,4 +294,6 @@ module.exports = {
   getSheetId,
   renameTickerGoogleSheet,
   composeNumberTwoDecimal,
+  convertCurrencyDolar,
+  convertCurrencyReal
 };
