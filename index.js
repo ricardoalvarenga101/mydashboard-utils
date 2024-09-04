@@ -237,7 +237,7 @@ const composeNumberTwoDecimal = (number) => {
  * @param {boolean} isCript indica se é cripto
  * @returns
  */
-export function convertCurrencyReal(
+function convertCurrencyReal(
   value,
   currency = true,
   isCript = false,
@@ -262,7 +262,7 @@ export function convertCurrencyReal(
  * @param {boolean} isCript indica se é cripto
  * @returns
  */
-export function convertCurrencyDolar(
+function convertCurrencyDolar(
   value,
   currency = true,
   isCript = false,
