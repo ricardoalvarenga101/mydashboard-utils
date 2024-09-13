@@ -1,6 +1,6 @@
 {
   "name": "mydashboard-utils",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Biblioteca de utilidades e constantes myDashboard",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ricardoalvarenga101/mydashboard-utils#readme",
   "dependencies": {
+    "lodash": "^4.17.21",
     "moment-timezone": "^0.5.45"
   }
 }
