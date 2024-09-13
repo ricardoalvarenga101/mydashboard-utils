@@ -21,7 +21,7 @@ function _generateIRPF(
   let document_number = documentNumberChosen;
   let operationsFII = {};
   let tableOperationsFII = {};
-  let lossesSalesFii = {};  
+  let lossesSalesFii = {};
   let SUM_SWING_TRADE_FREE = {};
   let SUM_SWING_TRADE_CRIPTO_FREE = {};
   let SUM_SWING_TRADE_FREE_99 = {};
@@ -34,11 +34,10 @@ function _generateIRPF(
   bonifications = data?.bonifications || {};
   bonificationsWithFractions = data?.bonificationsWithFractions || {};
   rentals = data?.rentals;
-  
 
-// console.log("Provents", provents);
-// console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
-// console.log("Aluguel", rentals);
+  // console.log("Provents", provents);
+  // console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
+  // console.log("Aluguel", rentals);
 
   operations = {};
   const t = map(data.sells, (year, indexYear) =>
@@ -75,7 +74,7 @@ function _generateIRPF(
     operationsFII,
     lossesSalesFii,
     tableOperationsFII
-  );  
-  return pdfDefinition
+  );
+  return pdfDefinition;
 }
-_generateIRPF(2022, "Heitor", "01204488752", mockFullData2022)
+// console.log(_generateIRPF(2022, "Heitor", "01204488752", mockFullData2022));

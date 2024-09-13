@@ -4,10 +4,6 @@
 
 const { map } = require("lodash");
 
-function closeWindow() {
-  google.script.host.close();
-}
-
 /**
  * Retorna a outra ultima posição
  * @param {*} operations
@@ -194,23 +190,6 @@ function getCodes(classe) {
     cod,
     locale,
   };
-}
-
-function calcLossesAcumulator(historyAcumulator, mountLoss) {
-  const sub = historyAcumulator - mountLoss;
-  return sub;
-}
-
-function checkNegativeSald(value) {
-  if (value <= 0) {
-    return 0;
-  }
-  return value;
-}
-
-function startAnimation(idShow, idHide, direction = "right") {
-  $(`#${idHide}`).hide();
-  $(`#${idShow}`).show("slide", { direction }, 350);
 }
 
 module.exports = {

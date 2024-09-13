@@ -284,7 +284,14 @@ function generatePdf(
 
   renderCommonsOperations(docDefinition, year, operationsFull);
 
-  renderOperationsFII(operationsFull, operationsFII, lossesSalesFii, year, tableOperationsFII,docDefinition);
+  renderOperationsFII(
+    operationsFull,
+    operationsFII,
+    lossesSalesFii,
+    year,
+    tableOperationsFII,
+    docDefinition
+  );
 
   composeTaxExternal(docDefinition, provents);
 

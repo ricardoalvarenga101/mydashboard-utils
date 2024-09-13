@@ -7,11 +7,7 @@ const {
   composeOperationsFII,
   composeTableOperationsFII,
 } = require("./composers");
-const {
-  convertCurrencyReal,
-  getNode,
-  subtractionLosses,  
-} = require("./utils");
+const { convertCurrencyReal, getNode, subtractionLosses } = require("./utils");
 const { CNPJ_B3, NAME_B3, MONTHS_LABEL } = require("./vars");
 
 /**
