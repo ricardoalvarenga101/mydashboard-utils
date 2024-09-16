@@ -1,5 +1,6 @@
 const moment = require("moment-timezone");
-const { CLASS, RENAME_TICKER_GOOGLE_SHEET } = require("./constants");
+const { RENAME_TICKER_GOOGLE_SHEET, CLASS } = require("../constants");
+
 
 /**
  * Retorna a descrição do mes a partir de seu código

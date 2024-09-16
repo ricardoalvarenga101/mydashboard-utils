@@ -9,13 +9,13 @@ const { mockFullData2022 } = require("./mocks/fullData");
 
 /**
  * Gerar relatório irpf
- * @param {*} yearChosen 
- * @param {*} nameChosen 
- * @param {*} documentNumberChosen 
- * @param {*} data 
- * @returns 
+ * @param {*} yearChosen
+ * @param {*} nameChosen
+ * @param {*} documentNumberChosen
+ * @param {*} data
+ * @returns
  */
-export function _generateIRPF(
+function generateIRPF(
   yearChosen = 2022,
   nameChosen = "",
   documentNumberChosen = "",
@@ -85,4 +85,5 @@ export function _generateIRPF(
   );
   return pdfDefinition;
 }
-// console.log(_generateIRPF(2022, "Heitor", "01204488752", mockFullData2022));
+console.log(generateIRPF(2022, "Heitor", "01204488752", mockFullData2022));
+module.exports = { generateIRPF };
