@@ -7,7 +7,15 @@ const {
 const { generatePdf } = require("./docGenerate");
 const { mockFullData2022 } = require("./mocks/fullData");
 
-function _generateIRPF(
+/**
+ * Gerar relatório irpf
+ * @param {*} yearChosen 
+ * @param {*} nameChosen 
+ * @param {*} documentNumberChosen 
+ * @param {*} data 
+ * @returns 
+ */
+export function _generateIRPF(
   yearChosen = 2022,
   nameChosen = "",
   documentNumberChosen = "",
