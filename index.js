@@ -42,7 +42,8 @@ const COLLECTION_NAME = {
   AMORTIZATION: "amortizations",
   WALLET: "wallet",
   ANOTATIONS: 'anotations',
-  WALLET_TIMELINE: 'wallet_timeline'
+  WALLET_TIMELINE: 'wallet_timeline',
+  WALLET_TIMELINE_IRPF: 'wallet_irpf'
 };
 
 const CLASS = {
