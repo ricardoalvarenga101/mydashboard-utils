@@ -280,6 +280,7 @@ function generatePdf(
         bold: true,
       },
     },
+    operations:[]
   };
 
   renderCommonsOperations(docDefinition, year, operationsFull);

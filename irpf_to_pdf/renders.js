@@ -8,7 +8,12 @@ const {
   composeTableOperationsFII,
 } = require("./composers");
 const { convertCurrencyReal, getNode, subtractionLosses } = require("./utils");
-const { CNPJ_B3, NAME_B3, MONTHS_LABEL } = require("./vars");
+const {
+  CNPJ_B3,
+  NAME_B3,
+  MONTHS_LABEL,
+  DOC_DEFINITION_OPERATIONS,
+} = require("./vars");
 
 /**
  * Renderiza vendas abaixo de 20k no mês
@@ -400,6 +405,12 @@ function renderCommonsOperations(docDefinition, year, operationsFull) {
       ...docDefinition.content,
       ...commonOperationsAnalised,
     ];
+
+    docDefinition.operations.push({
+      id: DOC_DEFINITION_OPERATIONS.OPERATIONS_COMUNS_DAYTRADE,
+      ...content4,
+      ...commonOperationsAnalised,
+    });
   }
 }
 
@@ -554,6 +565,10 @@ function renderOperationsFII(
   docDefinition.content.push(content2);
   docDefinition.content.push(content3);
   docDefinition.content.push(content4);
+  docDefinition.operations.push({
+    id: DOC_DEFINITION_OPERATIONS.OPERATIONS_FII,
+    ...content4,
+  });
 }
 
 /**

@@ -41,7 +41,7 @@ function generateIRPF(
   provents = composeProvents(data?.provents);
   bonifications = data?.bonifications || {};
   bonificationsWithFractions = data?.bonificationsWithFractions || {};
-  rentals = data?.rentals;
+  rentals = data?.rentals || {};
 
   // console.log("Provents", provents);
   // console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
