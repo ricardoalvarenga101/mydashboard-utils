@@ -37,7 +37,7 @@ function generateIRPF(
   let bonificationsWithFractions = {};
   let rentals = {};
 
-  itensWalletFiltered = data?.itensWallletFiltered;
+  itensWalletFiltered = data?.itensWalletFiltered;
   provents = composeProvents(data?.provents);
   bonifications = data?.bonifications || {};
   bonificationsWithFractions = data?.bonificationsWithFractions || {};
