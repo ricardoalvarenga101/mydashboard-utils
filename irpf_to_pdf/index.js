@@ -47,7 +47,6 @@ function generateIRPF(
   // console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
   // console.log("Aluguel", rentals);
 
-  operations = {};
   const t = map(data.sells, (year, indexYear) =>
     map(year, (month, indexMonth) => {
       const filterOperations = groupBy(month.operations, (x) => x.operation);

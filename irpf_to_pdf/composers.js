@@ -451,7 +451,7 @@ function composeCommonOperationAndDayTrade(
   const indexAtual = monthsFilter.indexOf(monthAnalysis);
 
   const arrayYears = Object.keys(operationsFull);
-  const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0;
+  const firstYear = arrayYears.length > 0 ? Number(arrayYears[0]) : 0;
   const totalCommon = convertCurrencyReal(
     convertCurrencyReal(operations.totalCommon)
   );
@@ -805,16 +805,6 @@ function composeSwingTradeFree(operations, SUM_SWING_TRADE_FREE) {
       })
     );
   });
-}
-
-function composeListYears() {
-  const currentYear = new Date().getFullYear();
-  const select = document.getElementById("year_select");
-  let options_str = "";
-  for (let i = currentYear; i >= _firstYear; i--) {
-    options_str = options_str + `<option value='${i}'>${i}</option>`;
-  }
-  select.innerHTML = options_str;
 }
 
 /**
