@@ -556,7 +556,7 @@ function renderOperationsFII(
           "Alíquota do imposto",
           "Imposto a pagar",
         ]),
-        ...composeTableOperationsFII(tableOperationsFII, operationsFII),
+        ...composeTableOperationsFII(tableOperationsFII, operationsFII, year),
       ],
     },
   };
