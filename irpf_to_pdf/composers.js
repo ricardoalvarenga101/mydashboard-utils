@@ -6,8 +6,7 @@ const {
   getLastOrFirstPositionYear,
   getOtherLastPosition,
   taxCal,
-  getNode,
-  convertCurrencyRealWithoutCoin,
+  getNode,  
 } = require("./utils");
 const {
   TYPE_OPERATIONS_SELL,
@@ -1107,40 +1106,40 @@ function composeTableOperationsFII(tableOperationsFII, operationsFII, year) {
         tableOperationsFII[year][mes][0],
         tableOperationsFII[year][mes][1] !== 0
           ? {
-              text: convertCurrencyRealWithoutCoin(
+              text: convertCurrencyReal(
                 getNode(operationsFII[year], mes)
               ),
               style: { color: fontColor, bold: true },
             }
-          : convertCurrencyRealWithoutCoin(0),
+          : convertCurrencyReal(0),
         mes === 1
-          ? convertCurrencyRealWithoutCoin(tableOperationsFII[year][mes][2])
+          ? convertCurrencyReal(tableOperationsFII[year][mes][2])
           : {
-              text: convertCurrencyRealWithoutCoin(
+              text: convertCurrencyReal(
                 tableOperationsFII[year][mes][2]
               ),
               style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
             },
         {
-          text: convertCurrencyRealWithoutCoin(
+          text: convertCurrencyReal(
             tableOperationsFII[year][mes][3]
           ),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
         {
-          text: convertCurrencyRealWithoutCoin(
+          text: convertCurrencyReal(
             tableOperationsFII[year][mes][4]
           ),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
         {
-          text: convertCurrencyRealWithoutCoin(
+          text: convertCurrencyReal(
             tableOperationsFII[year][mes][5]
           ),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
         {
-          text: convertCurrencyRealWithoutCoin(
+          text: convertCurrencyReal(
             tableOperationsFII[year][mes][6]
           ),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
