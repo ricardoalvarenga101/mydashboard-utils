@@ -6,7 +6,7 @@ const {
   getLastOrFirstPositionYear,
   getOtherLastPosition,
   taxCal,
-  getNode,  
+  getNode,
 } = require("./utils");
 const {
   TYPE_OPERATIONS_SELL,
@@ -957,15 +957,19 @@ function composerExternalDividends(docDefinition, provents) {
     map(provents.external, (ticker) => {
       map(ticker.dividendPerMonth, (value, month) => {
         const currentMonth = Number(month) + 1;
-        table.dividends[currentMonth].values.push(value);
-        table.dividends[currentMonth].amount = sum(
-          table.dividends[currentMonth].values
-        );
+        if (currentMonth <= 12) {
+          table.dividends[currentMonth].values.push(value);
+          table.dividends[currentMonth].amount = sum(
+            table.dividends[currentMonth].values
+          );
+        }
       });
       map(ticker.taxPerMonth, (value, month) => {
         const currentMonth = Number(month) + 1;
-        table.tax[currentMonth].values.push(value);
-        table.tax[currentMonth].amount = sum(table.tax[currentMonth].values);
+        if (currentMonth <= 12) {
+          table.tax[currentMonth].values.push(value);
+          table.tax[currentMonth].amount = sum(table.tax[currentMonth].values);
+        }
       });
     });
 
@@ -1106,42 +1110,30 @@ function composeTableOperationsFII(tableOperationsFII, operationsFII, year) {
         tableOperationsFII[year][mes][0],
         tableOperationsFII[year][mes][1] !== 0
           ? {
-              text: convertCurrencyReal(
-                getNode(operationsFII[year], mes)
-              ),
+              text: convertCurrencyReal(getNode(operationsFII[year], mes)),
               style: { color: fontColor, bold: true },
             }
           : convertCurrencyReal(0),
         mes === 1
           ? convertCurrencyReal(tableOperationsFII[year][mes][2])
           : {
-              text: convertCurrencyReal(
-                tableOperationsFII[year][mes][2]
-              ),
+              text: convertCurrencyReal(tableOperationsFII[year][mes][2]),
               style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
             },
         {
-          text: convertCurrencyReal(
-            tableOperationsFII[year][mes][3]
-          ),
+          text: convertCurrencyReal(tableOperationsFII[year][mes][3]),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
         {
-          text: convertCurrencyReal(
-            tableOperationsFII[year][mes][4]
-          ),
+          text: convertCurrencyReal(tableOperationsFII[year][mes][4]),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
         {
-          text: convertCurrencyReal(
-            tableOperationsFII[year][mes][5]
-          ),
+          text: convertCurrencyReal(tableOperationsFII[year][mes][5]),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
         {
-          text: convertCurrencyReal(
-            tableOperationsFII[year][mes][6]
-          ),
+          text: convertCurrencyReal(tableOperationsFII[year][mes][6]),
           style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
         },
       ]);
