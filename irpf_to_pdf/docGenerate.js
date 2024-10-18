@@ -54,6 +54,7 @@ function generatePdf(
   lossesSalesFii,
   tableOperationsFII
 ) {
+  const bens = composeBensDireitos(itensWalletFiltered)
   const docDefinition = {
     content: [
       {
@@ -217,7 +218,7 @@ function generatePdf(
               `Situação 31/12/${year - 1}`,
               `Situação 31/12/${year}`,
             ]),
-            ...composeBensDireitos(itensWalletFiltered),
+            ...bens,
           ],
         },
       },
@@ -280,7 +281,8 @@ function generatePdf(
         bold: true,
       },
     },
-    operations:[]
+    operations:[],
+    bens,
   };
 
   renderCommonsOperations(docDefinition, year, operationsFull);
