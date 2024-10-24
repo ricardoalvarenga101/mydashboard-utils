@@ -43,7 +43,8 @@ const COLLECTION_NAME = {
   WALLET: "wallet",
   ANOTATIONS: 'anotations',
   WALLET_TIMELINE: 'wallet_timeline',
-  WALLET_TIMELINE_IRPF: 'wallet_irpf'
+  WALLET_TIMELINE_IRPF: 'wallet_irpf',
+  INVOICES: 'invoices'
 };
 
 const CLASS = {
