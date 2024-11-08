@@ -254,12 +254,19 @@ function calcAccumulatedMonth(
     );
     if (_firstPosition.month == indexMonth) {
       // verifica é a primeira operação do ano
+      const oldYear = indexOf(
+        Object.keys(tableCommonOperationAndDayTradeProcessed),
+        indexYear
+      );
+      const oldYearIndex = Object.keys(
+        tableCommonOperationAndDayTradeProcessed
+      )[oldYear - 1];
+
       const _lastAccumulatorCommon =
-        tableCommonOperationAndDayTradeProcessed[indexYear - 1]
+        tableCommonOperationAndDayTradeProcessed[oldYearIndex]
           .accumulatedCommon;
       const _lastAccumulatorTrade =
-        tableCommonOperationAndDayTradeProcessed[indexYear - 1]
-          .accumulatedTrade;
+        tableCommonOperationAndDayTradeProcessed[oldYearIndex].accumulatedTrade;
       // existe acumulado mes anterior negativo COMMON
       tableCommonOperationAndDayTradeProcessed[indexYear][
         indexMonth
@@ -286,6 +293,7 @@ function calcAccumulatedMonth(
         indexMonth
       );
       // existe acumulado mes anterior negativo COMMON
+
       if (_pastPosition.op.accumulatedCommon < 0) {
         tableCommonOperationAndDayTradeProcessed[indexYear][
           indexMonth
@@ -365,12 +373,19 @@ function calcAccumulatedYear(
       );
   } else {
     // existe acumulado ano anterior negativo COMMON
+    const oldYear = indexOf(
+      Object.keys(tableCommonOperationAndDayTradeProcessed),
+      indexYear
+    );
+    const oldYearIndex = Object.keys(tableCommonOperationAndDayTradeProcessed)[
+      oldYear - 1
+    ];
     if (
-      tableCommonOperationAndDayTradeProcessed[indexYear - 1]
-        .accumulatedCommon < 0
+      tableCommonOperationAndDayTradeProcessed[oldYearIndex].accumulatedCommon <
+      0
     ) {
       tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedCommon =
-        tableCommonOperationAndDayTradeProcessed[indexYear - 1]
+        tableCommonOperationAndDayTradeProcessed[oldYearIndex]
           .accumulatedCommon +
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
@@ -388,11 +403,11 @@ function calcAccumulatedYear(
 
     // existe acumulado ano anterior negativo TRADER
     if (
-      tableCommonOperationAndDayTradeProcessed[indexYear - 1].accumulatedTrade <
+      tableCommonOperationAndDayTradeProcessed[oldYearIndex].accumulatedTrade <
       0
     ) {
       tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade =
-        tableCommonOperationAndDayTradeProcessed[indexYear - 1]
+        tableCommonOperationAndDayTradeProcessed[oldYearIndex]
           .accumulatedTrade +
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,

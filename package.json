@@ -1,6 +1,6 @@
 {
   "name": "mydashboard-utils",
-  "version": "1.0.39",
+  "version": "1.0.40",
   "description": "Biblioteca de utilidades e constantes myDashboard",
   "main": "index.js",
   "scripts": {
