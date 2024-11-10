@@ -1,4 +1,4 @@
-const { sum, map, sumBy } = require("lodash");
+const { sum, map, sumBy, indexOf } = require("lodash");
 const {
   convertCurrencyReal,
   getCodes,
@@ -254,10 +254,8 @@ function calcAccumulatedMonth(
     );
     if (_firstPosition.month == indexMonth) {
       // verifica é a primeira operação do ano
-      const oldYear = indexOf(
-        Object.keys(tableCommonOperationAndDayTradeProcessed),
-        indexYear
-      );
+      const list = Object.keys(tableCommonOperationAndDayTradeProcessed)
+      const oldYear = list.indexOf(indexYear);
       const oldYearIndex = Object.keys(
         tableCommonOperationAndDayTradeProcessed
       )[oldYear - 1];
@@ -373,10 +371,8 @@ function calcAccumulatedYear(
       );
   } else {
     // existe acumulado ano anterior negativo COMMON
-    const oldYear = indexOf(
-      Object.keys(tableCommonOperationAndDayTradeProcessed),
-      indexYear
-    );
+    const list = Object.keys(tableCommonOperationAndDayTradeProcessed)
+    const oldYear = list.indexOf(indexYear);
     const oldYearIndex = Object.keys(tableCommonOperationAndDayTradeProcessed)[
       oldYear - 1
     ];
