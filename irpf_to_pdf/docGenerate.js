@@ -61,8 +61,8 @@ function generatePdf(
         stack: [
           { image: "ricardoinvesting", width: 150, height: 150 },
           {
-            text: "@ricardoinvesting",
-            link: "https://www.youtube.com/@ricardoinvesting",
+            text: "myDashboard",
+            link: "https://mydashboard.com.br/",
             color: "#815ae8",
           },
           { text: "Relatório auxiliar para declaração de imposto de renda" },
@@ -239,7 +239,7 @@ function generatePdf(
     pageMargin: [0, 0],
     defaultStyle: { alignment: "justify" },
     images: {
-      ricardoinvesting: "https://i.ibb.co/FDPPj9w/Novo-Projeto-1.png",
+      ricardoinvesting: "https://i.ibb.co/WyLbmrt/logo-md.png",
       print1: "https://i.ibb.co/HG3hwv0/print-1.png",
       print2: "https://i.ibb.co/p0bgbwk/print-2.png",
       print3: "https://i.ibb.co/bs0HY4n/print-3.png",
