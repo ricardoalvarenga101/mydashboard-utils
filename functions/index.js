@@ -110,12 +110,12 @@ function composeDateDefaultToShort(dateDefault) {
  * @param {*} shortDate
  * @returns
  */
-function composeDateFromShort(shortDate) {
+function composeDateFromShortV2(shortDate) {
   const year = shortDate.slice(0, 4);
   const month = shortDate.slice(4, 6);
   const day = shortDate.slice(6, 8);
   // 2024-11-30T03:00:00.000Z
-  return `${year}-${month-1}-${day}T03:00:00.000Z`
+  return `${year}-${month}-${day}T03:00:00.000Z`;
 }
 
 /**
@@ -287,7 +287,7 @@ module.exports = {
   getMonths,
   composeRanges,
   getLastRow,
-  composeDateFromShort,
+  composeDateFromShortV2,
   composeDateDefaultToShort,
   getDataRange,
   mountList,
@@ -296,5 +296,5 @@ module.exports = {
   renameTickerGoogleSheet,
   composeNumberTwoDecimal,
   convertCurrencyDolar,
-  convertCurrencyReal
+  convertCurrencyReal,
 };
