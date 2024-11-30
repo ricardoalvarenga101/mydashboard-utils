@@ -1,5 +1,5 @@
 const moment = require("moment-timezone");
-const { RENAME_TICKER_GOOGLE_SHEET } = require("..");
+const { RENAME_TICKER_GOOGLE_SHEET, TABS } = require("..");
 
 /**
  * Retorna a descrição do mes a partir de seu código
@@ -71,7 +71,7 @@ async function getDataRange(
     initialColNameNumber +
     ":" +
     endColName +
-    (values.length + 1);
+    (values.length + (sheetName === TABS.MOVIMENTACOES ? +1 : +3));
   const dataRows = await getRange(sheetId, `${sheetName}!${rangeString}`);
   return dataRows;
 }
@@ -114,7 +114,8 @@ function composeDateFromShort(shortDate) {
   const year = shortDate.slice(0, 4);
   const month = shortDate.slice(4, 6);
   const day = shortDate.slice(6, 8);
-  return new Date(year, month - 1, day).toISOString();
+  // 2024-11-30T03:00:00.000Z
+  return `${year}-${month-1}-${day}T03:00:00.000Z`
 }
 
 /**
