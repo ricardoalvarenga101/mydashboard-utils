@@ -458,59 +458,66 @@ function renderOperationsFII(
                 : tableOperationsFII[indexYear - 1][12][2] > 0
                 ? tableOperationsFII[indexYear - 1][12][2] * -1
                 : 0;
+            const baseCalcTax = getNode(operationsFII[indexYear], mes) <0? 0 : getNode(operationsFII[indexYear], mes);
             tableOperationsFII[indexYear][mes] = [
               MONTHS_LABEL[mes].slice(0, 3),
               getNode(operationsFII[indexYear], mes),
               lossesOldYear,
-              0,
-              0,
+              getNode(operationsFII[indexYear], mes) < 0? 0:baseCalcTax,
+              lossesOldYear,
               "20%",
-              0,
+              (baseCalcTax-lossesOldYear) <= 0 ? 0: (baseCalcTax-lossesOldYear)*0.2,
             ];
           } else {
+            const lossesOldYear = tableOperationsFII[indexYear - 1][12][2] > 0
+            ? tableOperationsFII[indexYear - 1][12][2] * -1
+            : 0
+            const baseCalcTax = getNode(operationsFII[indexYear], mes) <0? 0 : getNode(operationsFII[indexYear], mes);
             tableOperationsFII[indexYear] = {
               [mes]: [
                 MONTHS_LABEL[mes].slice(0, 3),
                 getNode(operationsFII[indexYear], mes),
-                tableOperationsFII[indexYear - 1][12][2] > 0
-                  ? tableOperationsFII[indexYear - 1][12][2] * -1
-                  : 0,
-                0,
-                0,
+                lossesOldYear,
+                getNode(operationsFII[indexYear], mes) < 0? 0:baseCalcTax,
+                lossesOldYear,
                 "20%",
-                0,
+                (baseCalcTax-lossesOldYear) <= 0 ? 0: (baseCalcTax-lossesOldYear)*0.2,
               ],
             };
           }
         } else {
+          const lossesOldYear = tableOperationsFII.hasOwnProperty(indexYear - 1)
+          ? tableOperationsFII[indexYear - 1][12][2] > 0
+            ? tableOperationsFII[indexYear - 1][12][2]
+            : 0
+          : 0;
+          const baseCalcTax = getNode(operationsFII[indexYear], mes) <0? 0 : getNode(operationsFII[indexYear], mes);
           tableOperationsFII[indexYear] = {
             [mes]: [
               MONTHS_LABEL[mes].slice(0, 3),
               getNode(operationsFII[indexYear], mes),
-              tableOperationsFII.hasOwnProperty(indexYear - 1)
-                ? tableOperationsFII[indexYear - 1][12][2] > 0
-                  ? tableOperationsFII[indexYear - 1][12][2]
-                  : 0
-                : 0,
-              0,
-              0,
+              lossesOldYear,
+              getNode(operationsFII[indexYear], mes) < 0? 0:baseCalcTax,
+              lossesOldYear,
               "20%",
-              0,
+              (baseCalcTax-lossesOldYear) <= 0 ? 0: (baseCalcTax-lossesOldYear)*0.2,
             ],
           };
         }
       } else {
+        const lossesOldYear = subtractionLosses(
+          tableOperationsFII[indexYear][mes - 1][1],
+          tableOperationsFII[indexYear][mes - 1][2]
+        )
+        const baseCalcTax = getNode(operationsFII[indexYear], mes) <0? 0 : getNode(operationsFII[indexYear], mes);
         tableOperationsFII[indexYear][mes] = [
           MONTHS_LABEL[mes].slice(0, 3),
           getNode(operationsFII[indexYear], mes),
-          subtractionLosses(
-            tableOperationsFII[indexYear][mes - 1][1],
-            tableOperationsFII[indexYear][mes - 1][2]
-          ),
-          0,
-          0,
+          lossesOldYear,
+          getNode(operationsFII[indexYear], mes) < 0? 0:baseCalcTax,
+          lossesOldYear,
           "20%",
-          0,
+          (baseCalcTax-lossesOldYear) <= 0 ? 0: (baseCalcTax-lossesOldYear)*0.2,
         ];
       }
     })
