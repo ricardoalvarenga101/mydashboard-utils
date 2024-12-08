@@ -110,16 +110,22 @@ function composeTableCommonOperationAndDayTrade(operations) {
             break;
         }
       });
-      ops.totalCommon = sumBy(ops.commonList, "amountValues");
-      ops.totalTrade = sumBy(ops.dayTradeList, "amountValues");
-      tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = ops;
-      // calculando accumulado do mês
-      calcAccumulatedMonth(
-        indexYear,
-        firstYear,
-        indexMonth,
-        tableCommonOperationAndDayTradeProcessed
-      );
+      if (ops.commonList.length) {
+        ops.totalCommon = ops.commonList.length
+          ? sumBy(ops.commonList, "amountValues")
+          : 0;
+        ops.totalTrade = ops.commonList.length
+          ? sumBy(ops.dayTradeList, "amountValues")
+          : 0;
+        tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = ops;
+        // calculando accumulado do mês
+        calcAccumulatedMonth(
+          indexYear,
+          firstYear,
+          indexMonth,
+          tableCommonOperationAndDayTradeProcessed
+        );
+      }
     });
     // calculando accumulado no ano
     calcAccumulatedYear(
@@ -254,7 +260,7 @@ function calcAccumulatedMonth(
     );
     if (_firstPosition.month == indexMonth) {
       // verifica é a primeira operação do ano
-      const list = Object.keys(tableCommonOperationAndDayTradeProcessed)
+      const list = Object.keys(tableCommonOperationAndDayTradeProcessed);
       const oldYear = list.indexOf(indexYear);
       const oldYearIndex = Object.keys(
         tableCommonOperationAndDayTradeProcessed
@@ -295,13 +301,11 @@ function calcAccumulatedMonth(
       if (_pastPosition.op.accumulatedCommon < 0) {
         tableCommonOperationAndDayTradeProcessed[indexYear][
           indexMonth
-        ].accumulatedCommon =
-          _pastPosition.op.accumulatedCommon +
-          sumAccumulator(
-            tableCommonOperationAndDayTradeProcessed,
-            indexYear,
-            "totalCommon"
-          );
+        ].accumulatedCommon = sumAccumulator(
+          tableCommonOperationAndDayTradeProcessed,
+          indexYear,
+          "totalCommon"
+        );
       } else {
         tableCommonOperationAndDayTradeProcessed[indexYear][
           indexMonth
@@ -371,7 +375,7 @@ function calcAccumulatedYear(
       );
   } else {
     // existe acumulado ano anterior negativo COMMON
-    const list = Object.keys(tableCommonOperationAndDayTradeProcessed)
+    const list = Object.keys(tableCommonOperationAndDayTradeProcessed);
     const oldYear = list.indexOf(indexYear);
     const oldYearIndex = Object.keys(tableCommonOperationAndDayTradeProcessed)[
       oldYear - 1
@@ -478,10 +482,10 @@ function composeCommonOperationAndDayTrade(
       negativePastTrade = operationsGeneral[yearAnalysis - 1].accumulatedTrade;
     } else {
       negativePastCommon =
-        operationsGeneral[yearAnalysis][monthsFilter[indexAtual]]
+        operationsGeneral[yearAnalysis][monthsFilter[indexAtual - 1]]
           .accumulatedCommon;
       negativePastTrade =
-        operationsGeneral[yearAnalysis][monthsFilter[indexAtual]]
+        operationsGeneral[yearAnalysis][monthsFilter[indexAtual - 1]]
           .accumulatedTrade;
     }
   } else {
