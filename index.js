@@ -3,7 +3,8 @@ const JOBS = {
   IMPORT_PROCESS_CLEAN_FAIL: "ImportProcessCleanFail",
   INPLIT_AND_SPLIT_PROCESS: "SplitAndInplitProcess",
   WALLET_PROCESS: "WalletProcess",
-  RESET_WALLET_PROCESS: "ResetWalletProcess"
+  RESET_WALLET_PROCESS: "ResetWalletProcess",
+  WALLET_RESTORE: "WalletRestore"
 };
 
 const RENAME_TICKER_GOOGLE_SHEET = {
