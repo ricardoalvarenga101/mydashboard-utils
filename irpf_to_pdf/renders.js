@@ -200,6 +200,44 @@ function renderBonifications(bonifications, bonificationsWithFractions) {
 }
 
 /**
+ * Reembolso de proventos
+ * @param {*} rentals
+ * @returns
+ */
+function renderReembolso(reembolso) {  
+
+  if (!reembolso || !Object.keys(reembolso).length) {
+    return [{}];
+  }
+  const listReembolso = [];
+  let sumReembolso = 0;
+
+  Object.keys(reembolso).forEach((item) => {
+    sumReembolso += reembolso[item].amount;
+  });
+
+  // map(rentals, (item, ticker) => {
+  listReembolso.push(["99", CNPJ_B3, NAME_B3, "Reembolso de proventos", convertCurrencyReal(sumReembolso)]);
+  // })
+
+  const title = {
+    text: "Reembolso (Proventos de ativos alugados - Doador)",
+    style: "title",
+  };
+  const content1 = {
+    style: "table",
+    table: {
+      widths: [30, "*", 200, "*", "*"],
+      body: [
+        composeHeaderTable(["Tipo", "CNPJ", "Nome da fonte pagadora", "Descrição", "Valor"]),
+        ...listReembolso,
+      ],
+    },
+  };
+  return [title, content1];
+}
+
+/**
  * Aluguéis
  * @param {*} rentals
  * @returns
@@ -692,6 +730,7 @@ function renderRendimentsPrint(provents, SUM_SWING_TRADE_FREE_99, year) {
       "Vendas mensais de ações abaixo de 20 mil reais (Brasil)",
       "Dividendos de ações",
       "Rendimentos de (FII, FIAGRO e FI-INFRA)",
+      "Reembolso (dividendos recebidos com ativos alugados - doador)",
       "Vendas de ativos com benefício fiscal\n\n",
     ],
   };
@@ -727,4 +766,5 @@ module.exports = {
   renderRendimentsJCP,
   renderRendimentsPrint,
   renderRentals,
+  renderReembolso
 };

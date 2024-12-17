@@ -26,6 +26,7 @@ const TRANSACTIONS = {
     "Dividendo",
     "JCP",
     "Rendimento",
+    "Reembolso"
   ],
   BONIFICATION_IN_FRACTIONS: "Bonificação em Frações",
 };

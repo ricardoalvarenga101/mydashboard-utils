@@ -16,6 +16,7 @@ const {
   renderRentals,
   renderCommonsOperations,
   renderOperationsFII,
+  renderReembolso,
 } = require("./renders");
 
 /**
@@ -52,7 +53,8 @@ function generatePdf(
   rentals,
   operationsFII,
   lossesSalesFii,
-  tableOperationsFII
+  tableOperationsFII,
+  reembolso
 ) {
   const bens = composeBensDireitos(itensWalletFiltered)
   const docDefinition = {
@@ -192,7 +194,7 @@ function generatePdf(
           { text: "'OK'\n\n", style: { bold: true } },
           `Abaixo incluímos também o custo de seus ativos em ${
             year - 1
-          } de acordo com os lançamentos feitos na planilha @ricardoinvesting. Caso seus lançamentos de ${
+          } de acordo com os lançamentos inseridos em mydashboard. Caso seus lançamentos de ${
             year - 1
           } não estejam na planilha substitua os valores da coluna de 31/12/${
             year - 1
@@ -224,6 +226,7 @@ function generatePdf(
       },
       ...renderRendimentsPrint(provents, SUM_SWING_TRADE_FREE_99, year),
       ...renderBonifications(bonifications, bonificationsWithFractions),
+      ...renderReembolso(reembolso),
       ...renderDividends(provents),
       ...renderRendimentsIsentos(provents, SUM_SWING_TRADE_FREE_99, year),
       ...renderLow20kMonth(SUM_SWING_TRADE_FREE, year),
@@ -234,7 +237,7 @@ function generatePdf(
       ),
       ...renderJCPs(provents),
       ...renderRendimentsJCP(provents),
-      ...renderRentals(rentals),
+      ...renderRentals(rentals),      
     ],
     pageMargin: [0, 0],
     defaultStyle: { alignment: "justify" },

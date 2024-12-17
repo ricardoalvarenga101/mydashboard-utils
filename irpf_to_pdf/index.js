@@ -36,12 +36,14 @@ function generateIRPF(
   let bonifications = {};
   let bonificationsWithFractions = {};
   let rentals = {};
+  let reembolso = {};
 
   itensWalletFiltered = data?.itensWalletFiltered;
   provents = composeProvents(data?.provents);
   bonifications = data?.bonifications || {};
   bonificationsWithFractions = data?.bonificationsWithFractions || {};
   rentals = data?.rentals || {};
+  reembolso = data?.reembolso || {};
 
   // console.log("Provents", provents);
   // console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
@@ -80,7 +82,8 @@ function generateIRPF(
     rentals,
     operationsFII,
     lossesSalesFii,
-    tableOperationsFII
+    tableOperationsFII,
+    reembolso
   );
   return pdfDefinition;
 }
