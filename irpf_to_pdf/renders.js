@@ -401,7 +401,7 @@ function renderCommonsOperations(docDefinition, year, operationsFull) {
     composeTableCommonOperationAndDayTrade(operationsFull);
   let tableCommonOperationAndDayTradeFiltered = {};
   map(tableCommonOperationAndDayTrade, (year, indexYear) =>
-    map(year, (month, indexMonth) => {
+    map(year, (month, indexMonth) => {      
       if (Object.keys(month).length > 0) {
         if (tableCommonOperationAndDayTradeFiltered.hasOwnProperty(indexYear)) {
           tableCommonOperationAndDayTradeFiltered[indexYear].push(indexMonth);
@@ -535,10 +535,10 @@ function renderOperationsFII(
             };
           }
         } else {
+          let sumLiquidWithNegativeOld = tableOperationsFII.hasOwnProperty(indexYear - 1) ? tableOperationsFII[indexYear - 1][12][1] + (tableOperationsFII[indexYear - 1][12][2] *-1) : 0
+          sumLiquidWithNegativeOld = sumLiquidWithNegativeOld > 0 ? 0 : sumLiquidWithNegativeOld*-1
           const lossesOldYear = tableOperationsFII.hasOwnProperty(indexYear - 1)
-            ? tableOperationsFII[indexYear - 1][12][2] > 0
-              ? tableOperationsFII[indexYear - 1][12][2]
-              : 0
+            ? sumLiquidWithNegativeOld
             : 0;
           const baseCalcTax =
             getNode(operationsFII[indexYear], mes) < 0

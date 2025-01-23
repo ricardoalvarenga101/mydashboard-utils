@@ -201,6 +201,22 @@ function composeTableOperationsCriptos(operations) {
   return tableOperationsCriptosProcessed;
 }
 
+function getAccumulatedCommonRecursiveValueMonths(node, indexYear, indexMonth, keySum) {
+  const _selectNode = node[indexYear][indexMonth]
+  if(indexMonth===1) {
+    if(!Object.keys(_selectNode).length) {
+      return 0
+    }
+  }  
+  if(Object.keys(_selectNode).length) {
+    if(keySum==="totalTrade") {
+      return _selectNode.accumulatedTrade + _selectNode[keySum]
+    }
+    return _selectNode.accumulatedCommon + _selectNode[keySum]
+  }
+  return getAccumulatedCommonRecursiveValueMonths(node, indexYear, (indexMonth -1), keySum)
+}
+
 function calcAccumulatedMonth(
   indexYear,
   firstYear,
@@ -231,25 +247,8 @@ function calcAccumulatedMonth(
       tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = {
         ...itemMonth,
         accumulatedCommon:
-          tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth - 1]
-            .accumulatedCommon ||
-          0 +
-            sumAccumulator(
-              tableCommonOperationAndDayTradeProcessed,
-              indexYear,
-              "totalCommon",
-              indexMonth
-            ),
-        accumulatedTrade:
-          tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth - 1]
-            .accumulatedTrade ||
-          0 +
-            sumAccumulator(
-              tableCommonOperationAndDayTradeProcessed,
-              indexYear,
-              "totalTrade",
-              indexMonth
-            ),
+          getAccumulatedCommonRecursiveValueMonths(tableCommonOperationAndDayTradeProcessed, indexYear, indexMonth-1, 'totalCommon'),
+        accumulatedTrade:getAccumulatedCommonRecursiveValueMonths(tableCommonOperationAndDayTradeProcessed, indexYear, indexMonth-1, 'totalTrade'),
       };
     }
   } else {
