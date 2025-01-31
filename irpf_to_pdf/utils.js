@@ -192,26 +192,6 @@ function getCodes(classe) {
   };
 }
 
-/**
- * Classe mydashboard
- * @returns 
- */
-const mydash = () => {
-  /**
-   * Console log dinamico mydash
-   * @param {*} message 
-   * @returns 
-   */
-  const log = (message) => {
-    const staging = process.env.STAGING === "true" ? true : false;
-    return staging ? console.log(message) : null;
-  };
-
-  return {
-    log,
-  };
-};
-
 module.exports = {
   convertCurrencyReal,
   getCodes,
@@ -221,6 +201,5 @@ module.exports = {
   taxCal,
   getNode,
   subtractionLosses,
-  convertCurrencyRealWithoutCoin,
-  mydash
+  convertCurrencyRealWithoutCoin, 
 };

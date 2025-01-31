@@ -281,7 +281,28 @@ function convertCurrencyDolar(
   });
 }
 
+/**
+ * Classe mydashboard
+ * @returns 
+ */
+const mydash = () => {
+  /**
+   * Console log dinamico mydash
+   * @param {*} message 
+   * @returns 
+   */
+  const log = (message) => {
+    const staging = process.env.STAGING === "true" ? true : false;
+    return staging ? console.log(message) : null;
+  };
+
+  return {
+    log,
+  };
+};
+
 module.exports = {
+  mydash,
   strToFloat,
   getTypeByMainSearching,
   getMonths,
