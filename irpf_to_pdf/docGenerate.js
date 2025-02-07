@@ -285,6 +285,7 @@ function generatePdf(
       },
     },
     operations:[],
+    amountTransactions:[],
     bens,
   };
 

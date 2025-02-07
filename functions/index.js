@@ -283,21 +283,58 @@ function convertCurrencyDolar(
 
 /**
  * Classe mydashboard
- * @returns 
+ * @returns
  */
 const mydash = () => {
   /**
    * Console log dinamico mydash
-   * @param {*} message 
-   * @returns 
+   * @param {*} message
+   * @returns
    */
   const log = (message) => {
     const staging = process.env.STAGING === "true" ? true : false;
     return staging ? console.log(message) : null;
   };
 
+  /**
+   * Normaliza data em formato string
+   * @param {String} stringDate [dd/mm/YYYY]
+   */
+  const normalizeBRDate = (stringDate) => {
+    try {
+      const currentDate = moment(stringDate, "DD/MM/YYYY")
+        .tz("America/Sao_Paulo")
+        .toISOString();
+      const shortDate = moment(currentDate).format("YYYYMMDD");
+      return { currentDate, shortDate };
+    } catch {
+      return {
+        currentDate: null,
+        shortDate: null,
+      };
+    }
+  };
+  /**
+   * Sanitizar código do ticker apenas para visão
+   * @param {*} ticker
+   * @returns
+   */
+  const sanitizeTickerName = (ticker) => ticker.replace("CRYPTO.", "");
+
+  /**
+   * Delay
+   * @param {*} d <default: 200ms>
+   * @returns
+   */
+  const delay = async (d = 200) => {
+    return await new Promise((res) => setTimeout(() => res("delay"), d));
+  };
+
   return {
     log,
+    normalizeBRDate,
+    sanitizeTickerName,
+    delay,
   };
 };
 

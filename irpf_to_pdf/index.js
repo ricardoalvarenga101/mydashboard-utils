@@ -5,7 +5,7 @@ const {
   composeSwingTradeFree,
 } = require("./composers");
 const { generatePdf } = require("./docGenerate");
-const { mockFullData2022 } = require("./mocks/fullData");
+// const { mockFullData2022 } = require("./mocks/fullData");
 
 /**
  * Gerar relatório irpf
@@ -49,7 +49,7 @@ function generateIRPF(
   // console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
   // console.log("Aluguel", rentals);
 
-  const t = map(data.sells, (year, indexYear) =>
+  map(data.sells, (year, indexYear) =>
     map(year, (month, indexMonth) => {
       const filterOperations = groupBy(month.operations, (x) => x.operation);
       map(filterOperations, (ops) => {

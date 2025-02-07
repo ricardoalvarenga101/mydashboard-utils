@@ -46,7 +46,12 @@ const COLLECTION_NAME = {
   ANOTATIONS: 'anotations',
   WALLET_TIMELINE: 'wallet_timeline',
   WALLET_TIMELINE_IRPF: 'wallet_irpf',
-  INVOICES: 'invoices'
+  WALLET_RESTORES: "wallet_restores",
+  INVOICES: 'invoices',
+  OBJECTIVES: "objectives",
+  CONFIGURATIONS: "configurations",
+  CHANGELOG: "changelog",
+  MYDASHBOARD: "mydashboard"
 };
 
 const CLASS = {
@@ -133,6 +138,13 @@ const MOVIMENTATIONS_WITHOUT_SUBSCRIBERS = [
   MOVIMENTATIONS_OPERATIONS_KEYS.VENDA,
 ];
 
+/**
+ * Definição de prefixos da plataforma mydashboard
+ */
+const MYDASH_PREFIX = {
+  CRYPTO: "CRYPTO"
+}
+
 module.exports = {
   TABS,
   COLLECTION_NAME,
@@ -145,4 +157,5 @@ module.exports = {
   CLASS_EXTERNAL_LIST,
   MOVIMENTATIONS_WITHOUT_SUBSCRIBERS,
   RENAME_TICKER_GOOGLE_SHEET,
+  MYDASH_PREFIX
 };

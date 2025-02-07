@@ -13,6 +13,7 @@ const {
   NAME_B3,
   MONTHS_LABEL,
   DOC_DEFINITION_OPERATIONS,
+  TYPE_OPERATIONS_SELL,
 } = require("./vars");
 
 /**
@@ -416,6 +417,7 @@ function renderCommonsOperations(docDefinition, year, operationsFull) {
   // console.log("tableCommonOperationAndDayTradeFiltered", tableCommonOperationAndDayTradeFiltered);
 
   const commonOperationsAnalised = [];
+  const amountTransactions = [];
   map(tableCommonOperationAndDayTrade[year], (month, indexMonth) => {
     const co = composeCommonOperationAndDayTrade(
       month,
@@ -430,6 +432,24 @@ function renderCommonsOperations(docDefinition, year, operationsFull) {
       commonOperationsAnalised.push(co.content1);
       commonOperationsAnalised.push(co.content2);
       commonOperationsAnalised.push(co.content3);
+      // adiciona o total transacionado no mês <BDR, ETF, SWING ACOES E DIREITOS DE SUBSCRICOES>
+      let amountTransactionSum = 0;
+      if(TYPE_OPERATIONS_SELL.SWING_TRADE in operationsFull[year][indexMonth]) {
+        amountTransactionSum +=  operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.SWING_TRADE].amountTransaction
+      }
+      if(TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO in operationsFull[year][indexMonth]) {
+        amountTransactionSum +=  operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO].amountTransaction
+      }
+      if(TYPE_OPERATIONS_SELL.VENDA_DE_BDR in operationsFull[year][indexMonth]) {
+        amountTransactionSum +=  operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.VENDA_DE_BDR].amountTransaction
+      }
+      if(TYPE_OPERATIONS_SELL.VENDA_DE_ETF in operationsFull[year][indexMonth]) {
+        amountTransactionSum +=  operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.VENDA_DE_ETF].amountTransaction
+      }
+      amountTransactions.push({
+        id: co.title.text,
+        amountTransaction: amountTransactionSum
+      })
     }
   });
 
@@ -443,6 +463,8 @@ function renderCommonsOperations(docDefinition, year, operationsFull) {
       ...docDefinition.content,
       ...commonOperationsAnalised,
     ];
+
+    docDefinition.amountTransactions = amountTransactions
 
     docDefinition.operations.push({
       id: DOC_DEFINITION_OPERATIONS.OPERATIONS_COMUNS_DAYTRADE,
