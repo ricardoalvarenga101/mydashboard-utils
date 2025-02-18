@@ -476,9 +476,10 @@ function composeCommonOperationAndDayTrade(
     // se for diferente do ano inicial de investimento
     if (indexAtual === 0) {
       // se for a primeira operação do ano
+      const indexLastYear = Object.keys(operationsGeneral).filter(i=> i < yearAnalysis).sort().pop()
       negativePastCommon =
-        operationsGeneral[yearAnalysis - 1].accumulatedCommon;
-      negativePastTrade = operationsGeneral[yearAnalysis - 1].accumulatedTrade;
+        operationsGeneral[indexLastYear].accumulatedCommon;
+      negativePastTrade = operationsGeneral[indexLastYear].accumulatedTrade;
     } else {
       negativePastCommon =
         operationsGeneral[yearAnalysis][monthsFilter[indexAtual - 1]]
