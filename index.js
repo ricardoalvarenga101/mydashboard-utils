@@ -51,7 +51,8 @@ const COLLECTION_NAME = {
   OBJECTIVES: "objectives",
   CONFIGURATIONS: "configurations",
   CHANGELOG: "changelog",
-  MYDASHBOARD: "mydashboard"
+  MYDASHBOARD: "mydashboard",
+  TRANSACTIONS_FIXED: "transactions_fixed"
 };
 
 const CLASS = {
