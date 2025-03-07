@@ -136,6 +136,38 @@ function renderRendimentsJCP(provents) {
 }
 
 /**
+ * Rendimentos sobre resgate renda fixa - outros
+ * @param {*} cdbs
+ * @returns
+ */
+function renderResgateCDB(cdbs) {  
+  if (!cdbs.rendiments.length) {
+    return [{}];
+  }
+  const title = {
+    text: "\n\nRendimentos sobre resgate renda fixa CDB/LCs/RDB/OUTROS",
+    style: "title",
+  };
+  const content1 = {
+    style: "table",
+    table: {
+      widths: [30, "*", "*", "*", "*"],
+      body: [
+        composeHeaderTable([
+          "Tipo",
+          "CNPJ",
+          "Nome da fonte pagadora",
+          "Descrição",
+          "Valor",
+        ]),
+        ...cdbs.rendiments,
+      ],
+    },
+  };
+  return [title, content1];
+}
+
+/**
  * Bonificações
  * @param {*} bonifications
  * @param {*} bonificationsWithFractions
@@ -322,7 +354,7 @@ function renderJCPs(provents) {
     text: [
       "\n\nEsta seção irá lhe demonstrar quais ",
       { text: "rendimentos tiveram tributação", style: "negrito" },
-      " retida na fonte durante e o ano, não será necessário pagar imposto adicional sobre eles, mas precisará declará-los na seção de mesmo nome.",
+      " retida na fonte durante o ano, não será necessário pagar imposto adicional sobre eles, mas precisará declará-los na seção de mesmo nome.",
     ],
   };
   const content2 = {
@@ -788,5 +820,6 @@ module.exports = {
   renderRendimentsJCP,
   renderRendimentsPrint,
   renderRentals,
-  renderReembolso
+  renderReembolso,
+  renderResgateCDB
 };

@@ -13,6 +13,7 @@ const {
   renderCriptoLow35kMonth,
   renderJCPs,
   renderRendimentsJCP,
+  renderResgateCDB,
   renderRentals,
   renderCommonsOperations,
   renderOperationsFII,
@@ -54,7 +55,8 @@ function generatePdf(
   operationsFII,
   lossesSalesFii,
   tableOperationsFII,
-  reembolso
+  reembolso,
+  rendimentsCDB
 ) {
   const bens = composeBensDireitos(itensWalletFiltered)
   const docDefinition = {
@@ -237,6 +239,7 @@ function generatePdf(
       ),
       ...renderJCPs(provents),
       ...renderRendimentsJCP(provents),
+      ...renderResgateCDB(rendimentsCDB),
       ...renderRentals(rentals),      
     ],
     pageMargin: [0, 0],

@@ -889,6 +889,79 @@ function composeProvents(provents) {
 }
 
 /**
+ * Compoe os rendimentos de resgate cdbs e tesouro direto
+ * @param {*} cdbs
+ * @param {*} tds
+ * @returns
+ */
+function composeRendimentsCdbs(cdbs, tds) {
+  const sortProvents = Object.keys(cdbs).sort();  
+  const rendiments = [];
+
+  sortProvents.forEach((item) => {
+    const type = item.split("-").shift()
+    if (cdbs[item].amountRendiment) {
+      switch (type) {
+        case 'lci':
+        case 'lca':
+        case 'cra':
+        case 'cri':
+          rendiments.push([
+            "12",
+            cdbs[item].document_number_principal,
+            cdbs[item].name,
+            `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
+            convertCurrencyReal(cdbs[item].amountRendiment),
+          ]);
+          
+          break;
+      
+        default:
+          rendiments.push([
+            "06",
+            cdbs[item].document_number_principal,
+            cdbs[item].name,
+            `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
+            convertCurrencyReal(cdbs[item].amountRendiment),
+          ]);
+          break;
+      }
+     
+    }
+  });
+  rendiments.push(...tds)
+  return {
+    rendiments,
+  };
+}
+
+/**
+ * Compoe os rendimentos de resgate de tesouro direto
+ * @param {*} tds
+ * @returns
+ */
+function composeRendimentsTds(tds) {
+  const sortProvents = Object.keys(tds).sort();  
+  const rendiments = [];
+
+  sortProvents.forEach((item) => {
+    const type = item.split("-").shift()
+
+          rendiments.push([
+            "06",
+            tds[item].document_number_principal,
+            tds[item].name,
+            `Rendimentos tributados sobre juros recebidos de (${tds[item].name})`,
+            convertCurrencyReal(tds[item].amountRendiment),
+          ]);     
+    
+  });
+  return {
+    rendiments,
+  };
+}
+
+/**
  * Compoe bens e direitos da carteira
  * @param {*} itensWalletFiltered
  * @returns
@@ -1160,6 +1233,8 @@ function composeTableOperationsFII(tableOperationsFII, operationsFII, year) {
 module.exports = {
   composeOperations,
   composeProvents,
+  composeRendimentsCdbs,
+  composeRendimentsTds,
   composeSwingTradeFree,
   composeHeaderTable,
   composeBensDireitos,

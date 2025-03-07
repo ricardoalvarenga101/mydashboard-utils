@@ -1,6 +1,8 @@
 const { map, groupBy } = require("lodash");
 const {
   composeProvents,
+  composeRendimentsCdbs,
+  composeRendimentsTds,
   composeOperations,
   composeSwingTradeFree,
 } = require("./composers");
@@ -40,6 +42,8 @@ function generateIRPF(
 
   itensWalletFiltered = data?.itensWalletFiltered;
   provents = composeProvents(data?.provents);
+  rendimentsTD =  composeRendimentsTds(data?.tds||{});
+  rendimentsCDB = composeRendimentsCdbs(data?.cdbs||{}, rendimentsTD.rendiments);
   bonifications = data?.bonifications || {};
   bonificationsWithFractions = data?.bonificationsWithFractions || {};
   rentals = data?.rentals || {};
@@ -83,7 +87,8 @@ function generateIRPF(
     operationsFII,
     lossesSalesFii,
     tableOperationsFII,
-    reembolso
+    reembolso,
+    rendimentsCDB
   );
   return pdfDefinition;
 }
