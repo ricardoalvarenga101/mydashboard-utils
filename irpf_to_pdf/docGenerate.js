@@ -3,6 +3,7 @@ const {
   composeBensDireitos,
   composeTaxExternal,
   composerExternalDividends,
+  sanitizaTableBensCDB,
 } = require("./composers");
 const {
   renderRendimentsPrint,
@@ -58,7 +59,7 @@ function generatePdf(
   reembolso,
   rendimentsCDB
 ) {
-  const bens = composeBensDireitos(itensWalletFiltered)
+  const bens = composeBensDireitos(itensWalletFiltered);
   const docDefinition = {
     content: [
       {
@@ -222,7 +223,7 @@ function generatePdf(
               `Situação 31/12/${year - 1}`,
               `Situação 31/12/${year}`,
             ]),
-            ...bens,
+            ...sanitizaTableBensCDB(bens),
           ],
         },
       },
@@ -240,7 +241,7 @@ function generatePdf(
       ...renderJCPs(provents),
       ...renderRendimentsJCP(provents),
       ...renderResgateCDB(rendimentsCDB),
-      ...renderRentals(rentals),      
+      ...renderRentals(rentals),
     ],
     pageMargin: [0, 0],
     defaultStyle: { alignment: "justify" },
@@ -287,8 +288,8 @@ function generatePdf(
         bold: true,
       },
     },
-    operations:[],
-    amountTransactions:[],
+    operations: [],
+    amountTransactions: [],
     bens,
   };
 

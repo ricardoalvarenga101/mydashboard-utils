@@ -42,8 +42,11 @@ function generateIRPF(
 
   itensWalletFiltered = data?.itensWalletFiltered;
   provents = composeProvents(data?.provents);
-  rendimentsTD =  composeRendimentsTds(data?.tds||{});
-  rendimentsCDB = composeRendimentsCdbs(data?.cdbs||{}, rendimentsTD.rendiments);
+  rendimentsTD = composeRendimentsTds(data?.tds || {});
+  rendimentsCDB = composeRendimentsCdbs(
+    data?.cdbs || {},
+    rendimentsTD.rendiments
+  );
   bonifications = data?.bonifications || {};
   bonificationsWithFractions = data?.bonificationsWithFractions || {};
   rentals = data?.rentals || {};

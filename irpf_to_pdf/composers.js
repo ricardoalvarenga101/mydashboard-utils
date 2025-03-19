@@ -1,4 +1,4 @@
-const { sum, map, sumBy, indexOf } = require("lodash");
+const { sum, map, sumBy, indexOf, cloneDeep } = require("lodash");
 const {
   convertCurrencyReal,
   getCodes,
@@ -13,6 +13,7 @@ const {
   LIMIT_SWING_TRADE,
   MONTHS_LABEL,
 } = require("./vars");
+const { CLASS } = require("mydashboard-utils");
 
 /**
  * Compoe operações em FII
@@ -201,20 +202,30 @@ function composeTableOperationsCriptos(operations) {
   return tableOperationsCriptosProcessed;
 }
 
-function getAccumulatedCommonRecursiveValueMonths(node, indexYear, indexMonth, keySum) {
-  const _selectNode = node[indexYear][indexMonth]
-  if(indexMonth===1) {
-    if(!Object.keys(_selectNode).length) {
-      return 0
+function getAccumulatedCommonRecursiveValueMonths(
+  node,
+  indexYear,
+  indexMonth,
+  keySum
+) {
+  const _selectNode = node[indexYear][indexMonth];
+  if (indexMonth === 1) {
+    if (!Object.keys(_selectNode).length) {
+      return 0;
     }
-  }  
-  if(Object.keys(_selectNode).length) {
-    if(keySum==="totalTrade") {
-      return _selectNode.accumulatedTrade + _selectNode[keySum]
-    }
-    return _selectNode.accumulatedCommon + _selectNode[keySum]
   }
-  return getAccumulatedCommonRecursiveValueMonths(node, indexYear, (indexMonth -1), keySum)
+  if (Object.keys(_selectNode).length) {
+    if (keySum === "totalTrade") {
+      return _selectNode.accumulatedTrade + _selectNode[keySum];
+    }
+    return _selectNode.accumulatedCommon + _selectNode[keySum];
+  }
+  return getAccumulatedCommonRecursiveValueMonths(
+    node,
+    indexYear,
+    indexMonth - 1,
+    keySum
+  );
 }
 
 function calcAccumulatedMonth(
@@ -246,9 +257,18 @@ function calcAccumulatedMonth(
     } else {
       tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = {
         ...itemMonth,
-        accumulatedCommon:
-          getAccumulatedCommonRecursiveValueMonths(tableCommonOperationAndDayTradeProcessed, indexYear, indexMonth-1, 'totalCommon'),
-        accumulatedTrade:getAccumulatedCommonRecursiveValueMonths(tableCommonOperationAndDayTradeProcessed, indexYear, indexMonth-1, 'totalTrade'),
+        accumulatedCommon: getAccumulatedCommonRecursiveValueMonths(
+          tableCommonOperationAndDayTradeProcessed,
+          indexYear,
+          indexMonth - 1,
+          "totalCommon"
+        ),
+        accumulatedTrade: getAccumulatedCommonRecursiveValueMonths(
+          tableCommonOperationAndDayTradeProcessed,
+          indexYear,
+          indexMonth - 1,
+          "totalTrade"
+        ),
       };
     }
   } else {
@@ -476,9 +496,11 @@ function composeCommonOperationAndDayTrade(
     // se for diferente do ano inicial de investimento
     if (indexAtual === 0) {
       // se for a primeira operação do ano
-      const indexLastYear = Object.keys(operationsGeneral).filter(i=> i < yearAnalysis).sort().pop()
-      negativePastCommon =
-        operationsGeneral[indexLastYear].accumulatedCommon;
+      const indexLastYear = Object.keys(operationsGeneral)
+        .filter((i) => i < yearAnalysis)
+        .sort()
+        .pop();
+      negativePastCommon = operationsGeneral[indexLastYear].accumulatedCommon;
       negativePastTrade = operationsGeneral[indexLastYear].accumulatedTrade;
     } else {
       negativePastCommon =
@@ -895,27 +917,27 @@ function composeProvents(provents) {
  * @returns
  */
 function composeRendimentsCdbs(cdbs, tds) {
-  const sortProvents = Object.keys(cdbs).sort();  
+  const sortProvents = Object.keys(cdbs).sort();
   const rendiments = [];
 
   sortProvents.forEach((item) => {
-    const type = item.split("-").shift()
+    const type = item.split("-").shift();
     if (cdbs[item].amountRendiment) {
       switch (type) {
-        case 'lci':
-        case 'lca':
-        case 'cra':
-        case 'cri':
+        case "lci":
+        case "lca":
+        case "cra":
+        case "cri":
           rendiments.push([
             "12",
-            cdbs[item].document_number_principal,
+            cdbs[item].documentNumber,
             cdbs[item].name,
             `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
             convertCurrencyReal(cdbs[item].amountRendiment),
           ]);
-          
+
           break;
-      
+
         default:
           rendiments.push([
             "06",
@@ -926,10 +948,9 @@ function composeRendimentsCdbs(cdbs, tds) {
           ]);
           break;
       }
-     
     }
   });
-  rendiments.push(...tds)
+  rendiments.push(...tds);
   return {
     rendiments,
   };
@@ -941,25 +962,41 @@ function composeRendimentsCdbs(cdbs, tds) {
  * @returns
  */
 function composeRendimentsTds(tds) {
-  const sortProvents = Object.keys(tds).sort();  
+  const sortProvents = Object.keys(tds).sort();
   const rendiments = [];
 
   sortProvents.forEach((item) => {
-    const type = item.split("-").shift()
+    const type = item.split("-").shift();
 
-          rendiments.push([
-            "06",
-            tds[item].document_number_principal,
-            tds[item].name,
-            `Rendimentos tributados sobre juros recebidos de (${tds[item].name})`,
-            convertCurrencyReal(tds[item].amountRendiment),
-          ]);     
-    
+    rendiments.push([
+      "06",
+      tds[item].document_number_principal,
+      tds[item].name,
+      `Rendimentos tributados sobre juros recebidos de (${tds[item].name})`,
+      convertCurrencyReal(tds[item].amountRendiment),
+    ]);
   });
   return {
     rendiments,
   };
 }
+
+const getCodesCDB = (type) => {
+  switch (type) {
+    case "LCI":
+    case "LCD":
+    case "CRI":
+    case "CRA":
+    case "DEBÊNTURE":
+      return "03";
+    case "CDB":
+    case "RDB":
+      return "02";
+    case "OUTROS":
+    case "LF":
+      return "99";
+  }
+};
 
 /**
  * Compoe bens e direitos da carteira
@@ -971,7 +1008,9 @@ function composeBensDireitos(itensWalletFiltered) {
   itensWalletFiltered.forEach((item) => {
     bens.push([
       getCodes(item.classe).group,
-      getCodes(item.classe).cod,
+      item.classe !== CLASS.RENDA_FIXA_OUTROS
+        ? getCodes(item.classe).cod
+        : getCodesCDB(item?.type),
       getCodes(item.classe).locale,
       item.document_number_principal && item.document_number_principal !== ""
         ? item.document_number_principal
@@ -979,10 +1018,39 @@ function composeBensDireitos(itensWalletFiltered) {
       { text: item.description, style: "description" },
       item.past_year,
       item.this_year,
+      item.ticker,
+      item.classe,
     ]);
   });
 
   return bens;
+}
+
+/**
+ * Sanitiza descrição de bens e direitos para cdbs
+ * @param {*} txt
+ * @param {*} ticker
+ * @returns
+ */
+function sanitizeDescriptionBens(txt = "", ticker) {
+  return txt.replace(`(${ticker})`, "").trim();
+}
+
+function sanitizaTableBensCDB(bens = []) {
+  const newBens = [];
+  const cloneBens = cloneDeep(bens);
+  cloneBens.forEach((b, i) => {
+    if (b[8] === CLASS.RENDA_FIXA_OUTROS) {
+      b[4] = {
+        text: sanitizeDescriptionBens(b[4].text, b[7]),
+        style: "description",
+      };
+    }
+    b.pop();
+    b.pop();
+    newBens.push(b);
+  });
+  return newBens;
 }
 
 /**
@@ -1245,4 +1313,5 @@ module.exports = {
   composeCommonOperationAndDayTrade,
   composeOperationsFII,
   composeTableOperationsFII,
+  sanitizaTableBensCDB,
 };
