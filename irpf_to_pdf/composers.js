@@ -1112,7 +1112,7 @@ function composerExternalDividends(docDefinition, provents) {
 
     map(provents.external, (ticker) => {
       map(ticker.dividendPerMonth, (value, month) => {
-        const currentMonth = Number(month) + 1;
+        const currentMonth = Number(month);
         if (currentMonth <= 12) {
           table.dividends[currentMonth].values.push(value);
           table.dividends[currentMonth].amount = sum(
@@ -1121,7 +1121,7 @@ function composerExternalDividends(docDefinition, provents) {
         }
       });
       map(ticker.taxPerMonth, (value, month) => {
-        const currentMonth = Number(month) + 1;
+        const currentMonth = Number(month);
         if (currentMonth <= 12) {
           table.tax[currentMonth].values.push(value);
           table.tax[currentMonth].amount = sum(table.tax[currentMonth].values);
