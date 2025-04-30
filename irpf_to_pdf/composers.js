@@ -700,9 +700,20 @@ function composeCommonOperationAndDayTrade(
  * Monta o total das operações
  * @param {*} operation
  */
-function composeAmountOperations(operation) {
-  operation["amountTransaction"] = sum(operation.transactions);
-  operation["amountValues"] = sum(operation.values);
+function composeAmountOperations(operation, op) {
+  const _amountTransactionToMonth = sum(operation.transactions);
+  const _amountLoss = operation.values
+    .filter((v) => v < 0)
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  const _amountValues =
+    _amountTransactionToMonth > LIMIT_SWING_TRADE
+      ? sum(operation.values)
+      : _amountLoss;
+  operation["amountTransaction"] = _amountTransactionToMonth;
+  operation["amountValues"] =
+    op.operation === TYPE_OPERATIONS_SELL.SWING_TRADE
+      ? _amountValues
+      : sum(operation.values);
 }
 
 /**
@@ -735,7 +746,10 @@ function mountSalesFiInfra(
         document_number_principal: op.document_number_principal,
       },
     };
-    composeAmountOperations(SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker]);
+    composeAmountOperations(
+      SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker],
+      op
+    );
   } else {
     if (SUM_SWING_TRADE_FREE_99[yearAnalysis].hasOwnProperty(op.ticker)) {
       // se tem o ticker
@@ -743,7 +757,10 @@ function mountSalesFiInfra(
         op.transaction
       );
       SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker].values.push(op.value);
-      composeAmountOperations(SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker]);
+      composeAmountOperations(
+        SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker],
+        op
+      );
     } else {
       // não tem o ticker
       SUM_SWING_TRADE_FREE_99[yearAnalysis] = {
@@ -759,7 +776,10 @@ function mountSalesFiInfra(
           document_number_principal: op.document_number_principal,
         },
       };
-      composeAmountOperations(SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker]);
+      composeAmountOperations(
+        SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker],
+        op
+      );
     }
   }
 }
@@ -789,7 +809,10 @@ function composeOperations(
         },
       },
     };
-    composeAmountOperations(operations[indexYear][indexMonth][op.operation]);
+    composeAmountOperations(
+      operations[indexYear][indexMonth][op.operation],
+      op
+    );
   } else {
     if (!operations[indexYear].hasOwnProperty(indexMonth)) {
       operations[indexYear][indexMonth] = {
@@ -798,7 +821,10 @@ function composeOperations(
           values: [op.value],
         },
       };
-      composeAmountOperations(operations[indexYear][indexMonth][op.operation]);
+      composeAmountOperations(
+        operations[indexYear][indexMonth][op.operation],
+        op
+      );
     } else {
       if (!operations[indexYear][indexMonth].hasOwnProperty(op.operation)) {
         operations[indexYear][indexMonth][op.operation] = {
@@ -806,7 +832,8 @@ function composeOperations(
           values: [op.value],
         };
         composeAmountOperations(
-          operations[indexYear][indexMonth][op.operation]
+          operations[indexYear][indexMonth][op.operation],
+          op
         );
       } else {
         operations[indexYear][indexMonth][op.operation].transactions.push(
@@ -814,7 +841,8 @@ function composeOperations(
         );
         operations[indexYear][indexMonth][op.operation].values.push(op.value);
         composeAmountOperations(
-          operations[indexYear][indexMonth][op.operation]
+          operations[indexYear][indexMonth][op.operation],
+          op
         );
       }
     }
