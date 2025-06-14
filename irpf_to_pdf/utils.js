@@ -141,6 +141,10 @@ function getCodes(classe) {
   let locale = "105 - Brasil";
 
   switch (classe) {
+    case "ETF":
+      group = "07";
+      cod = "06";
+      break;
     case "BDR":
       group = "04";
       cod = "04";
@@ -174,6 +178,7 @@ function getCodes(classe) {
       group = "03";
       cod = "01";
       locale = "249 - Estados Unidos";
+      break;
     case "ETF-EXTERIOR":
       group = "07";
       cod = "09";
@@ -188,7 +193,6 @@ function getCodes(classe) {
       cod = "02";
       break;
   }
-
   return {
     group,
     cod,
@@ -205,5 +209,5 @@ module.exports = {
   taxCal,
   getNode,
   subtractionLosses,
-  convertCurrencyRealWithoutCoin, 
+  convertCurrencyRealWithoutCoin,
 };
