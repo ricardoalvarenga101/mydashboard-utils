@@ -1,4 +1,4 @@
-const { sum, map, sumBy, indexOf, cloneDeep } = require("lodash");
+const { sum, map, sumBy, cloneDeep, groupBy } = require("lodash");
 const {
   convertCurrencyReal,
   getCodes,
@@ -956,27 +956,37 @@ function composeRendimentsCdbs(cdbs, tds) {
         case "lca":
         case "cra":
         case "cri":
-          rendiments.push([
-            "12",
-            cdbs[item].documentNumber,
-            cdbs[item].name,
-            `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
-            convertCurrencyReal(cdbs[item].amountRendiment),
-          ]);
-
+          rendimentsFiltered.push({
+            tipo: "12",
+            document: cdbs[item].document_number_principal,
+            name: cdbs[item].name,
+            descricao: `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
+            valor: cdbs[item].amountRendiment,
+          });
           break;
 
         default:
-          rendiments.push([
-            "06",
-            cdbs[item].document_number_principal,
-            cdbs[item].name,
-            `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
-            convertCurrencyReal(cdbs[item].amountRendiment),
-          ]);
+          rendimentsFiltered.push({
+            tipo: "06",
+            document: cdbs[item].document_number_principal,
+            name: cdbs[item].name,
+            descricao: `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
+            valor: cdbs[item].amountRendiment,
+          });
           break;
       }
     }
+  });
+  agroupByDocumentNumber = groupBy(rendimentsFiltered, "document");
+  map(agroupByDocumentNumber, (item) => {
+    const sum = sumBy(item, "valor");
+    rendiments.push([
+      item[0].tipo,
+      item[0].document,
+      item[0].name,
+      item[0].descricao,
+      convertCurrencyReal(sum),
+    ]);
   });
   rendiments.push(...tds);
   return {
