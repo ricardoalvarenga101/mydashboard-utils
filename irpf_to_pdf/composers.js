@@ -947,6 +947,8 @@ function composeProvents(provents) {
 function composeRendimentsCdbs(cdbs, tds) {
   const sortProvents = Object.keys(cdbs).sort();
   const rendiments = [];
+  const rendimentsFiltered = [];
+  let agroupByDocumentNumber = {};
 
   sortProvents.forEach((item) => {
     const type = item.split("-").shift();
