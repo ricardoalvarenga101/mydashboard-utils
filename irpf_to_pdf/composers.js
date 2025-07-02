@@ -1114,6 +1114,7 @@ function composeHeaderTable(text = [], fillColor = "#300668", color = "white") {
 }
 
 function composerExternalDividends(docDefinition, provents) {
+  const dividendsConsolidated = {};
   if (
     provents.hasOwnProperty("external") &&
     provents["external"] &&
@@ -1150,59 +1151,77 @@ function composerExternalDividends(docDefinition, provents) {
       },
     };
 
-    map(provents.external, (ticker) => {
-      map(ticker.dividendPerMonth, (value, month) => {
-        const currentMonth = Number(month);
-        if (currentMonth <= 12) {
-          table.dividends[currentMonth].values.push(value);
-          table.dividends[currentMonth].amount = sum(
-            table.dividends[currentMonth].values
-          );
-        }
-      });
-      map(ticker.taxPerMonth, (value, month) => {
-        const currentMonth = Number(month);
-        if (currentMonth <= 12) {
-          table.tax[currentMonth].values.push(value);
-          table.tax[currentMonth].amount = sum(table.tax[currentMonth].values);
-        }
-      });
+    map(provents.external, (ticker, symbol) => {
+      // map(ticker.dividendPerMonth, (value, month) => {
+      //   const currentMonth = Number(month);
+      //   if (currentMonth <= 12) {
+      //     table.dividends[currentMonth].values.push(value);
+      //     table.dividends[currentMonth].amount = sum(
+      //       table.dividends[currentMonth].values
+      //     );
+      //   }
+      // });
+      // map(ticker.taxPerMonth, (value, month) => {
+      //   const currentMonth = Number(month);
+      //   if (currentMonth <= 12) {
+      //     table.tax[currentMonth].values.push(value);
+      //     table.tax[currentMonth].amount = sum(table.tax[currentMonth].values);
+      //   }
+      // });
+      dividendsConsolidated[symbol] = {
+        lucroVenda: ticker.amountBuy,
+        totalDividendos: ticker.amountDividend,
+        impostoPago: ticker.amountTax,
+      };
     });
 
     const tablePdf = [];
-    map(table.dividends, (mes, indexMonth) => {
-      if (mes.values.length) {
-        tablePdf.push([
-          MONTHS_LABEL[indexMonth],
-          convertCurrencyReal(table.dividends[indexMonth].amount),
-          convertCurrencyReal(table.tax[indexMonth].amount),
-        ]);
-      }
+    // map(table.dividends, (mes, indexMonth) => {
+    //   if (mes.values.length) {
+    //     tablePdf.push([
+    //       MONTHS_LABEL[indexMonth],
+    //       convertCurrencyReal(table.dividends[indexMonth].amount),
+    //       convertCurrencyReal(table.tax[indexMonth].amount),
+    //     ]);
+    //   }
+    // });
+
+    map(dividendsConsolidated, (item, ticker) => {
+      tablePdf.push([
+        ticker,
+        `${convertCurrencyReal(item.lucroVenda)} + ${convertCurrencyReal(
+          item.totalDividendos
+        )}`,
+        convertCurrencyReal(item.lucroVenda + item.totalDividendos),
+        convertCurrencyReal(item.impostoPago),
+      ]);
     });
 
     const title = {
       pageBreak: "before",
-      text: "Carnê-Leão (Dividendos recebidos no exterior)",
+      text: "Dividendos recebidos no exterior",
       style: "title",
     };
     const content1 = {
       text: [
         "\nOs ",
-        { text: "dividendos recebidos nos Estados Unidos", style: "negrito" },
-        " tem seu imposto de renda retido na fonte, mas devem ser declarados através do Programa Carnê-Leão.\n\n",
-        { text: "O Carnê-Leão Online pode ser acessado pelo e-CAC " },
         {
-          text: "[CLIQUE AQUI]",
-          link: "https://www.gov.br/pt-br/servicos/apurar-carne-leao",
-          color: "#815ae8",
+          text: "dividendos recebidos nos Estados Unidos e/ou BDRs",
+          style: "negrito",
+        },
+        " tem seu imposto de renda retido na fonte, mas devem ser declarados através do Programa Oficial de Declaração (IRPF), somando lucros em vendas com proventos/cupons recebidos no exterior.\n\n",
+        {
+          text: "A Receita concentrou a emissão exclusivamente no programa de declaração, portanto será emitido um DARF único, somando ganhos no exterior e eventuais valores de IR gerados pelo próprio programa da declaração. O cálculo final dependerá de todas as informações preenchidas no programa.\n\n",
         },
         {
-          text: "\n\n Veja vídeo tutorial ensinando como deve ser o prenchimento dos dados: ",
+          text: "A partir de 2024, será necessário informar os ganhos recebidos no exterior (vendas, dividendos, cupons) diretamente na declaração, na ficha de bens e direitos, somente nos campos da seção APLICAÇÃO FINANCEIRA.\n\n",
+          style: "negrito",
+          color: "#e13709",
         },
         {
-          text: "[VÍDEO TUTORIAL]\n",
-          link: "https://youtu.be/bYZH-D4h51Y?si=SogRBTtyjGkL_MgN",
-          color: "#815ae8",
+          text: "ATENÇÃO: A seção LUCROS E DIVIDENDOS não precisa ser preenchida, pois se refere a rendimentos de empresas offshore somente, mantenha zerada, conforme nosso informe. Nosso documento irá mostrar na tabela quais dados deverá preencher nos novos campos do exemplo abaixo: \n\n",
+          style: "negrito",
+          color: "#e13709",
         },
       ],
     };
@@ -1210,21 +1229,28 @@ function composerExternalDividends(docDefinition, provents) {
     const content2 = {
       style: "table",
       table: {
-        widths: [70, "*", "*"],
+        widths: [70, "*", "*", "*"],
         body: [
           composeHeaderTable([
-            "Mês",
-            "Rendimentos do exterior (R$)",
-            "Imposto pago no exterior",
+            "Ativo",
+            "Lucro/Prejuízo em vendas + proventos recebidos (R$)",
+            "Lucro ou Prejuízo (R$)",
+            "Imposto pago no exterior (R$)",
           ]),
           ...tablePdf,
         ],
       },
     };
 
+    const content3 = {
+      image: "print9",
+      width: 505,
+    };
+
     docDefinition.content.push(title);
     docDefinition.content.push(content1);
     docDefinition.content.push(content2);
+    docDefinition.content.push(content3);
   }
   return null;
 }

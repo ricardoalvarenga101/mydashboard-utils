@@ -255,6 +255,7 @@ function generatePdf(
       print6: "https://i.ibb.co/xSvNxT6/print-6.png",
       print7: "https://i.ibb.co/MggZg8Q/print-7.png",
       print8: "https://i.ibb.co/WDjfkTL/print-8.png",
+      print9: "https://i.ibb.co/QjPv3Hx1/print-9.png",
     },
     styles: {
       table: {
