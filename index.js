@@ -52,7 +52,8 @@ const COLLECTION_NAME = {
   CONFIGURATIONS: "configurations",
   CHANGELOG: "changelog",
   MYDASHBOARD: "mydashboard",
-  TRANSACTIONS_FIXED: "transactions_fixed"
+  TRANSACTIONS_FIXED: "transactions_fixed",
+  BALANCER: "balancer",
 };
 
 const CLASS = {
