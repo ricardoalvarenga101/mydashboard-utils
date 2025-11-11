@@ -4,7 +4,8 @@ const JOBS = {
   INPLIT_AND_SPLIT_PROCESS: "SplitAndInplitProcess",
   WALLET_PROCESS: "WalletProcess",
   RESET_WALLET_PROCESS: "ResetWalletProcess",
-  WALLET_RESTORE: "WalletRestore"
+  WALLET_RESTORE: "WalletRestore",
+  PROCESS_DIVIDEND_NOTIFICATION: "ProcessDividendNotification",
 };
 
 const RENAME_TICKER_GOOGLE_SHEET = {
