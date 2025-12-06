@@ -13,7 +13,7 @@ const {
   LIMIT_SWING_TRADE,
   MONTHS_LABEL,
 } = require("./vars");
-const { CLASS } = require("mydashboard-utils");
+const { CLASS } = require("../index");
 
 /**
  * Compoe operações em FII

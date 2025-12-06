@@ -101,10 +101,6 @@ function generatePdf(
             text: "Não contempla ganho de capital em vendas de criptoativos acima de R$35.000,00",
             color: "red",
           },
-          {
-            text: "Não contempla ganho de capital nas vendas de ativos do exterior",
-            color: "red",
-          },
         ],
       },
       {

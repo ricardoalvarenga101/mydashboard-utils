@@ -95,5 +95,5 @@ function generateIRPF(
   );
   return pdfDefinition;
 }
-// console.log(generateIRPF(2022, "Heitor", "01204488752", mockFullData2022));
+// console.log(JSON.stringify(generateIRPF(2022, "Heitor", "01204488752", mockFullData2022)));
 module.exports = { generateIRPF };
