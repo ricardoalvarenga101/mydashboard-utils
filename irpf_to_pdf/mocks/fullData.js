@@ -1361,7 +1361,7 @@ const mockFullData2022 = {
             }
         }
     },
-    "itensWallletFiltered": [
+    "itensWalletFiltered": [
         {
             "qtd": 8,
             "classe": "Ação",
@@ -1948,7 +1948,7 @@ const mockFullData2024 = {
             }
         }
     },
-    "itensWallletFiltered": [
+    "itensWalletFiltered": [
         {
             "qtd": 19,
             "classe": "Ação",
@@ -3412,7 +3412,7 @@ const mockRobert2023 = {
             }
         }
     },
-    "itensWallletFiltered": [
+    "itensWalletFiltered": [
         {
             "qtd": 30,
             "ticker": "BTLG11",
@@ -5079,7 +5079,7 @@ const mockBonification2024 = {
 
 const mockBonificationProvent2024 = {
     "bonifications": {},
-    "itensWallletFiltered": [
+    "itensWalletFiltered": [
         {
             "unitBonificationToYear": 0,
             "qtd": 38,
@@ -6263,7 +6263,7 @@ const mockAluguel2024 = {
             "cnpj": "33.611.500/0001-19"
         }
     },
-    "itensWallletFiltered": [
+    "itensWalletFiltered": [
         {
             "unitBonificationToYear": 0,
             "qtd": 38,
