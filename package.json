@@ -11,7 +11,7 @@
     "build": "npm run build:esm && npm run build:cjs",
     "prepare": "npm run build",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix ."    
   },
   "exports": {
     ".": {

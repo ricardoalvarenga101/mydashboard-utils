@@ -162,3 +162,7 @@ export {
   RENAME_TICKER_GOOGLE_SHEET,
   MYDASH_PREFIX
 }
+
+// Re-exports from submodules for convenience and CJS consumers
+export { generateIRPF } from './irpf_to_pdf/index.js'
+export * from './irpf_to_pdf/mocks/fullData.js'

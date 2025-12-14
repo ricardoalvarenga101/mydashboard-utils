@@ -4,7 +4,8 @@ import {
   composeRendimentsCdbs,
   composeRendimentsTds,
   composeOperations,
-  composeSwingTradeFree
+  composeSwingTradeFree,
+  unionSwingTradeUnit
 } from './composers.js'
 import { generatePdf } from './docGenerate.js'
 const { map, groupBy } = lodash
@@ -36,6 +37,7 @@ function generateIRPF (
   const SUM_SWING_TRADE_FREE = {}
   const SUM_SWING_TRADE_CRIPTO_FREE = {}
   const SUM_SWING_TRADE_FREE_99 = {}
+  const SUM_SWING_TRADE_UNIT = {}
   let bonifications = {}
   let bonificationsWithFractions = {}
   let rentals = {}
@@ -67,13 +69,14 @@ function generateIRPF (
             indexMonth,
             indexYear,
             op,
-            SUM_SWING_TRADE_FREE_99
+            SUM_SWING_TRADE_FREE_99,
+            SUM_SWING_TRADE_UNIT
           )
         })
       })
     })
   )
-
+  unionSwingTradeUnit(operationsFull, SUM_SWING_TRADE_UNIT)
   composeSwingTradeFree(operationsFull, SUM_SWING_TRADE_FREE)
   const pdfDefinition = generatePdf(
     name,

@@ -425,6 +425,11 @@ function renderCommonsOperations (docDefinition, year, operationsFull) {
     ]
   }
   const content4 = {
+    text: '\nATENÇÃO: Vendas de ações Units: independentemente do valor transacionado no mês, os ganhos auferidos podem estar sujeitos à tributação.\n',
+    style: 'negrito',
+    color: '#e13709'
+  }
+  const content5 = {
     image: 'print6',
     width: 505
   }
@@ -491,6 +496,7 @@ function renderCommonsOperations (docDefinition, year, operationsFull) {
     docDefinition.content.push(content2)
     docDefinition.content.push(content3)
     docDefinition.content.push(content4)
+    docDefinition.content.push(content5)
     docDefinition.content = [
       ...docDefinition.content,
       ...commonOperationsAnalised
@@ -542,75 +548,28 @@ function renderOperationsFII (
   map(operationsFII, (opYear, indexYear) =>
     map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
       if (mes === 1) {
-        if (hasOwn(tableOperationsFII, indexYear)) {
-          if (hasOwn(tableOperationsFII[indexYear], mes)) {
-            const lossesOldYear =
-              Number(indexYear) === Number(_firstYear)
-                ? 0
-                : tableOperationsFII[indexYear - 1][12][2] > 0
-                  ? tableOperationsFII[indexYear - 1][12][2] * -1
-                  : 0
-            const baseCalcTax =
-              getNode(operationsFII[indexYear], mes) < 0
-                ? 0
-                : getNode(operationsFII[indexYear], mes)
-            tableOperationsFII[indexYear][mes] = [
-              MONTHS_LABEL[mes].slice(0, 3),
-              getNode(operationsFII[indexYear], mes),
-              lossesOldYear,
-              getNode(operationsFII[indexYear], mes) < 0 ? 0 : baseCalcTax,
-              lossesOldYear,
-              '20%',
-              baseCalcTax - lossesOldYear <= 0
-                ? 0
-                : (baseCalcTax - lossesOldYear) * 0.2
-            ]
-          } else {
-            const lossesOldYear =
-              tableOperationsFII[indexYear - 1][12][2] > 0
-                ? tableOperationsFII[indexYear - 1][12][2] * -1
-                : 0
-            const baseCalcTax =
-              getNode(operationsFII[indexYear], mes) < 0
-                ? 0
-                : getNode(operationsFII[indexYear], mes)
-            tableOperationsFII[indexYear] = {
-              [mes]: [
-                MONTHS_LABEL[mes].slice(0, 3),
-                getNode(operationsFII[indexYear], mes),
-                lossesOldYear,
-                getNode(operationsFII[indexYear], mes) < 0 ? 0 : baseCalcTax,
-                lossesOldYear,
-                '20%',
-                baseCalcTax - lossesOldYear <= 0
-                  ? 0
-                  : (baseCalcTax - lossesOldYear) * 0.2
-              ]
-            }
-          }
-        } else {
-          let sumLiquidWithNegativeOld = hasOwn(tableOperationsFII, indexYear - 1) ? tableOperationsFII[indexYear - 1][12][1] + (tableOperationsFII[indexYear - 1][12][2] * -1) : 0
-          sumLiquidWithNegativeOld = sumLiquidWithNegativeOld > 0 ? 0 : sumLiquidWithNegativeOld * -1
-          const lossesOldYear = hasOwn(tableOperationsFII, indexYear - 1)
-            ? sumLiquidWithNegativeOld
-            : 0
-          const baseCalcTax =
+        let sumLiquidWithNegativeOld = hasOwn(tableOperationsFII, indexYear - 1) ? tableOperationsFII[indexYear - 1][12][1] + (tableOperationsFII[indexYear - 1][12][2] * -1) : 0
+        sumLiquidWithNegativeOld = sumLiquidWithNegativeOld > 0 ? 0 : sumLiquidWithNegativeOld * -1
+        const lossesOldYear = hasOwn(tableOperationsFII, indexYear - 1)
+          ? sumLiquidWithNegativeOld
+          : 0
+        const baseCalcTax =
             getNode(operationsFII[indexYear], mes) < 0
               ? 0
               : getNode(operationsFII[indexYear], mes)
-          tableOperationsFII[indexYear] = {
-            [mes]: [
-              MONTHS_LABEL[mes].slice(0, 3),
-              getNode(operationsFII[indexYear], mes),
-              lossesOldYear,
-              getNode(operationsFII[indexYear], mes) < 0 ? 0 : baseCalcTax,
-              lossesOldYear,
-              '20%',
-              baseCalcTax - lossesOldYear <= 0
-                ? 0
-                : (baseCalcTax - lossesOldYear) * 0.2
-            ]
-          }
+        tableOperationsFII[indexYear] = {
+          [mes]: [
+            MONTHS_LABEL[mes].slice(0, 3),
+            getNode(operationsFII[indexYear], mes),
+            lossesOldYear,
+            getNode(operationsFII[indexYear], mes) < 0 ? 0 : baseCalcTax,
+            lossesOldYear,
+            '20%',
+            baseCalcTax - lossesOldYear <= 0
+              ? 0
+              : (baseCalcTax - lossesOldYear) * 0.2
+          ]
+
         }
       } else {
         const lossesOldYear = subtractionLosses(
@@ -704,7 +663,7 @@ function renderRendimentsIsentos (provents, SUM_SWING_TRADE_FREE_99, year) {
   ) {
     return [{}]
   }
-  const gcapInfra = []
+  const gcapInfra = [] // ganho de capital em vendas fi-infra
   if (hasOwn(SUM_SWING_TRADE_FREE_99, year)) {
     map(SUM_SWING_TRADE_FREE_99[year], (ticker) => {
       gcapInfra.push([

@@ -208,6 +208,25 @@ function getCodes (classe) {
   }
 }
 
+/**
+ * Verifica se um ticker (string) termina com '11', padrão de mercado para Units.
+ * @param {string} ticker - O código do ativo (ex: 'KLBN11', 'PETR4', 'WEGE3').
+ * @returns {boolean} - Retorna true se for uma Unit.
+ */
+function isUnit (ticker, classe, classeCompare = 'Ação') {
+  if (classe !== classeCompare) {
+    return false
+  }
+  if (typeof ticker !== 'string' || ticker.length < 3) {
+    return false // Garante que o input seja uma string válida
+  }
+
+  // Converte para maiúsculas para garantir que a comparação seja case-insensitive
+  const upperTicker = ticker.toUpperCase()
+
+  return upperTicker.endsWith('11')
+}
+
 export {
   convertCurrencyReal,
   getCodes,
@@ -218,5 +237,6 @@ export {
   getNode,
   subtractionLosses,
   convertCurrencyRealWithoutCoin,
-  hasOwn
+  hasOwn,
+  isUnit
 }

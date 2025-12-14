@@ -7380,6 +7380,2356 @@ const mockAluguel2024 = {
   }
 }
 
+const mockRicardo2025 = {
+  sells: {
+    2022: {
+      10: {
+        operations: [
+          {
+            classe: 'FII',
+            ticker: 'XPPR11',
+            name: 'Xp Properties Fundo De Investimento Imobiliario',
+            type: 'Renda Variável',
+            value: -3.8901999999999997,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 314.6,
+            document_number_principal: '30.654.849/0001-40',
+            document_number_admin: '22.610.500/0001-88'
+          },
+          {
+            classe: 'FII',
+            ticker: 'VINO11',
+            name: 'Vinci Corporate Fundo De Investimento Imobiliario',
+            type: 'Renda Variável',
+            value: 0.1298,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 339.41,
+            document_number_principal: '12.516.185/0001-70',
+            document_number_admin: '13.486.793/0001-42'
+          }
+        ]
+      },
+      11: {
+        operations: [
+          {
+            classe: 'Ação',
+            ticker: 'CPLE6',
+            name: 'Companhia Paranaense de Energia - COPEL',
+            type: 'Renda Variável',
+            value: 49.58819999999999,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 311.52000000000004,
+            document_number_principal: '76.483.817/0001-20',
+            document_number_admin: null
+          }
+        ]
+      }
+    },
+    2023: {
+      5: {
+        operations: [
+          {
+            classe: 'FII',
+            ticker: 'RZTR11',
+            name: 'Fundo De Investimento Imobiliario Riza Terrax',
+            type: 'Renda Variável',
+            value: 0.521,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 543.4399999999999,
+            document_number_principal: '36.501.128/0001-86',
+            document_number_admin: '45.246.410/0001-55'
+          }
+        ]
+      },
+      7: {
+        operations: [
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.MATIC',
+            name: 'MATIC',
+            type: 'Renda Variável',
+            value: 2.9924999999999997,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 196.829052718,
+            document_number_principal: null,
+            document_number_admin: null
+          }
+        ]
+      },
+      8: {
+        operations: [
+          {
+            classe: 'Ação',
+            ticker: 'BBDC3',
+            name: 'Banco Bradesco S.A.',
+            type: 'Renda Variável',
+            value: 63.0188,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 854.4499999999999,
+            document_number_principal: '60.746.948/0001-12',
+            document_number_admin: null
+          },
+          {
+            classe: 'Ação',
+            ticker: 'SANB4',
+            name: 'Banco Santander (Brasil) S.A.',
+            type: 'Renda Variável',
+            value: 2.1601999999999997,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 264.62000000000006,
+            document_number_principal: '90.400.888/0001-42',
+            document_number_admin: null
+          }
+        ]
+      },
+      10: {
+        operations: [
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.MATIC',
+            name: 'MATIC',
+            type: 'Renda Variável',
+            value: 0.8156999999999996,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 611.90350685825,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.MATIC',
+            name: 'MATIC',
+            type: 'Renda Variável',
+            value: -1.6827,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 146.8625030235,
+            document_number_principal: null,
+            document_number_admin: null
+          }
+        ]
+      },
+      11: {
+        operations: [
+        ]
+      },
+      12: {
+        operations: [
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.BTC',
+            name: 'Bitcoin',
+            type: 'Renda Variável',
+            value: 45.285,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 147.2149887118,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.ETH',
+            name: 'Ethereum',
+            type: 'Renda Variável',
+            value: 24.6598,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 174.41975699999998,
+            document_number_principal: null,
+            document_number_admin: null
+          }
+        ]
+      }
+    },
+    2024: {
+      2: {
+        operations: [
+          {
+            classe: 'Ação',
+            ticker: 'PETR4',
+            name: 'Petróleo Brasileiro S.A. - Petrobras',
+            type: 'Renda Variável',
+            value: 447.029,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 1264.9399999999996,
+            document_number_principal: '33.000.167/0001-01',
+            document_number_admin: null
+          },
+          {
+            classe: 'STOCK',
+            ticker: 'NVDA',
+            name: 'NVIDIA Corporation',
+            type: 'Renda Variável',
+            value: 0.797,
+            operation: 'VENDA DE AÇÃO ESTRANGEIRA',
+            transaction: 80.79,
+            document_number_principal: undefined,
+            document_number_admin: undefined
+          }
+        ]
+      },
+      7: {
+        operations: [
+          {
+            classe: 'Renda Fixa',
+            ticker: 'TESOURO PREFIXADO COM JUROS SEMESTRAIS 2035',
+            name: 'TESOURO PREFIXADO COM JUROS SEMESTRAIS 2035',
+            type: 'Renda Fixa',
+            value: -11.0423,
+            operation: 'RENDA FIXA',
+            transaction: 96.04,
+            document_number_principal: '(Verifique na sua corretora/banco)',
+            document_number_admin: '62.169.875/0001-79'
+          }
+        ]
+      },
+      8: {
+        operations: [
+          {
+            classe: 'Renda Fixa',
+            ticker: 'TESOURO RENDA+ APOSENTADORIA EXTRA 2045',
+            name: 'TESOURO RENDA+ APOSENTADORIA EXTRA 2045',
+            type: 'Renda Fixa',
+            value: 26.767,
+            operation: 'RENDA FIXA',
+            transaction: 1000.977,
+            document_number_principal: '(Verifique na sua corretora/banco)',
+            document_number_admin: '62.169.875/0001-79'
+          }
+        ]
+      },
+      9: {
+        operations: [
+          {
+            classe: 'Ação',
+            ticker: 'GRND3',
+            name: 'Grendene S.A.',
+            type: 'Renda Variável',
+            value: 30.2438,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 1741.73,
+            document_number_principal: '89.850.341/0001-60',
+            document_number_admin: null
+          }
+        ]
+      },
+      10: {
+        operations: [
+          {
+            classe: 'FII',
+            ticker: 'TVRI11',
+            name: 'BB Progressivo II Fundo de Investimento Imobiliário - FII',
+            type: 'Renda Variável',
+            value: 68.75,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 967.51,
+            document_number_principal: '14.410.722/0001-29',
+            document_number_admin: '00.066.670/0001-00'
+          },
+          {
+            classe: 'FII',
+            ticker: 'VISC11',
+            name: 'Vinci Shopping Centers Fundo Investimento Imobiliario - Fii',
+            type: 'Renda Variável',
+            value: -45.3698,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 716.17,
+            document_number_principal: '17.554.274/0001-25',
+            document_number_admin: '13.486.793/0001-42'
+          },
+          {
+            classe: 'FII',
+            ticker: 'VILG11',
+            name: 'Vinci Logistica Fundo Investimento Imobiliario FII',
+            type: 'Renda Variável',
+            value: -245.4804,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1813.79,
+            document_number_principal: '24.853.044/0001-22',
+            document_number_admin: '13.486.793/0001-42'
+          }
+        ]
+      }
+    },
+    2025: {
+      1: {
+        operations: [
+          {
+            classe: 'Renda Fixa',
+            ticker: 'TESOURO PREFIXADO 2025',
+            name: 'TESOURO PREFIXADO 2025',
+            type: 'Renda Fixa',
+            value: 169.1937,
+            operation: 'RENDA FIXA',
+            transaction: 879.1437000000001,
+            document_number_principal: '(Verifique na sua corretora/banco)',
+            document_number_admin: '62.169.875/0001-79'
+          }
+        ]
+      },
+      3: {
+        operations: [
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.BTC',
+            name: 'Bitcoin',
+            type: 'Renda Variável',
+            value: 4.8616,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 302.70869999999996,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'REIT',
+            ticker: 'PLD',
+            name: 'PROLOGIS INC.',
+            type: 'Renda Variável',
+            value: 32.9466,
+            operation: 'VENDA DE AÇÃO ESTRANGEIRA',
+            transaction: 564.932005,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'ETF-EXTERIOR',
+            ticker: 'JEPI',
+            name: 'JPMORGAN EQUITY PREMIUM INCOME ETF - JEPI',
+            type: 'Renda Variável',
+            value: 11.6249,
+            operation: 'VENDA DE AÇÃO ESTRANGEIRA',
+            transaction: 414.2648841,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'Ação',
+            ticker: 'CXSE3',
+            name: 'Caixa Seguridade Participações S.A.',
+            type: 'Renda Variável',
+            value: 77.94,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 301.3246,
+            document_number_principal: '22.543.331/0001-00',
+            document_number_admin: null
+          }
+        ]
+      },
+      4: {
+        operations: [
+          {
+            classe: 'Ação',
+            ticker: 'KLBN4',
+            name: 'Klabin S.A.',
+            type: 'Renda Variável',
+            value: -11.7183,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 741.6714699999999,
+            document_number_principal: '89.637.490/0001-45',
+            document_number_admin: null
+          },
+          {
+            classe: 'Ação',
+            ticker: 'BEES3',
+            name: 'BANCO BANESTES',
+            type: 'Renda Variável',
+            value: 70.77,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 840.7897,
+            document_number_principal: '28.127.603/0001-78',
+            document_number_admin: null
+          },
+          {
+            classe: 'FII',
+            ticker: 'SARE11',
+            name: 'Santander Renda De Alugueis Fundo Investimento Imobiliarios',
+            type: 'Renda Variável',
+            value: -254.15,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 2379.405,
+            document_number_principal: '32.903.702/0001-71',
+            document_number_admin: '62.318.407/0001-19'
+          },
+          {
+            classe: 'Ação',
+            ticker: 'TAEE11',
+            name: 'TAESA',
+            type: 'Renda Variável',
+            value: 26.4485,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 2280.9296,
+            document_number_principal: '07.859.971/0001-30',
+            document_number_admin: null
+          },
+          {
+            classe: 'FII',
+            ticker: 'GARE11',
+            name: 'Guardian Logistica Fundo De Investimento Imobiliario',
+            type: 'Renda Variável',
+            value: 8.856,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 2125.8684,
+            document_number_principal: '37.295.919/0001-60',
+            document_number_admin: '62.232.889/0001-90'
+          }
+        ]
+      },
+      5: {
+        operations: [
+          {
+            classe: 'ETF-EXTERIOR',
+            ticker: 'SCHD',
+            name: 'Schwab US Dividend Equity',
+            type: 'Renda Variável',
+            value: -7.0689,
+            operation: 'VENDA DE AÇÃO ESTRANGEIRA',
+            transaction: 199.99999999820002,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'ETF-EXTERIOR',
+            ticker: 'QQQM',
+            name: 'INVESCO NASDAQ 100 ETF',
+            type: 'Renda Variável',
+            value: 3.6972,
+            operation: 'VENDA DE AÇÃO ESTRANGEIRA',
+            transaction: 262.57312533545996,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'ETF-EXTERIOR',
+            ticker: 'VOO',
+            name: 'VANGUARD S&P 500 ETF',
+            type: 'Renda Variável',
+            value: 7.3099,
+            operation: 'VENDA DE AÇÃO ESTRANGEIRA',
+            transaction: 528.589953553714,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'Renda Fixa',
+            ticker: 'TESOURO PREFIXADO 2026',
+            name: 'TESOURO PREFIXADO 2026',
+            type: 'Renda Fixa',
+            value: 244.39339999999999,
+            operation: 'RENDA FIXA',
+            transaction: 1786.1133999999997,
+            document_number_principal: '(Verifique na sua corretora/banco)',
+            document_number_admin: null
+          },
+          {
+            classe: 'Renda Fixa',
+            ticker: 'TESOURO PREFIXADO 2027',
+            name: 'TESOURO PREFIXADO 2027',
+            type: 'Renda Fixa',
+            value: 131.3132,
+            operation: 'RENDA FIXA',
+            transaction: 3100.1173,
+            document_number_principal: '(Verifique na sua corretora/banco)',
+            document_number_admin: null
+          },
+          {
+            classe: 'FII',
+            ticker: 'KISU11',
+            name: 'Kilima Fundo De Investimento Em Cotas De Fundos Imobiliarios Suno 30',
+            type: 'Renda Variável',
+            value: -242.256,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1973.4078,
+            document_number_principal: '36.669.660/0001-07',
+            document_number_admin: '13.486.793/0001-42'
+          },
+          {
+            classe: 'FII',
+            ticker: 'CPTS11',
+            name: 'Capitania Securities II Fundo Investimento Imobiliario FII',
+            type: 'Renda Variável',
+            value: -139.1314,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 2240.2798000000003,
+            document_number_principal: '18.979.895/0001-13',
+            document_number_admin: '59.281.253/0001-23'
+          },
+          {
+            classe: 'FII',
+            ticker: 'VGHF11',
+            name: 'Valora Hedge Fund Fundo De Investimento Imobiliario - Fii',
+            type: 'Renda Variável',
+            value: -334.7575,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 2009.2369999999999,
+            document_number_principal: '36.771.692/0001-19',
+            document_number_admin: '62.232.889/0001-90'
+          },
+          {
+            classe: 'FI-INFRA',
+            ticker: 'CPTI11',
+            name: 'Capitania Infra Fic Fi Infra Rf Cp',
+            type: 'Renda Variável',
+            value: -140.4886,
+            operation: 'VENDA DE FI INFRA',
+            transaction: 1937.9554,
+            document_number_principal: '38.065.012/0001-77',
+            document_number_admin: '38.065.012/0001-77'
+          },
+          {
+            classe: 'Fiagro',
+            ticker: 'FGAA11',
+            name: 'FG/Agro Fundo De Investimento Nas Cadeias Produtivas Agroindustriais - Fiagro-Imobiliario',
+            type: 'Renda Variável',
+            value: -47.827,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1137.5,
+            document_number_principal: '42.405.905/0001-91',
+            document_number_admin: '13.486.793/0001-42'
+          }
+        ]
+      },
+      6: {
+        operations: [
+          {
+            classe: 'Fiagro',
+            ticker: 'FGAA11',
+            name: 'FG/Agro Fundo De Investimento Nas Cadeias Produtivas Agroindustriais - Fiagro-Imobiliario',
+            type: 'Renda Variável',
+            value: -65.58,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1757.9999999999998,
+            document_number_principal: '42.405.905/0001-91',
+            document_number_admin: '13.486.793/0001-42'
+          },
+          {
+            classe: 'Ação',
+            ticker: 'GGBR4',
+            name: 'Gerdau S.A.',
+            type: 'Renda Variável',
+            value: -462.6591,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 1692.3268,
+            document_number_principal: '33.611.500/0001-19',
+            document_number_admin: null
+          },
+          {
+            classe: 'Ação',
+            ticker: 'RANI3',
+            name: 'Irani Papel e Embalagem S.A.',
+            type: 'Renda Variável',
+            value: -193.3236,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 1239.71,
+            document_number_principal: '92.791.243/0001-03',
+            document_number_admin: null
+          }
+        ]
+      },
+      7: {
+        operations: [
+          {
+            classe: 'Ação',
+            ticker: 'PETR4',
+            name: 'Petróleo Brasileiro S.A. - Petrobras',
+            type: 'Renda Variável',
+            value: 135.5196,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 3975.6857999999997,
+            document_number_principal: '33.000.167/0001-01',
+            document_number_admin: null
+          }
+        ]
+      },
+      8: {
+        operations: [
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.ETH',
+            name: 'Ethereum',
+            type: 'Renda Variável',
+            value: 188.1456076,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 739.4155596,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'FII',
+            ticker: 'RZTR11',
+            name: 'Fundo De Investimento Imobiliario Riza Terrax',
+            type: 'Renda Variável',
+            value: 45.05,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1528.7677,
+            document_number_principal: '36.501.128/0001-86',
+            document_number_admin: '45.246.410/0001-55'
+          },
+          {
+            classe: 'FII',
+            ticker: 'HGLG11',
+            name: 'Cshg Logistica - Fundo De Investimento Imobiliario',
+            type: 'Renda Variável',
+            value: -38.62,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1519.7199999999998,
+            document_number_principal: '11.728.688/0001-47',
+            document_number_admin: '61.809.182/0001-30'
+          },
+          {
+            classe: 'FII',
+            ticker: 'HGLG11',
+            name: 'Cshg Logistica - Fundo De Investimento Imobiliario',
+            type: 'Renda Variável',
+            value: -50.336,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1975.506,
+            document_number_principal: '11.728.688/0001-47',
+            document_number_admin: '61.809.182/0001-30'
+          },
+          {
+            classe: 'Fiagro',
+            ticker: 'RZAG11',
+            name: 'Fundo De Investimento Nas Cadeias Produtivas Agroindustriais Riza Agro - Fiagro - Imobiliario',
+            type: 'Renda Variável',
+            value: -54.315,
+            operation: 'VENDA DE FII/FIAGRO',
+            transaction: 1480.3298,
+            document_number_principal: '40.413.979/0001-44',
+            document_number_admin: '45.246.410/0001-55'
+          }
+        ]
+      },
+      9: {
+        operations: [
+          {
+            classe: 'FI-INFRA',
+            ticker: 'CPTI11',
+            name: 'Capitania Infra Fic Fi Infra Rf Cp',
+            type: 'Renda Variável',
+            value: -255.246,
+            operation: 'VENDA DE FI INFRA',
+            transaction: 2455.7859,
+            document_number_principal: '38.065.012/0001-77',
+            document_number_admin: '38.065.012/0001-77'
+          },
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.SOL',
+            name: 'Solana USD',
+            type: 'Renda Variável',
+            value: 52.0171,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 345.095825016,
+            document_number_principal: null,
+            document_number_admin: null
+          }
+        ]
+      },
+      10: {
+        operations: [
+          {
+            classe: 'Criptomoeda',
+            ticker: 'CRYPTO.SOL',
+            name: 'Solana USD',
+            type: 'Renda Variável',
+            value: 72.9184,
+            operation: 'VENDA DE CRIPTOMOEDA',
+            transaction: 937.739518674,
+            document_number_principal: null,
+            document_number_admin: null
+          },
+          {
+            classe: 'Ação',
+            ticker: 'CSMG3',
+            name: 'Companhia de Saneamento de Minas Gerais',
+            type: 'Renda Variável',
+            value: 319.8295,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 633.06,
+            document_number_principal: '17.281.106/0001-03',
+            document_number_admin: null
+          },
+          {
+            classe: 'Ação',
+            ticker: 'CMIG4',
+            name: 'Companhia Energética de Minas Gerais - CEMIG',
+            type: 'Renda Variável',
+            value: 158.1624,
+            operation: 'SWING TRADE DE AÇÃO',
+            transaction: 1471.3585,
+            document_number_principal: '17.155.730/0001-64',
+            document_number_admin: null
+          }
+        ]
+      },
+      11: {
+        operations: [
+          {
+            classe: 'Renda Fixa',
+            ticker: 'TESOURO PREFIXADO 2028',
+            name: 'TESOURO PREFIXADO 2028',
+            type: 'Renda Fixa',
+            value: 11.596,
+            operation: 'RENDA FIXA',
+            transaction: 152.54800000000003,
+            document_number_principal: '(Verifique na sua corretora/banco)',
+            document_number_admin: '62.169.875/0001-79'
+          }
+        ]
+      }
+    }
+  },
+  itensWalletFiltered: [
+    {
+      qtd: 215,
+      classe: 'Ação',
+      ticker: 'BBAS3',
+      investiment: 'R$ 4.944,95',
+      averageCambio: 'R$ 0,00',
+      name: 'Banco do Brasil S.A.',
+      description: '(BBAS3) - 215 AÇÕES DE BANCO DO BRASIL S.A., CNPJ: 00.000.000/0001-91, CÓDIGO DE NEGOCIAÇÃO: BBAS3. PREÇO MÉDIO DE R$ 23,00 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 4.944,95 ',
+      document_number_principal: '00.000.000/0001-91',
+      document_number_admin: '00.000.000/0001-91',
+      pm: 'R$ 23,00',
+      this_year: 'R$ 4.944,95',
+      past_year: 'R$ 1.893,23',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 100,
+      classe: 'Ação',
+      ticker: 'BEES3',
+      investiment: 'R$ 770,23',
+      averageCambio: 'R$ 0,00',
+      name: 'BANCO BANESTES',
+      description: '(BEES3) - 100 AÇÕES DE BANCO BANESTES, CNPJ: 28.127.603/0001-78, CÓDIGO DE NEGOCIAÇÃO: BEES3. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '28.127.603/0001-78',
+      document_number_admin: '28.127.603/0001-78',
+      pm: 'R$ 7,70',
+      this_year: 'R$0,00',
+      past_year: 'R$ 770,23',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 131,
+      classe: 'Ação',
+      ticker: 'CMIG4',
+      investiment: 'R$ 1.302,99',
+      averageCambio: 'R$ 0,00',
+      name: 'Companhia Energética de Minas Gerais - CEMIG',
+      description: '(CMIG4) - 131 AÇÕES DE COMPANHIA ENERGÉTICA DE MINAS GERAIS - CEMIG, CNPJ: 17.155.730/0001-64, CÓDIGO DE NEGOCIAÇÃO: CMIG4. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '17.155.730/0001-64',
+      document_number_admin: '17.155.730/0001-64',
+      pm: 'R$ 9,95',
+      this_year: 'R$0,00',
+      past_year: 'R$ 1.302,99',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 17,
+      classe: 'Ação',
+      ticker: 'CSMG3',
+      investiment: 'R$ 313,42',
+      averageCambio: 'R$ 0,00',
+      name: 'Companhia de Saneamento de Minas Gerais',
+      description: '(CSMG3) - 17 AÇÕES DE COMPANHIA DE SANEAMENTO DE MINAS GERAIS, CNPJ: 17.281.106/0001-03, CÓDIGO DE NEGOCIAÇÃO: CSMG3. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '17.281.106/0001-03',
+      document_number_admin: '17.281.106/0001-03',
+      pm: 'R$ 18,44',
+      this_year: 'R$0,00',
+      past_year: 'R$ 313,42',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 20,
+      classe: 'Ação',
+      ticker: 'CXSE3',
+      investiment: 'R$ 223,46',
+      averageCambio: 'R$ 0,00',
+      name: 'Caixa Seguridade Participações S.A.',
+      description: '(CXSE3) - 20 AÇÕES DE CAIXA SEGURIDADE PARTICIPAÇÕES S.A., CNPJ: 22.543.331/0001-00, CÓDIGO DE NEGOCIAÇÃO: CXSE3. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '22.543.331/0001-00',
+      document_number_admin: '22.543.331/0001-00',
+      pm: 'R$ 11,17',
+      this_year: 'R$0,00',
+      past_year: 'R$ 223,46',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 106,
+      classe: 'Ação',
+      ticker: 'GGBR4',
+      investiment: 'R$ 2.072,24',
+      averageCambio: 'R$ 0,00',
+      name: 'Gerdau S.A.',
+      description: '(GGBR4) - 106 AÇÕES DE GERDAU S.A., CNPJ: 33.611.500/0001-19, CÓDIGO DE NEGOCIAÇÃO: GGBR4. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '33.611.500/0001-19',
+      document_number_admin: '33.611.500/0001-19',
+      pm: 'R$ 19,55',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.072,24',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 165,
+      classe: 'Ação',
+      ticker: 'KLBN4',
+      investiment: 'R$ 620,20',
+      averageCambio: 'R$ 0,00',
+      name: 'Klabin S.A.',
+      description: '(KLBN4) - 165 AÇÕES DE KLABIN S.A., CNPJ: 89.637.490/0001-45, CÓDIGO DE NEGOCIAÇÃO: KLBN4. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '89.637.490/0001-45',
+      document_number_admin: '89.637.490/0001-45',
+      pm: 'R$ 3,76',
+      this_year: 'R$0,00',
+      past_year: 'R$ 620,20',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 30,
+      classe: 'Ação',
+      ticker: 'PETR4',
+      investiment: 'R$ 817,91',
+      averageCambio: 'R$ 0,00',
+      name: 'Petróleo Brasileiro S.A. - Petrobras',
+      description: '(PETR4) - 30 AÇÕES DE PETRÓLEO BRASILEIRO S.A. - PETROBRAS, CNPJ: 33.000.167/0001-01, CÓDIGO DE NEGOCIAÇÃO: PETR4. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '33.000.167/0001-01',
+      document_number_admin: '33.000.167/0001-01',
+      pm: 'R$ 27,26',
+      this_year: 'R$0,00',
+      past_year: 'R$0,00',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 4.76575,
+      classe: 'REIT',
+      ticker: 'PLD',
+      investiment: 'R$ 2.757,38',
+      averageCambio: 'R$ 5,18',
+      name: 'PROLOGIS INC.',
+      description: '(PLD) - 4.76575 AÇÕES DE PROLOGIS INC., CÓDIGO DE NEGOCIAÇÃO: PLD. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: null,
+      document_number_admin: null,
+      pm: 'R$ 111,63',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.757,38',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 405,
+      classe: 'Ação',
+      ticker: 'RANI3',
+      investiment: 'R$ 3.495,85',
+      averageCambio: 'R$ 0,00',
+      name: 'Irani Papel e Embalagem S.A.',
+      description: '(RANI3) - 405 AÇÕES DE IRANI PAPEL E EMBALAGEM S.A., CNPJ: 92.791.243/0001-03, CÓDIGO DE NEGOCIAÇÃO: RANI3. PREÇO MÉDIO DE R$ 8,63 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 3.495,85 ',
+      document_number_principal: '92.791.243/0001-03',
+      document_number_admin: '92.791.243/0001-03',
+      pm: 'R$ 8,63',
+      this_year: 'R$ 3.495,85',
+      past_year: 'R$ 4.410,33',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 65,
+      classe: 'Ação',
+      ticker: 'TAEE11',
+      investiment: 'R$ 2.255,05',
+      averageCambio: 'R$ 0,00',
+      name: 'TAESA',
+      description: '(TAEE11) - 65 AÇÕES DE TAESA, CNPJ: 07.859.971/0001-30, CÓDIGO DE NEGOCIAÇÃO: TAEE11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '07.859.971/0001-30',
+      document_number_admin: '07.859.971/0001-30',
+      pm: 'R$ 34,69',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.255,05',
+      group: '03',
+      code: '01'
+    },
+    {
+      qtd: 0.9100000000000001,
+      classe: 'Renda Fixa',
+      ticker: 'TESOURO PREFIXADO 2025',
+      investiment: 'R$ 709,95',
+      averageCambio: 'R$ 0,00',
+      name: 'TESOURO PREFIXADO 2025',
+      description: 'APLICAÇÃO EM TESOURO PREFIXADO 2025 NO CNPJ: 74.014.747/0001-35 TOTALIZANDO 0,910000 UNIDADE, COM CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35',
+      pm: 'R$ 780,16',
+      this_year: 'R$0,00',
+      past_year: 'R$ 709,95',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 2.01,
+      classe: 'Renda Fixa',
+      ticker: 'TESOURO PREFIXADO 2026',
+      investiment: 'R$ 1.541,72',
+      averageCambio: 'R$ 0,00',
+      name: 'TESOURO PREFIXADO 2026',
+      description: 'APLICAÇÃO EM TESOURO PREFIXADO 2026 NO CNPJ: 74.014.747/0001-35 TOTALIZANDO 2,010000 UNIDADES, COM CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35',
+      pm: 'R$ 767,02',
+      this_year: 'R$0,00',
+      past_year: 'R$ 1.541,72',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 2.7129999999999996,
+      classe: 'Renda Fixa',
+      ticker: 'TESOURO PREFIXADO 2027',
+      investiment: 'R$ 2.087,88',
+      averageCambio: 'R$ 0,00',
+      name: 'TESOURO PREFIXADO 2027',
+      description: 'APLICAÇÃO EM TESOURO PREFIXADO 2027 NO CNPJ: 74.014.747/0001-35 TOTALIZANDO 2,713000 UNIDADES, COM CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35',
+      pm: 'R$ 769,58',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.087,88',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 24,
+      classe: 'FI-INFRA',
+      ticker: 'CPTI11',
+      investiment: 'R$ 2.366,90',
+      averageCambio: 'R$ 0,00',
+      name: 'Capitania Infra Fic Fi Infra Rf Cp',
+      description: '(CPTI11) - 24 COTAS DE CAPITANIA INFRA FIC FI INFRA RF CP, CNPJ: 38.065.012/0001-77, CÓDIGO DE NEGOCIAÇÃO: CPTI11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '38.065.012/0001-77',
+      document_number_admin: '38.065.012/0001-77',
+      pm: 'R$ 98,62',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.366,90',
+      group: '07',
+      code: '99'
+    },
+    {
+      qtd: 280,
+      classe: 'FII',
+      ticker: 'CPTS11',
+      investiment: 'R$ 2.243,08',
+      averageCambio: 'R$ 0,00',
+      name: 'Capitania Securities II Fundo Investimento Imobiliario FII',
+      description: '(CPTS11) - 280 COTAS DE CAPITANIA SECURITIES II FUNDO INVESTIMENTO IMOBILIARIO FII, CNPJ: 59.281.253/0001-23, CÓDIGO DE NEGOCIAÇÃO: CPTS11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '59.281.253/0001-23',
+      document_number_admin: '59.281.253/0001-23',
+      pm: 'R$ 8,01',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.243,08',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 260,
+      classe: 'Fiagro',
+      ticker: 'FGAA11',
+      investiment: 'R$ 2.459,46',
+      averageCambio: 'R$ 0,00',
+      name: 'FG/Agro Fundo De Investimento Nas Cadeias Produtivas Agroindustriais - Fiagro-Imobiliario',
+      description: '(FGAA11) - 260 COTAS DE FG/AGRO FUNDO DE INVESTIMENTO NAS CADEIAS PRODUTIVAS AGROINDUSTRIAIS - FIAGRO-IMOBILIARIO, CNPJ: 13.486.793/0001-42, CÓDIGO DE NEGOCIAÇÃO: FGAA11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '13.486.793/0001-42',
+      document_number_admin: '13.486.793/0001-42',
+      pm: 'R$ 9,46',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.459,46',
+      group: '07',
+      code: '02'
+    },
+    {
+      qtd: 210,
+      classe: 'FII',
+      ticker: 'GARE11',
+      investiment: 'R$ 1.863,07',
+      averageCambio: 'R$ 0,00',
+      name: 'Guardian Logistica Fundo De Investimento Imobiliario',
+      description: '(GARE11) - 210 COTAS DE GUARDIAN LOGISTICA FUNDO DE INVESTIMENTO IMOBILIARIO, CNPJ: 62.232.889/0001-90, CÓDIGO DE NEGOCIAÇÃO: GARE11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '62.232.889/0001-90',
+      document_number_admin: '62.232.889/0001-90',
+      pm: 'R$ 8,87',
+      this_year: 'R$0,00',
+      past_year: 'R$ 1.863,07',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 23,
+      classe: 'FII',
+      ticker: 'HGLG11',
+      investiment: 'R$ 3.585,06',
+      averageCambio: 'R$ 0,00',
+      name: 'Cshg Logistica - Fundo De Investimento Imobiliario',
+      description: '(HGLG11) - 23 COTAS DE CSHG LOGISTICA - FUNDO DE INVESTIMENTO IMOBILIARIO, CNPJ: 61.809.182/0001-30, CÓDIGO DE NEGOCIAÇÃO: HGLG11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '61.809.182/0001-30',
+      document_number_admin: '61.809.182/0001-30',
+      pm: 'R$ 155,87',
+      this_year: 'R$0,00',
+      past_year: 'R$ 3.585,06',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 7.22171,
+      classe: 'ETF-EXTERIOR',
+      ticker: 'JEPI',
+      investiment: 'R$ 2.043,00',
+      averageCambio: 'R$ 5,07',
+      name: 'JPMORGAN EQUITY PREMIUM INCOME ETF - JEPI',
+      description: '(JEPI) - 7.22171 AÇÕES DE JPMORGAN EQUITY PREMIUM INCOME ETF - JEPI, CÓDIGO DE NEGOCIAÇÃO: JEPI. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: null,
+      document_number_admin: null,
+      pm: 'R$ 55,75',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.043,00',
+      group: '07',
+      code: '09'
+    },
+    {
+      qtd: 264,
+      classe: 'FII',
+      ticker: 'KISU11',
+      investiment: 'R$ 2.102,80',
+      averageCambio: 'R$ 0,00',
+      name: 'Kilima Fundo De Investimento Em Cotas De Fundos Imobiliarios Suno 30',
+      description: '(KISU11) - 264 COTAS DE KILIMA FUNDO DE INVESTIMENTO EM COTAS DE FUNDOS IMOBILIARIOS SUNO 30, CNPJ: 13.486.793/0001-42, CÓDIGO DE NEGOCIAÇÃO: KISU11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '13.486.793/0001-42',
+      document_number_admin: '13.486.793/0001-42',
+      pm: 'R$ 7,97',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.102,80',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 2,
+      classe: 'FII',
+      ticker: 'KNCR11',
+      investiment: 'R$ 209,36',
+      averageCambio: 'R$ 0,00',
+      name: 'Kinea Rendimentos Imobiliários Fundo de Investimento Imobiliário - FII',
+      description: '(KNCR11) - 2 COTAS DE KINEA RENDIMENTOS IMOBILIÁRIOS FUNDO DE INVESTIMENTO IMOBILIÁRIO - FII, CNPJ: 62.418.140/0001-31, CÓDIGO DE NEGOCIAÇÃO: KNCR11. PREÇO MÉDIO DE R$ 104,68 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 209,36 ',
+      document_number_principal: '62.418.140/0001-31',
+      document_number_admin: '62.418.140/0001-31',
+      pm: 'R$ 104,68',
+      this_year: 'R$ 209,36',
+      past_year: 'R$ 0,00',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 551,
+      classe: 'FII',
+      ticker: 'MXRF11',
+      investiment: 'R$ 5.366,49',
+      averageCambio: 'R$ 0,00',
+      name: 'Maxi Renda Fundo De Investimento Imobiliaro - FII',
+      description: '(MXRF11) - 551 COTAS DE MAXI RENDA FUNDO DE INVESTIMENTO IMOBILIARO - FII, CNPJ: 59.281.253/0001-23, CÓDIGO DE NEGOCIAÇÃO: MXRF11. PREÇO MÉDIO DE R$ 9,74 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 5.366,49 ',
+      document_number_principal: '59.281.253/0001-23',
+      document_number_admin: '59.281.253/0001-23',
+      pm: 'R$ 9,74',
+      this_year: 'R$ 5.366,49',
+      past_year: 'R$ 2.631,60',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 218,
+      classe: 'Fiagro',
+      ticker: 'RZAG11',
+      investiment: 'R$ 1.972,30',
+      averageCambio: 'R$ 0,00',
+      name: 'Fundo De Investimento Nas Cadeias Produtivas Agroindustriais Riza Agro - Fiagro - Imobiliario',
+      description: '(RZAG11) - 218 COTAS DE FUNDO DE INVESTIMENTO NAS CADEIAS PRODUTIVAS AGROINDUSTRIAIS RIZA AGRO - FIAGRO - IMOBILIARIO, CNPJ: 45.246.410/0001-55, CÓDIGO DE NEGOCIAÇÃO: RZAG11. PREÇO MÉDIO DE R$ 9,05 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 1.972,30 ',
+      document_number_principal: '45.246.410/0001-55',
+      document_number_admin: '45.246.410/0001-55',
+      pm: 'R$ 9,05',
+      this_year: 'R$ 1.972,30',
+      past_year: 'R$ 2.162,34',
+      group: '07',
+      code: '02'
+    },
+    {
+      qtd: 20,
+      classe: 'FII',
+      ticker: 'RZTR11',
+      investiment: 'R$ 1.767,04',
+      averageCambio: 'R$ 0,00',
+      name: 'Fundo De Investimento Imobiliario Riza Terrax',
+      description: '(RZTR11) - 20 COTAS DE FUNDO DE INVESTIMENTO IMOBILIARIO RIZA TERRAX, CNPJ: 45.246.410/0001-55, CÓDIGO DE NEGOCIAÇÃO: RZTR11. PREÇO MÉDIO DE R$ 88,35 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 1.767,04 ',
+      document_number_principal: '45.246.410/0001-55',
+      document_number_admin: '45.246.410/0001-55',
+      pm: 'R$ 88,35',
+      this_year: 'R$ 1.767,04',
+      past_year: 'R$ 2.559,45',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 500,
+      classe: 'FII',
+      ticker: 'SARE11',
+      investiment: 'R$ 2.634,17',
+      averageCambio: 'R$ 0,00',
+      name: 'Santander Renda De Alugueis Fundo Investimento Imobiliarios',
+      description: '(SARE11) - 500 COTAS DE SANTANDER RENDA DE ALUGUEIS FUNDO INVESTIMENTO IMOBILIARIOS, CNPJ: 62.318.407/0001-19, CÓDIGO DE NEGOCIAÇÃO: SARE11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '62.318.407/0001-19',
+      document_number_admin: '62.318.407/0001-19',
+      pm: 'R$ 5,27',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.634,17',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 6.70470353,
+      classe: 'ETF-EXTERIOR',
+      ticker: 'SCHD',
+      investiment: 'R$ 1.032,18',
+      averageCambio: 'R$ 5,63',
+      name: 'Schwab US Dividend Equity',
+      description: '(SCHD) - 6.70470353 AÇÕES DE SCHWAB US DIVIDEND EQUITY, CÓDIGO DE NEGOCIAÇÃO: SCHD. PREÇO MÉDIO DE $27.35 E CUSTO TOTAL DE AQUISIÇÃO DE $183.37 - (CÂMBIO DE R$ 5,63) ',
+      document_number_principal: null,
+      document_number_admin: null,
+      pm: 'R$ 27,35',
+      this_year: 'R$ 1.032,18',
+      past_year: 'R$ 0,00',
+      group: '07',
+      code: '09'
+    },
+    {
+      qtd: 250,
+      classe: 'FII',
+      ticker: 'VGHF11',
+      investiment: 'R$ 2.278,06',
+      averageCambio: 'R$ 0,00',
+      name: 'Valora Hedge Fund Fundo De Investimento Imobiliario - Fii',
+      description: '(VGHF11) - 250 COTAS DE VALORA HEDGE FUND FUNDO DE INVESTIMENTO IMOBILIARIO - FII, CNPJ: 62.232.889/0001-90, CÓDIGO DE NEGOCIAÇÃO: VGHF11. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: '62.232.889/0001-90',
+      document_number_admin: '62.232.889/0001-90',
+      pm: 'R$ 9,11',
+      this_year: 'R$0,00',
+      past_year: 'R$ 2.278,06',
+      group: '07',
+      code: '03'
+    },
+    {
+      qtd: 0.00040050999999999997,
+      classe: 'Criptomoeda',
+      ticker: 'CRYPTO.BTC',
+      investiment: 'R$ 199,99',
+      averageCambio: 'R$ 0,00',
+      name: 'Bitcoin',
+      description: '(BTC) - 0.00040050999999999997 UNIDADE DE BITCOIN, CÓDIGO DE NEGOCIAÇÃO: BTC. PREÇO MÉDIO DE R$ 499.334,29 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 199,99 ',
+      document_number_principal: null,
+      document_number_admin: null,
+      pm: 'R$ 499.334,29',
+      this_year: 'R$ 199,99',
+      past_year: 'R$ 0,00',
+      group: '08',
+      code: '99'
+    },
+    {
+      qtd: 336.99142062,
+      classe: 'Criptomoeda',
+      ticker: 'CRYPTO.DOGE',
+      investiment: 'R$ 414,37',
+      averageCambio: 'R$ 0,00',
+      name: 'Doge Coin',
+      description: '(DOGE) - 336.99142062 UNIDADES DE DOGE COIN, CÓDIGO DE NEGOCIAÇÃO: DOGE. PREÇO MÉDIO DE R$ 1,23 E CUSTO TOTAL DE AQUISIÇÃO DE R$ 414,37 ',
+      document_number_principal: null,
+      document_number_admin: null,
+      pm: 'R$ 1,23',
+      this_year: 'R$ 414,37',
+      past_year: 'R$ 0,00',
+      group: '08',
+      code: '99'
+    },
+    {
+      qtd: 0.02730016,
+      classe: 'Criptomoeda',
+      ticker: 'CRYPTO.ETH',
+      investiment: 'R$ 451,27',
+      averageCambio: 'R$ 0,00',
+      name: 'Ethereum',
+      description: '(ETH) - 0.02730016 UNIDADE DE ETHEREUM, CÓDIGO DE NEGOCIAÇÃO: ETH. CUSTO TOTAL DE AQUISIÇÃO DE R$0,00 (POSIÇÃO ENCERRADA)',
+      document_number_principal: null,
+      document_number_admin: null,
+      pm: 'R$ 16.529,94',
+      this_year: 'R$0,00',
+      past_year: 'R$ 451,27',
+      group: '08',
+      code: '99'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251106-20261106-pos-fixado-115-cdi',
+      investiment: 'R$ 101,39',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251106-20261106-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 101,39',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 101,39',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251114-20261114-pos-fixado-115-cdi',
+      investiment: 'R$ 50,51',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251114-20261114-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 50,51',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 50,51',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251118-20261218-pos-fixado-115-cdi',
+      investiment: 'R$ 155,48',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251118-20261218-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 155,48',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 155,48',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251127-20261227-pos-fixado-115-cdi',
+      investiment: 'R$ 503,00',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251127-20261227-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 503,00',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 503,00',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251129-20261229-pos-fixado-115-cdi',
+      investiment: 'R$ 251,20',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251129-20261229-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 251,20',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 251,20',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251203-20261203-pos-fixado-115-cdi',
+      investiment: 'R$ 301,08',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251203-20261203-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 301,08',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 301,08',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251204-20261204-pos-fixado-115-cdi',
+      investiment: 'R$ 250,75',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251204-20261204-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 250,75',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 250,75',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    },
+    {
+      qtd: 1,
+      classe: 'Renda Fixa - Outros',
+      ticker: 'rdb-turbo---nubank-20251205-20261205-pos-fixado-115-cdi',
+      investiment: 'R$ 50,12',
+      averageCambio: 'R$ 0,00',
+      name: 'TURBO - Nubank',
+      description: '(rdb-turbo---nubank-20251205-20261205-pos-fixado-115-cdi) APLICAÇÃO EM RDB-TURBO - NUBANK CNPJ: 18.236.120/0001-58 COM SALDO DE R$ 50,12',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58',
+      pm: 'R$ 0,00',
+      this_year: 'R$ 50,12',
+      past_year: 'R$ 0,00',
+      type: 'RDB',
+      group: '04',
+      code: '02'
+    }
+  ],
+  provents: {
+    RZAG11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        28.8,
+        42.5,
+        22,
+        22,
+        28.32,
+        25.96,
+        28.32,
+        42.5,
+        42.5,
+        21.25,
+        42.5
+      ],
+      amountRendiment: 346.65,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Fundo De Investimento Nas Cadeias Produtivas Agroindustriais Riza Agro - Fiagro - Imobiliario',
+      document_number_principal: '40.413.979/0001-44',
+      document_number_admin: '45.246.410/0001-55'
+    },
+    BBAS3: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        10.88
+      ],
+      amountDividend: 10.88,
+      jcp: [
+        10.131999999999998,
+        23.324,
+        32.08070000000001,
+        8.6445
+      ],
+      amountJcp: 74.18120000000002,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+        0.5579999999999999,
+        0.248
+      ],
+      amountRendimentJCP: 0.8059999999999999,
+      name: 'Banco do Brasil S.A.',
+      document_number_principal: '00.000.000/0001-91',
+      document_number_admin: null
+    },
+    HGLG11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        25.3,
+        25.3,
+        25.3,
+        25.3,
+        25.3,
+        25.3,
+        25.3,
+        25.3
+      ],
+      amountRendiment: 202.40000000000003,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Cshg Logistica - Fundo De Investimento Imobiliario',
+      document_number_principal: '11.728.688/0001-47',
+      document_number_admin: '61.809.182/0001-30'
+    },
+    BEES3: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+        2.02,
+        2.04,
+        2.04,
+        1.93,
+        2.02
+      ],
+      amountJcp: 10.05,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'BANCO BANESTES',
+      document_number_principal: '28.127.603/0001-78',
+      document_number_admin: null
+    },
+    FGAA11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        27.3,
+        28.6,
+        37.95,
+        28.6,
+        29.9
+      ],
+      amountRendiment: 152.35000000000002,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'FG/Agro Fundo De Investimento Nas Cadeias Produtivas Agroindustriais - Fiagro-Imobiliario',
+      document_number_principal: '42.405.905/0001-91',
+      document_number_admin: '13.486.793/0001-42'
+    },
+    SARE11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        11.5,
+        10,
+        13,
+        13
+      ],
+      amountRendiment: 47.5,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Santander Renda De Alugueis Fundo Investimento Imobiliarios',
+      document_number_principal: '32.903.702/0001-71',
+      document_number_admin: '62.318.407/0001-19'
+    },
+    CPTS11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        24.76,
+        21,
+        22.5,
+        24.16,
+        25.67
+      ],
+      amountRendiment: 118.09,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Capitania Securities II Fundo Investimento Imobiliario FII',
+      document_number_principal: '18.979.895/0001-13',
+      document_number_admin: '59.281.253/0001-23'
+    },
+    PETR4: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        38.24
+      ],
+      amountDividend: 38.24,
+      jcp: [
+        47.957,
+        15.388399999999999
+      ],
+      amountJcp: 63.3454,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Petróleo Brasileiro S.A. - Petrobras',
+      document_number_principal: '33.000.167/0001-01',
+      document_number_admin: null
+    },
+    GARE11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        18.59,
+        19.32,
+        18.59,
+        19.92
+      ],
+      amountRendiment: 76.42,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Guardian Logistica Fundo De Investimento Imobiliario',
+      document_number_principal: '37.295.919/0001-60',
+      document_number_admin: '62.232.889/0001-90'
+    },
+    CSMG3: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        0.6,
+        3.01
+      ],
+      amountDividend: 3.61,
+      jcp: [
+        6.4736,
+        5.33205,
+        4.32055,
+        6.25685
+      ],
+      amountJcp: 22.38305,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Companhia de Saneamento de Minas Gerais',
+      document_number_principal: '17.281.106/0001-03',
+      document_number_admin: null
+    },
+    CPTI11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        30,
+        24,
+        53,
+        30,
+        26,
+        26,
+        30,
+        30,
+        24
+      ],
+      amountRendiment: 273,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Capitania Infra Fic Fi Infra Rf Cp',
+      document_number_principal: '38.065.012/0001-77',
+      document_number_admin: '38.065.012/0001-77'
+    },
+    TAEE11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+        38.37
+      ],
+      amountReembolso: 38.37,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'TAESA',
+      document_number_principal: '07.859.971/0001-30',
+      document_number_admin: null
+    },
+    external: {
+      JEPI: {
+        amountBuy: 58.984661923399926,
+        rentals: [
+        ],
+        amountRental: 0,
+        bonification: [
+        ],
+        amountBonification: 0,
+        dividends: [
+          9.943303636677799,
+          12.047315194580401,
+          9.470685956904902
+        ],
+        amountDividend: 31.4613047881631,
+        jcp: [
+        ],
+        amountJcp: 0,
+        rendiments: [
+        ],
+        amountRendiment: 0,
+        rendimentJCP: [
+        ],
+        amountRendimentJCP: 0,
+        name: 'JPMORGAN EQUITY PREMIUM INCOME ETF - JEPI',
+        document_number_principal: null,
+        document_number_admin: null,
+        amountTax: 13.48266516,
+        dividendPerMonth: {
+          1: 17.2103982545804,
+          2: 14.2042888166778,
+          3: 13.529282876904901
+        },
+        taxPerMonth: {
+          1: 5.16308306,
+          2: 4.26098518,
+          3: 4.05859692
+        },
+        cambioMonth: {
+          1: 6.0394,
+          2: 6.0371,
+          3: 5.7099
+        },
+        amountMonth: {
+          1: 17.2103982545804,
+          2: 14.2042888166778,
+          3: 13.529282876904901
+        }
+      },
+      SCHD: {
+        amountBuy: -40.163084774922254,
+        rentals: [
+        ],
+        amountRental: 0,
+        bonification: [
+        ],
+        amountBonification: 0,
+        dividends: [
+          4.5791985898309475,
+          4.607495694619281,
+          10.16741587176734
+        ],
+        amountDividend: 19.35411015621757,
+        jcp: [
+        ],
+        amountJcp: 0,
+        rendiments: [
+        ],
+        amountRendiment: 0,
+        rendimentJCP: [
+        ],
+        amountRendimentJCP: 0,
+        name: 'Schwab US Dividend Equity',
+        document_number_principal: null,
+        document_number_admin: null,
+        amountTax: 8.2948252,
+        dividendPerMonth: {
+          4: 14.525055751767338,
+          6: 6.582459434619281,
+          9: 6.541420169830948
+        },
+        taxPerMonth: {
+          4: 4.35763988,
+          6: 1.9749637400000002,
+          9: 1.96222158
+        },
+        cambioMonth: {
+          4: 5.7082,
+          6: 5.4302,
+          9: 5.3922
+        },
+        amountMonth: {
+          4: 14.525055751767338,
+          6: 6.582459434619281,
+          9: 6.541420169830948
+        }
+      },
+      PLD: {
+        amountBuy: 170.76793271967017,
+        rentals: [
+        ],
+        amountRental: 0,
+        bonification: [
+        ],
+        amountBonification: 0,
+        dividends: [
+          16.69934443192
+        ],
+        amountDividend: 16.69934443192,
+        jcp: [
+        ],
+        amountJcp: 0,
+        rendiments: [
+        ],
+        amountRendiment: 0,
+        rendimentJCP: [
+        ],
+        amountRendimentJCP: 0,
+        name: 'PROLOGIS INC.',
+        document_number_principal: null,
+        document_number_admin: null,
+        amountTax: 4.43835506,
+        dividendPerMonth: {
+          1: 21.13769949192
+        },
+        taxPerMonth: {
+          1: 4.43835506
+        },
+        cambioMonth: {
+          1: 6.0394
+        },
+        amountMonth: {
+          1: 21.13769949192
+        }
+      },
+      VOO: {
+        amountBuy: 41.81585851036107,
+        rentals: [
+        ],
+        amountRental: 0,
+        bonification: [
+        ],
+        amountBonification: 0,
+        dividends: [
+          7.232289399999999
+        ],
+        amountDividend: 7.232289399999999,
+        jcp: [
+        ],
+        amountJcp: 0,
+        rendiments: [
+        ],
+        amountRendiment: 0,
+        rendimentJCP: [
+        ],
+        amountRendimentJCP: 0,
+        name: 'VANGUARD S&P 500 ETF',
+        document_number_principal: null,
+        document_number_admin: null,
+        amountTax: 3.0995526,
+        dividendPerMonth: {
+          4: 10.331842
+        },
+        taxPerMonth: {
+          4: 3.0995526
+        },
+        cambioMonth: {
+          4: 5.7082
+        },
+        amountMonth: {
+          4: 10.331842
+        }
+      },
+      QQQM: {
+        amountBuy: 21.14922172578349,
+        rentals: [
+        ],
+        amountRental: 0,
+        bonification: [
+        ],
+        amountBonification: 0,
+        dividends: [
+          1.3350522763188002
+        ],
+        amountDividend: 1.3350522763188002,
+        jcp: [
+        ],
+        amountJcp: 0,
+        rendiments: [
+        ],
+        amountRendiment: 0,
+        rendimentJCP: [
+        ],
+        amountRendimentJCP: 0,
+        name: 'INVESCO NASDAQ 100 ETF',
+        document_number_principal: null,
+        document_number_admin: null,
+        amountTax: 0.5719616399999999,
+        dividendPerMonth: {
+          3: 1.9070139163188002
+        },
+        taxPerMonth: {
+          3: 0.5719616399999999
+        },
+        cambioMonth: {
+          3: 5.7082
+        },
+        amountMonth: {
+          3: 1.9070139163188002
+        }
+      }
+    },
+    KLBN4: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        1.46
+      ],
+      amountDividend: 1.46,
+      jcp: [
+        4.917
+      ],
+      amountJcp: 4.917,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Klabin S.A.',
+      document_number_principal: '89.637.490/0001-45',
+      document_number_admin: null
+    },
+    GGBR4: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        13.32,
+        10.6
+      ],
+      amountDividend: 23.92,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Gerdau S.A.',
+      document_number_principal: '33.611.500/0001-19',
+      document_number_admin: null
+    },
+    MXRF11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        46.8,
+        49.8,
+        50.5,
+        45.7,
+        27.9,
+        33.3,
+        26,
+        45.9,
+        27.9,
+        54.3,
+        38.5
+      ],
+      amountRendiment: 446.59999999999997,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Maxi Renda Fundo De Investimento Imobiliaro - FII',
+      document_number_principal: '97.521.225/0001-25',
+      document_number_admin: '59.281.253/0001-23'
+    },
+    RZTR11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        34,
+        17,
+        35.7,
+        35.7,
+        35.7,
+        35.7,
+        31.9,
+        30.45,
+        17,
+        17,
+        35.7
+      ],
+      amountRendiment: 325.85,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Fundo De Investimento Imobiliario Riza Terrax',
+      document_number_principal: '36.501.128/0001-86',
+      document_number_admin: '45.246.410/0001-55'
+    },
+    RANI3: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        43.9,
+        35.42,
+        101.07,
+        182.91,
+        18
+      ],
+      amountDividend: 381.29999999999995,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Irani Papel e Embalagem S.A.',
+      document_number_principal: '92.791.243/0001-03',
+      document_number_admin: null
+    },
+    VGHF11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        22.77,
+        22.77,
+        22.5,
+        22.5,
+        23.31
+      ],
+      amountRendiment: 113.85,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Valora Hedge Fund Fundo De Investimento Imobiliario - Fii',
+      document_number_principal: '36.771.692/0001-19',
+      document_number_admin: '62.232.889/0001-90'
+    },
+    KISU11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        18.48,
+        19.6,
+        19.6,
+        17.68,
+        18.48
+      ],
+      amountRendiment: 93.84,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Kilima Fundo De Investimento Em Cotas De Fundos Imobiliarios Suno 30',
+      document_number_principal: '36.669.660/0001-07',
+      document_number_admin: '13.486.793/0001-42'
+    },
+    CXSE3: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        6.2
+      ],
+      amountDividend: 6.2,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+        0.03
+      ],
+      amountRendimentJCP: 0.03,
+      name: 'Caixa Seguridade Participações S.A.',
+      document_number_principal: '22.543.331/0001-00',
+      document_number_admin: null
+    },
+    KNCR11: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+      ],
+      amountDividend: 0,
+      jcp: [
+      ],
+      amountJcp: 0,
+      rendiments: [
+        2.66
+      ],
+      amountRendiment: 2.66,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Kinea Rendimentos Imobiliários Fundo de Investimento Imobiliário - FII',
+      document_number_principal: '16.706.958/0001-32',
+      document_number_admin: '62.418.140/0001-31'
+    },
+    CMIG4: {
+      amountBuy: 0,
+      rentals: [
+      ],
+      amountRental: 0,
+      reembolso: [
+      ],
+      amountReembolso: 0,
+      bonification: [
+      ],
+      amountBonification: 0,
+      dividends: [
+        43.48
+      ],
+      amountDividend: 43.48,
+      jcp: [
+        5.236,
+        10.912300000000002,
+        9.24205,
+        6.375
+      ],
+      amountJcp: 31.765350000000005,
+      rendiments: [
+      ],
+      amountRendiment: 0,
+      rendimentJCP: [
+      ],
+      amountRendimentJCP: 0,
+      name: 'Companhia Energética de Minas Gerais - CEMIG',
+      document_number_principal: '17.155.730/0001-64',
+      document_number_admin: null
+    }
+  },
+  reembolso: {
+    TAEE11: {
+      name: 'TAESA',
+      amount: 38.37,
+      cnpj: '07.859.971/0001-30'
+    }
+  },
+  cdbs: {
+    'rdb-turbo---nubank-20250814-20260818-pos-fixado-115-cdi': {
+      rendiments: [
+        0
+      ],
+      amountRendiment: 0,
+      name: 'TURBO - Nubank',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58'
+    },
+    'rdb-turbo---nubank-20250807-20260829-pos-fixado-115-cdi': {
+      rendiments: [
+        1.73
+      ],
+      amountRendiment: 1.73,
+      name: 'TURBO - Nubank',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58'
+    },
+    'rdb-turbo---nubank-20250820-20260820-pos-fixado-115-cdi': {
+      rendiments: [
+        5.83
+      ],
+      amountRendiment: 5.83,
+      name: 'TURBO - Nubank',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58'
+    },
+    'rdb-turbo---nubank-20250807-20260729-pos-fixado-115-cdi': {
+      rendiments: [
+        3.47
+      ],
+      amountRendiment: 3.47,
+      name: 'TURBO - Nubank',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58'
+    },
+    'rdb-mydashboard-nubank-20250401-20260924-pos-fixado-100-cdi': {
+      rendiments: [
+        12.76
+      ],
+      amountRendiment: 12.76,
+      name: 'Mydashboard-Nubank',
+      document_number_principal: '18.236.120/0001-58',
+      document_number_admin: '18.236.120/0001-58'
+    }
+  },
+  tds: {
+    'TESOURO PREFIXADO 2025': {
+      rendiments: [
+        169.19370000000026
+      ],
+      amountRendiment: 169.19370000000026,
+      name: 'TESOURO PREFIXADO 2025',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35'
+    },
+    'TESOURO PREFIXADO 2026': {
+      rendiments: [
+        250.56339999999992
+      ],
+      amountRendiment: 250.56339999999992,
+      name: 'TESOURO PREFIXADO 2026',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35'
+    },
+    'TESOURO PREFIXADO 2027': {
+      rendiments: [
+        134.95321014717194
+      ],
+      amountRendiment: 134.95321014717194,
+      name: 'TESOURO PREFIXADO 2027',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35'
+    },
+    'TESOURO PREFIXADO 2028': {
+      rendiments: [
+        11.596000000000032
+      ],
+      amountRendiment: 11.596000000000032,
+      name: 'TESOURO PREFIXADO 2028',
+      document_number_principal: '74.014.747/0001-35',
+      document_number_admin: '74.014.747/0001-35'
+    }
+  }
+}
+
 export {
   mockFullData2022,
   mockAluguel2024,
@@ -7388,5 +9738,6 @@ export {
   mockFullData2024,
   mockFullData2023,
   mockRobert2023,
-  mockBonification2024
+  mockBonification2024,
+  mockRicardo2025
 }

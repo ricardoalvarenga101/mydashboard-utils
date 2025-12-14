@@ -64,7 +64,7 @@ function generatePdf (
     content: [
       {
         stack: [
-          { image: 'ricardoinvesting', width: 150, height: 150 },
+          { image: 'ricardoinvesting', width: 150, height: 120 },
           {
             text: 'myDashboard',
             link: 'https://mydashboard.com.br/',

@@ -7,9 +7,14 @@ import {
   getOtherLastPosition,
   taxCal,
   getNode,
-  hasOwn
+  hasOwn,
+  isUnit
 } from './utils.js'
-import { TYPE_OPERATIONS_SELL, LIMIT_SWING_TRADE, MONTHS_LABEL } from './vars.js'
+import {
+  TYPE_OPERATIONS_SELL,
+  LIMIT_SWING_TRADE,
+  MONTHS_LABEL
+} from './vars.js'
 import { CLASS } from '../index.js'
 const { sum, map, sumBy, cloneDeep, groupBy } = lodash
 
@@ -97,6 +102,7 @@ function composeTableCommonOperationAndDayTrade (operations) {
               ops.commonList.push(op)
             }
             break
+          case `${TYPE_OPERATIONS_SELL.SWING_TRADE} UNIT`: // units são tributadas
           case TYPE_OPERATIONS_SELL.VENDA_DE_ETF:
           case TYPE_OPERATIONS_SELL.VENDA_DE_BDR:
           case TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO:
@@ -699,12 +705,16 @@ function composeCommonOperationAndDayTrade (
  * @param {*} operation
  */
 function composeAmountOperations (operation, op) {
+  if (op.ticker === 'TAEE11') {
+    console.log('debug')
+  }
   const _amountTransactionToMonth = sum(operation.transactions)
   const _amountLoss = operation.values
     .filter((v) => v < 0)
     .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
   const _amountValues =
-    _amountTransactionToMonth > LIMIT_SWING_TRADE
+    _amountTransactionToMonth > LIMIT_SWING_TRADE ||
+    isUnit(op.ticker, op.classe, CLASS.ACAO)
       ? sum(operation.values)
       : _amountLoss
   operation.amountTransaction = _amountTransactionToMonth
@@ -712,6 +722,85 @@ function composeAmountOperations (operation, op) {
     op.operation === TYPE_OPERATIONS_SELL.SWING_TRADE
       ? _amountValues
       : sum(operation.values)
+}
+
+/**
+ * Monta vendas swing trade unit
+ * @param {*} yearAnalysis
+ * @param {*} indexMonth
+ * @param {*} op
+ * @param {*} SUM_SWING_TRADE_UNIT
+ * @returns
+ */
+function mountSalesSwingTradeUnit (
+  yearAnalysis,
+  indexMonth,
+  op,
+  SUM_SWING_TRADE_UNIT
+) {
+  if (
+    op.operation !== TYPE_OPERATIONS_SELL.SWING_TRADE ||
+    !isUnit(op.ticker, op.classe, CLASS.ACAO)
+  ) {
+    return null
+  }
+
+  if (!hasOwn(SUM_SWING_TRADE_UNIT, yearAnalysis)) {
+    // nao tem o ano
+    SUM_SWING_TRADE_UNIT[yearAnalysis] = {
+      [indexMonth]: {
+        [op.ticker]: {
+          transactions: [op.transaction],
+          values: [op.value],
+          name: op.name,
+          ticker: op.ticker,
+          type: op.type,
+          classe: op.classe,
+          document_number_admin: op.document_number_admin,
+          document_number_principal: op.document_number_principal
+        }
+      }
+    }
+    composeAmountOperations(
+      SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker],
+      op
+    )
+  } else {
+    if (hasOwn(SUM_SWING_TRADE_UNIT[yearAnalysis], op.ticker)) {
+      // se tem o ticker
+      SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][
+        op.ticker
+      ].transactions.push(op.transaction)
+      SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker].values.push(
+        op.value
+      )
+      composeAmountOperations(
+        SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker],
+        op
+      )
+    } else {
+      // não tem o ticker
+      SUM_SWING_TRADE_UNIT[yearAnalysis] = {
+        ...SUM_SWING_TRADE_UNIT[yearAnalysis],
+        [indexMonth]: {
+          [op.ticker]: {
+            transactions: [op.transaction],
+            values: [op.value],
+            name: op.name,
+            ticker: op.ticker,
+            type: op.type,
+            classe: op.classe,
+            document_number_admin: op.document_number_admin,
+            document_number_principal: op.document_number_principal
+          }
+        }
+      }
+      composeAmountOperations(
+        SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker],
+        op
+      )
+    }
+  }
 }
 
 /**
@@ -795,9 +884,60 @@ function composeOperations (
   indexMonth,
   indexYear,
   op,
-  SUM_SWING_TRADE_FREE_99
+  SUM_SWING_TRADE_FREE_99,
+  SUM_SWING_TRADE_UNIT
 ) {
   mountSalesFiInfra(indexYear, indexMonth, op, SUM_SWING_TRADE_FREE_99)
+  if (isUnit(op.ticker, op.classe, CLASS.ACAO)) {
+    if (!hasOwn(SUM_SWING_TRADE_UNIT, indexYear)) {
+      SUM_SWING_TRADE_UNIT[indexYear] = {
+        [indexMonth]: {
+          [op.operation]: {
+            transactions: [op.transaction],
+            values: [op.value]
+          }
+        }
+      }
+      composeAmountOperations(
+        SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+        op
+      )
+    } else {
+      if (!hasOwn(SUM_SWING_TRADE_UNIT[indexYear], indexMonth)) {
+        SUM_SWING_TRADE_UNIT[indexYear][indexMonth] = {
+          [op.operation]: {
+            transactions: [op.transaction],
+            values: [op.value]
+          }
+        }
+        composeAmountOperations(
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+          op
+        )
+      } else {
+        if (!hasOwn(SUM_SWING_TRADE_UNIT[indexYear][indexMonth], op.operation)) {
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation] = {
+            transactions: [op.transaction],
+            values: [op.value]
+          }
+          composeAmountOperations(
+            SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+            op
+          )
+        } else {
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation].transactions.push(
+            op.transaction
+          )
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation].values.push(op.value)
+          composeAmountOperations(
+            SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+            op
+          )
+        }
+      }
+    }
+    return null
+  }
   if (!hasOwn(operations, indexYear)) {
     operations[indexYear] = {
       [indexMonth]: {
@@ -848,6 +988,21 @@ function composeOperations (
   return operations
 }
 
+function unionSwingTradeUnit (operations, SUM_SWING_TRADE_UNIT) {
+  map(operations, (year, indexYear) => {
+    map(year, (month, indexMonth) => {
+      if (
+        indexYear in SUM_SWING_TRADE_UNIT &&
+        indexMonth in SUM_SWING_TRADE_UNIT[indexYear]) {
+        operations[indexYear][indexMonth] = {
+          ...operations[indexYear][indexMonth],
+          [`${TYPE_OPERATIONS_SELL.SWING_TRADE} UNIT`]: SUM_SWING_TRADE_UNIT[indexYear][indexMonth][TYPE_OPERATIONS_SELL.SWING_TRADE]
+        }
+      }
+    })
+  })
+}
+
 /**
  * Compoe as operações de swing trade abaixo de 20k
  * @param {*} operations
@@ -866,6 +1021,38 @@ function composeSwingTradeFree (operations, SUM_SWING_TRADE_FREE) {
         }
       })
     )
+  })
+}
+
+/**
+ * Compoe as operações de swing trade units (tributaveis)
+ * @param {*} operations
+ * @param {*} SUM_SWING_TRADE_FREE
+ * @param {*} SUM_SWING_TRADE_UNIT Ações units
+ */
+function composeSwingTradeUnit (
+  operations,
+  SUM_SWING_TRADE_FREE,
+  SUM_SWING_TRADE_UNIT = {}
+) {
+  map(operations, (year, indexYear) => {
+    let sumSwingTradeFree = 0
+    map(year, (month, indexMonth) => {
+      if (
+        indexYear in SUM_SWING_TRADE_UNIT &&
+        indexMonth in SUM_SWING_TRADE_UNIT[indexYear]
+      ) {
+        console.log('calcular units imposto')
+        map(SUM_SWING_TRADE_UNIT[indexYear][indexMonth], (opUnit) => {
+          sumSwingTradeFree += opUnit.amountValues
+          SUM_SWING_TRADE_FREE = {
+            ...SUM_SWING_TRADE_FREE,
+            [indexYear]:
+              (SUM_SWING_TRADE_FREE?.[indexYear] || 0) + sumSwingTradeFree
+          }
+        })
+      }
+    })
   })
 }
 
@@ -1190,7 +1377,9 @@ function composerExternalDividends (docDefinition, provents) {
         `${convertCurrencyReal(item?.lucroVenda || 0)} + ${convertCurrencyReal(
           item?.totalDividendos || 0
         )}`,
-        convertCurrencyReal((item?.lucroVenda || 0) + (item?.totalDividendos || 0)),
+        convertCurrencyReal(
+          (item?.lucroVenda || 0) + (item?.totalDividendos || 0)
+        ),
         convertCurrencyReal(item?.impostoPago || 0)
       ])
     })
@@ -1377,5 +1566,7 @@ export {
   composeCommonOperationAndDayTrade,
   composeOperationsFII,
   composeTableOperationsFII,
-  sanitizaTableBensCDB
+  sanitizaTableBensCDB,
+  composeSwingTradeUnit,
+  unionSwingTradeUnit
 }
