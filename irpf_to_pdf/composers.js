@@ -1,5 +1,5 @@
-const { sum, map, sumBy, cloneDeep, groupBy } = require("lodash");
-const {
+import lodash from 'lodash'
+import {
   convertCurrencyReal,
   getCodes,
   sumAccumulator,
@@ -7,13 +7,16 @@ const {
   getOtherLastPosition,
   taxCal,
   getNode,
-} = require("./utils");
-const {
+  hasOwn,
+  isUnit
+} from './utils.js'
+import {
   TYPE_OPERATIONS_SELL,
   LIMIT_SWING_TRADE,
-  MONTHS_LABEL,
-} = require("./vars");
-const { CLASS } = require("../index");
+  MONTHS_LABEL
+} from './vars.js'
+import { CLASS } from '../index.js'
+const { sum, map, sumBy, cloneDeep, groupBy } = lodash
 
 /**
  * Compoe operações em FII
@@ -22,35 +25,35 @@ const { CLASS } = require("../index");
  * @param {*} lossesSalesFii
  * @returns
  */
-function composeOperationsFII(operations, yearAnalysis, lossesSalesFii) {
-  let mountOperationsFII = 0;
-  let mountLossOperationsFII = 0;
-  let nameOp = "";
+function composeOperationsFII (operations, yearAnalysis, lossesSalesFii) {
+  let mountOperationsFII = 0
+  let mountLossOperationsFII = 0
+  let nameOp = ''
 
   map(operations, (op, operationName) => {
     switch (operationName) {
       case TYPE_OPERATIONS_SELL.VENDA_DE_FII:
-        nameOp = operationName;
+        nameOp = operationName
         if (op.amountValues >= 0) {
-          mountOperationsFII += op.amountValues;
+          mountOperationsFII += op.amountValues
         } else {
-          mountLossOperationsFII += op.amountValues;
-          mountOperationsFII += op.amountValues;
-          if (lossesSalesFii.hasOwnProperty(yearAnalysis)) {
-            lossesSalesFii[yearAnalysis] += mountLossOperationsFII;
+          mountLossOperationsFII += op.amountValues
+          mountOperationsFII += op.amountValues
+          if (hasOwn(lossesSalesFii, yearAnalysis)) {
+            lossesSalesFii[yearAnalysis] += mountLossOperationsFII
           } else {
             lossesSalesFii = {
-              [yearAnalysis]: mountLossOperationsFII,
-            };
+              [yearAnalysis]: mountLossOperationsFII
+            }
           }
         }
-        break;
+        break
     }
-  });
+  })
 
   return nameOp === TYPE_OPERATIONS_SELL.VENDA_DE_FII
     ? mountOperationsFII
-    : null;
+    : null
 }
 
 /**
@@ -58,10 +61,10 @@ function composeOperationsFII(operations, yearAnalysis, lossesSalesFii) {
  * @param {*} operations
  * @returns
  */
-function composeTableCommonOperationAndDayTrade(operations) {
-  let tableCommonOperationAndDayTradeProcessed = {};
-  const arrayYears = Object.keys(operations);
-  const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0;
+function composeTableCommonOperationAndDayTrade (operations) {
+  const tableCommonOperationAndDayTradeProcessed = {}
+  const arrayYears = Object.keys(operations)
+  const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0
 
   map(operations, (years, indexYear) => {
     tableCommonOperationAndDayTradeProcessed[indexYear] = {
@@ -78,16 +81,16 @@ function composeTableCommonOperationAndDayTrade(operations) {
       11: {},
       12: {},
       accumulatedCommon: 0,
-      accumulatedTrade: 0,
-    };
+      accumulatedTrade: 0
+    }
 
     map(years, (months, indexMonth) => {
-      let ops = {
+      const ops = {
         commonList: [],
         dayTradeList: [],
         totalCommon: 0,
-        totalTrade: 0,
-      };
+        totalTrade: 0
+      }
       map(months, (op, operationName) => {
         switch (operationName) {
           case TYPE_OPERATIONS_SELL.SWING_TRADE:
@@ -96,46 +99,47 @@ function composeTableCommonOperationAndDayTrade(operations) {
               op.amountTransaction > LIMIT_SWING_TRADE ||
               op.amountValues < 0
             ) {
-              ops.commonList.push(op);
+              ops.commonList.push(op)
             }
-            break;
+            break
+          case `${TYPE_OPERATIONS_SELL.SWING_TRADE} UNIT`: // units são tributadas
           case TYPE_OPERATIONS_SELL.VENDA_DE_ETF:
           case TYPE_OPERATIONS_SELL.VENDA_DE_BDR:
           case TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO:
             // communs independente de valor
-            ops.commonList.push(op);
-            break;
+            ops.commonList.push(op)
+            break
           case TYPE_OPERATIONS_SELL.DAY_TRADE:
             // day trade
-            ops.dayTradeList.push(op);
-            break;
+            ops.dayTradeList.push(op)
+            break
         }
-      });
+      })
       if (ops.commonList.length) {
         ops.totalCommon = ops.commonList.length
-          ? sumBy(ops.commonList, "amountValues")
-          : 0;
+          ? sumBy(ops.commonList, 'amountValues')
+          : 0
         ops.totalTrade = ops.commonList.length
-          ? sumBy(ops.dayTradeList, "amountValues")
-          : 0;
-        tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = ops;
+          ? sumBy(ops.dayTradeList, 'amountValues')
+          : 0
+        tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = ops
         // calculando accumulado do mês
         calcAccumulatedMonth(
           indexYear,
           firstYear,
           indexMonth,
           tableCommonOperationAndDayTradeProcessed
-        );
+        )
       }
-    });
+    })
     // calculando accumulado no ano
     calcAccumulatedYear(
       indexYear,
       firstYear,
       tableCommonOperationAndDayTradeProcessed
-    );
-  });
-  return tableCommonOperationAndDayTradeProcessed;
+    )
+  })
+  return tableCommonOperationAndDayTradeProcessed
 }
 
 /**
@@ -143,10 +147,10 @@ function composeTableCommonOperationAndDayTrade(operations) {
  * @param {*} operations
  * @returns
  */
-function composeTableOperationsCriptos(operations) {
-  let tableOperationsCriptosProcessed = {};
-  const arrayYears = Object.keys(operations);
-  const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0;
+function composeTableOperationsCriptos (operations) {
+  const tableOperationsCriptosProcessed = {}
+  const arrayYears = Object.keys(operations)
+  const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0
 
   map(operations, (years, indexYear) => {
     tableOperationsCriptosProcessed[indexYear] = {
@@ -163,97 +167,97 @@ function composeTableOperationsCriptos(operations) {
       11: {},
       12: {},
       accumulatedTrade: 0,
-      accumulatedCommon: 0,
-    };
+      accumulatedCommon: 0
+    }
 
     map(years, (months, indexMonth) => {
-      let ops = {
+      const ops = {
         commonList: [],
         dayTradeList: [],
         totalCommon: 0,
-        totalTrade: 0,
-      };
+        totalTrade: 0
+      }
       map(months, (op, operationName) => {
         switch (operationName) {
           case TYPE_OPERATIONS_SELL.VENDA_DE_CRIPTOMOEDA:
             // comuns, acima de 35k para acoes ou prejuizo
             if (op.amountTransaction > LIMIT_SWING_TRADE) {
-              ops.dayTradeList.push(op);
+              ops.dayTradeList.push(op)
             } else {
-              ops.commonList.push(op);
+              ops.commonList.push(op)
             }
-            break;
+            break
         }
-      });
-      ops.totalCommon = sumBy(ops.commonList, "amountValues");
-      ops.totalTrade = sumBy(ops.dayTradeList, "amountValues");
-      tableOperationsCriptosProcessed[indexYear][indexMonth] = ops;
+      })
+      ops.totalCommon = sumBy(ops.commonList, 'amountValues')
+      ops.totalTrade = sumBy(ops.dayTradeList, 'amountValues')
+      tableOperationsCriptosProcessed[indexYear][indexMonth] = ops
       // calculando accumulado do mês
       calcAccumulatedMonth(
         indexYear,
         firstYear,
         indexMonth,
         tableOperationsCriptosProcessed
-      );
-    });
+      )
+    })
     // calculando accumulado no ano
-    calcAccumulatedYear(indexYear, firstYear, tableOperationsCriptosProcessed);
-  });
-  return tableOperationsCriptosProcessed;
+    calcAccumulatedYear(indexYear, firstYear, tableOperationsCriptosProcessed)
+  })
+  return tableOperationsCriptosProcessed
 }
 
-function getAccumulatedCommonRecursiveValueMonths(
+function getAccumulatedCommonRecursiveValueMonths (
   node,
   indexYear,
   indexMonth,
   keySum
 ) {
-  const _selectNode = node[indexYear][indexMonth];
+  const _selectNode = node[indexYear][indexMonth]
   if (indexMonth === 1) {
     if (!Object.keys(_selectNode).length) {
-      return 0;
+      return 0
     }
   }
   if (Object.keys(_selectNode).length) {
-    if (keySum === "totalTrade") {
-      return _selectNode.accumulatedTrade + _selectNode[keySum];
+    if (keySum === 'totalTrade') {
+      return _selectNode.accumulatedTrade + _selectNode[keySum]
     }
-    return _selectNode.accumulatedCommon + _selectNode[keySum];
+    return _selectNode.accumulatedCommon + _selectNode[keySum]
   }
   return getAccumulatedCommonRecursiveValueMonths(
     node,
     indexYear,
     indexMonth - 1,
     keySum
-  );
+  )
 }
 
-function calcAccumulatedMonth(
+function calcAccumulatedMonth (
   indexYear,
   firstYear,
   indexMonth,
   tableCommonOperationAndDayTradeProcessed
 ) {
   const itemMonth =
-    tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth];
+    tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth]
   if (indexYear === firstYear) {
-    if (indexMonth === "1") {
+    if (indexMonth === '1') {
       // é o primeiro mês
       tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = {
         ...itemMonth,
         accumulatedCommon: sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalCommon",
+          'totalCommon',
           indexMonth
         ),
         accumulatedTrade: sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalTrade",
+          'totalTrade',
           indexMonth
-        ),
-      };
+        )
+      }
     } else {
       tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth] = {
         ...itemMonth,
@@ -261,35 +265,35 @@ function calcAccumulatedMonth(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
           indexMonth - 1,
-          "totalCommon"
+          'totalCommon'
         ),
         accumulatedTrade: getAccumulatedCommonRecursiveValueMonths(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
           indexMonth - 1,
-          "totalTrade"
-        ),
-      };
+          'totalTrade'
+        )
+      }
     }
   } else {
     const _firstPosition = getLastOrFirstPositionYear(
       tableCommonOperationAndDayTradeProcessed,
       indexYear,
       1
-    );
-    if (_firstPosition.month == indexMonth) {
+    )
+    if (String(_firstPosition.month) === String(indexMonth)) {
       // verifica é a primeira operação do ano
-      const list = Object.keys(tableCommonOperationAndDayTradeProcessed);
-      const oldYear = list.indexOf(indexYear);
+      const list = Object.keys(tableCommonOperationAndDayTradeProcessed)
+      const oldYear = list.indexOf(indexYear)
       const oldYearIndex = Object.keys(
         tableCommonOperationAndDayTradeProcessed
-      )[oldYear - 1];
+      )[oldYear - 1]
 
       const _lastAccumulatorCommon =
         tableCommonOperationAndDayTradeProcessed[oldYearIndex]
-          .accumulatedCommon;
+          .accumulatedCommon
       const _lastAccumulatorTrade =
-        tableCommonOperationAndDayTradeProcessed[oldYearIndex].accumulatedTrade;
+        tableCommonOperationAndDayTradeProcessed[oldYearIndex].accumulatedTrade
       // existe acumulado mes anterior negativo COMMON
       tableCommonOperationAndDayTradeProcessed[indexYear][
         indexMonth
@@ -298,8 +302,8 @@ function calcAccumulatedMonth(
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalCommon"
-        );
+          'totalCommon'
+        )
       tableCommonOperationAndDayTradeProcessed[indexYear][
         indexMonth
       ].accumulatedTrade =
@@ -307,14 +311,14 @@ function calcAccumulatedMonth(
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalTrade"
-        );
+          'totalTrade'
+        )
     } else {
       const _pastPosition = getOtherLastPosition(
         tableCommonOperationAndDayTradeProcessed,
         indexYear,
         indexMonth
-      );
+      )
       // existe acumulado mes anterior negativo COMMON
 
       if (_pastPosition.op.accumulatedCommon < 0) {
@@ -323,16 +327,16 @@ function calcAccumulatedMonth(
         ].accumulatedCommon = sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalCommon"
-        );
+          'totalCommon'
+        )
       } else {
         tableCommonOperationAndDayTradeProcessed[indexYear][
           indexMonth
         ].accumulatedCommon = sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalCommon"
-        );
+          'totalCommon'
+        )
       }
       // existe acumulado mes anterior negativo TRADER
       if (_pastPosition.op.accumulatedTrade < 0) {
@@ -343,38 +347,38 @@ function calcAccumulatedMonth(
           sumAccumulator(
             tableCommonOperationAndDayTradeProcessed,
             indexYear,
-            "totalTrade"
-          );
+            'totalTrade'
+          )
       } else {
         tableCommonOperationAndDayTradeProcessed[indexYear][
           indexMonth
         ].accumulatedTrade = sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalTrade"
-        );
+          'totalTrade'
+        )
       }
     }
   }
   const acc =
     tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth]
-      .accumulatedCommon;
+      .accumulatedCommon
   const accTrader =
     tableCommonOperationAndDayTradeProcessed[indexYear][indexMonth]
-      .accumulatedTrade;
+      .accumulatedTrade
   if (acc > 0) {
     tableCommonOperationAndDayTradeProcessed[indexYear][
       indexMonth
-    ].accumulatedCommon = 0;
+    ].accumulatedCommon = 0
   }
   if (accTrader > 0) {
     tableCommonOperationAndDayTradeProcessed[indexYear][
       indexMonth
-    ].accumulatedTrade = 0;
+    ].accumulatedTrade = 0
   }
 }
 
-function calcAccumulatedYear(
+function calcAccumulatedYear (
   indexYear,
   firstYear,
   tableCommonOperationAndDayTradeProcessed
@@ -384,21 +388,21 @@ function calcAccumulatedYear(
       sumAccumulator(
         tableCommonOperationAndDayTradeProcessed,
         indexYear,
-        "totalCommon"
-      );
+        'totalCommon'
+      )
     tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade =
       sumAccumulator(
         tableCommonOperationAndDayTradeProcessed,
         indexYear,
-        "totalTrade"
-      );
+        'totalTrade'
+      )
   } else {
     // existe acumulado ano anterior negativo COMMON
-    const list = Object.keys(tableCommonOperationAndDayTradeProcessed);
-    const oldYear = list.indexOf(indexYear);
+    const list = Object.keys(tableCommonOperationAndDayTradeProcessed)
+    const oldYear = list.indexOf(indexYear)
     const oldYearIndex = Object.keys(tableCommonOperationAndDayTradeProcessed)[
       oldYear - 1
-    ];
+    ]
     if (
       tableCommonOperationAndDayTradeProcessed[oldYearIndex].accumulatedCommon <
       0
@@ -409,15 +413,15 @@ function calcAccumulatedYear(
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalCommon"
-        );
+          'totalCommon'
+        )
     } else {
       tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedCommon =
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalCommon"
-        );
+          'totalCommon'
+        )
     }
 
     // existe acumulado ano anterior negativo TRADER
@@ -431,26 +435,26 @@ function calcAccumulatedYear(
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalTrade"
-        );
+          'totalTrade'
+        )
     } else {
       tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade =
         sumAccumulator(
           tableCommonOperationAndDayTradeProcessed,
           indexYear,
-          "totalTrade"
-        );
+          'totalTrade'
+        )
     }
   }
   const acc =
-    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedCommon;
+    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedCommon
   const accTrader =
-    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade;
+    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade
   if (acc > 0) {
-    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedCommon = 0;
+    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedCommon = 0
   }
   if (accTrader > 0) {
-    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade = 0;
+    tableCommonOperationAndDayTradeProcessed[indexYear].accumulatedTrade = 0
   }
 }
 
@@ -464,7 +468,7 @@ function calcAccumulatedYear(
  * @param {*} operationsGeneral
  * @returns
  */
-function composeCommonOperationAndDayTrade(
+function composeCommonOperationAndDayTrade (
   operations,
   yearAnalysis,
   monthAnalysis,
@@ -473,24 +477,24 @@ function composeCommonOperationAndDayTrade(
   operationsGeneral
 ) {
   if (!monthsFilter.includes(monthAnalysis)) {
-    return null;
+    return null
   }
   if (!operations.commonList.length && !operations.dayTradeList.length) {
-    return null;
+    return null
   }
 
-  let negativePastCommon = 0;
-  let negativePastTrade = 0;
-  const indexAtual = monthsFilter.indexOf(monthAnalysis);
+  let negativePastCommon = 0
+  let negativePastTrade = 0
+  const indexAtual = monthsFilter.indexOf(monthAnalysis)
 
-  const arrayYears = Object.keys(operationsFull);
-  const firstYear = arrayYears.length > 0 ? Number(arrayYears[0]) : 0;
+  const arrayYears = Object.keys(operationsFull)
+  const firstYear = arrayYears.length > 0 ? Number(arrayYears[0]) : 0
   const totalCommon = convertCurrencyReal(
     convertCurrencyReal(operations.totalCommon)
-  );
+  )
   const totalTrade = convertCurrencyReal(
     convertCurrencyReal(operations.totalTrade)
-  );
+  )
 
   if (yearAnalysis !== firstYear) {
     // se for diferente do ano inicial de investimento
@@ -499,221 +503,304 @@ function composeCommonOperationAndDayTrade(
       const indexLastYear = Object.keys(operationsGeneral)
         .filter((i) => i < yearAnalysis)
         .sort()
-        .pop();
-      negativePastCommon = operationsGeneral[indexLastYear].accumulatedCommon;
-      negativePastTrade = operationsGeneral[indexLastYear].accumulatedTrade;
+        .pop()
+      negativePastCommon = operationsGeneral[indexLastYear].accumulatedCommon
+      negativePastTrade = operationsGeneral[indexLastYear].accumulatedTrade
     } else {
       negativePastCommon =
         operationsGeneral[yearAnalysis][monthsFilter[indexAtual - 1]]
-          .accumulatedCommon;
+          .accumulatedCommon
       negativePastTrade =
         operationsGeneral[yearAnalysis][monthsFilter[indexAtual - 1]]
-          .accumulatedTrade;
+          .accumulatedTrade
     }
   } else {
     if (indexAtual === 0) {
       // se for a primeira operação do ano
-      negativePastCommon = 0;
-      negativePastTrade = 0;
+      negativePastCommon = 0
+      negativePastTrade = 0
     } else {
       negativePastCommon =
         operationsGeneral[yearAnalysis][monthsFilter[indexAtual]]
-          .accumulatedCommon;
+          .accumulatedCommon
       negativePastTrade =
         operationsGeneral[yearAnalysis][monthsFilter[indexAtual]]
-          .accumulatedTrade;
+          .accumulatedTrade
     }
   }
 
   const baseCalcTemp =
     negativePastCommon >= operations.totalCommon
       ? 0
-      : operations.totalCommon + negativePastCommon;
-  const baseCalcCommon = baseCalcTemp < 0 ? 0 : baseCalcTemp;
+      : operations.totalCommon + negativePastCommon
+  const baseCalcCommon = baseCalcTemp < 0 ? 0 : baseCalcTemp
   const baseCalcTradeTemp =
     negativePastTrade >= operations.totalTrade
       ? 0
-      : operations.totalTrade + negativePastTrade;
-  const baseCalcTrade = baseCalcTradeTemp < 0 ? 0 : baseCalcTradeTemp;
+      : operations.totalTrade + negativePastTrade
+  const baseCalcTrade = baseCalcTradeTemp < 0 ? 0 : baseCalcTradeTemp
   const prejuizoCompensarComumTemp =
-    negativePastCommon + operations.totalCommon;
+    negativePastCommon + operations.totalCommon
   const prejuizoCompensarComum =
-    prejuizoCompensarComumTemp >= 0 ? 0 : prejuizoCompensarComumTemp;
-  const prejuizoCompensarTradeTemp = negativePastTrade + operations.totalTrade;
+    prejuizoCompensarComumTemp >= 0 ? 0 : prejuizoCompensarComumTemp
+  const prejuizoCompensarTradeTemp = negativePastTrade + operations.totalTrade
   const prejuizoCompensarTrade =
-    prejuizoCompensarTradeTemp >= 0 ? 0 : prejuizoCompensarTradeTemp;
+    prejuizoCompensarTradeTemp >= 0 ? 0 : prejuizoCompensarTradeTemp
 
   const title = {
-    pageBreak: "before",
+    pageBreak: 'before',
     text: `\n\n${MONTHS_LABEL[monthAnalysis]} - ${yearAnalysis}`,
-    style: "title",
-  };
+    style: 'title'
+  }
 
   const content1 = {
-    style: "tableOperation",
+    style: 'tableOperation',
     table: {
-      widths: [200, "*", "*"],
+      widths: [200, '*', '*'],
       body: [
-        composeHeaderTable(["Resultados", "Operações Comuns", "Day-Trade"]),
+        composeHeaderTable(['Resultados', 'Operações Comuns', 'Day-Trade']),
         [
-          { text: "Mercado à Vista - Ações", style: { color: "black" } },
-          { text: totalCommon, style: { color: "blue", bold: true } },
-          { text: totalTrade, style: { color: "blue", bold: true } },
-        ],
-      ],
-    },
-  };
+          { text: 'Mercado à Vista - Ações', style: { color: 'black' } },
+          { text: totalCommon, style: { color: 'blue', bold: true } },
+          { text: totalTrade, style: { color: 'blue', bold: true } }
+        ]
+      ]
+    }
+  }
 
   // Alíquotas 15% e 20%
   const content2 = {
-    style: "tableOperation",
+    style: 'tableOperation',
     table: {
-      widths: [200, "*", "*"],
+      widths: [200, '*', '*'],
       body: [
-        composeHeaderTable(["Resultados", "Operações Comuns", "Day-Trade"]),
+        composeHeaderTable(['Resultados', 'Operações Comuns', 'Day-Trade']),
         [
-          { text: "RESULTADO LÍQUIDO DO MÊS", style: { color: "black" } },
-          { text: totalCommon, style: { color: "blue", bold: true } },
+          { text: 'RESULTADO LÍQUIDO DO MÊS', style: { color: 'black' } },
+          { text: totalCommon, style: { color: 'blue', bold: true } },
           {
             text: convertCurrencyReal(0),
-            style: { color: "blue", bold: true },
-          },
+            style: { color: 'blue', bold: true }
+          }
         ],
         [
           {
-            text: "Resultado negativo até o mês anterior",
-            style: { color: "black" },
+            text: 'Resultado negativo até o mês anterior',
+            style: { color: 'black' }
           },
           convertCurrencyReal(Math.abs(negativePastCommon)),
-          convertCurrencyReal(negativePastTrade),
+          convertCurrencyReal(negativePastTrade)
         ],
         [
-          { text: "BASE DE CÁLCULO DO IMPOSTO", style: { color: "black" } },
+          { text: 'BASE DE CÁLCULO DO IMPOSTO', style: { color: 'black' } },
           {
             text: convertCurrencyReal(baseCalcCommon),
-            style: { color: "blue", bold: true },
+            style: { color: 'blue', bold: true }
           },
           {
             text: convertCurrencyReal(baseCalcTrade),
-            style: { color: "blue", bold: true },
-          },
+            style: { color: 'blue', bold: true }
+          }
         ],
         [
-          { text: "Prejuízo a compensar", style: { color: "black" } },
+          { text: 'Prejuízo a compensar', style: { color: 'black' } },
           convertCurrencyReal(Math.abs(prejuizoCompensarComum)),
-          convertCurrencyReal(prejuizoCompensarTrade),
+          convertCurrencyReal(prejuizoCompensarTrade)
         ],
         [
-          { text: "Alíquota do imposto", style: { color: "black" } },
-          { text: "15%", style: { color: "black" } },
-          { text: "20%", style: { color: "black" } },
+          { text: 'Alíquota do imposto', style: { color: 'black' } },
+          { text: '15%', style: { color: 'black' } },
+          { text: '20%', style: { color: 'black' } }
         ],
         [
-          { text: "IMPOSTO DEVIDO", style: { color: "black" } },
+          { text: 'IMPOSTO DEVIDO', style: { color: 'black' } },
           {
             text: taxCal(baseCalcCommon, 0.15),
-            style: { color: "blue", bold: true },
+            style: { color: 'blue', bold: true }
           },
           {
             text: taxCal(baseCalcTrade, 0.2),
-            style: { color: "blue", bold: true },
-          },
-        ],
-      ],
-    },
-  };
+            style: { color: 'blue', bold: true }
+          }
+        ]
+      ]
+    }
+  }
 
   const content3 = {
-    style: "tableOperation",
+    style: 'tableOperation',
     table: {
-      widths: ["*", "*"],
+      widths: ['*', '*'],
       body: [
-        composeHeaderTable([{ text: "Consolidação do mês", colSpan: 2 }, {}]),
+        composeHeaderTable([{ text: 'Consolidação do mês', colSpan: 2 }, {}]),
         [
-          { text: "Total do imposto devido", style: { color: "black" } },
+          { text: 'Total do imposto devido', style: { color: 'black' } },
           {
             text: convertCurrencyReal(
               baseCalcCommon * 0.15 + baseCalcTrade * 0.2
             ),
-            style: { color: "blue", bold: true },
-          },
+            style: { color: 'blue', bold: true }
+          }
         ],
         [
-          { text: "IR fonte de Day-Trade no Mês", style: { color: "black" } },
-          convertCurrencyReal(0),
-        ],
-        [
-          {
-            text: "IR fonte de Day-Trade nos meses anteriores",
-            style: { color: "black" },
-          },
-          convertCurrencyReal(0),
+          { text: 'IR fonte de Day-Trade no Mês', style: { color: 'black' } },
+          convertCurrencyReal(0)
         ],
         [
           {
-            text: "IR fonte de Day-Trade a compensar",
-            style: { color: "black" },
+            text: 'IR fonte de Day-Trade nos meses anteriores',
+            style: { color: 'black' }
           },
-          convertCurrencyReal(0),
+          convertCurrencyReal(0)
         ],
         [
           {
-            text: "IR fonte (Lei nº 11.033/2004) no mês",
-            style: { color: "black" },
+            text: 'IR fonte de Day-Trade a compensar',
+            style: { color: 'black' }
           },
-          convertCurrencyReal(0),
+          convertCurrencyReal(0)
         ],
         [
           {
-            text: "IR fonte (Lei nº 11.033/2004) nos meses anteriores",
-            style: { color: "black" },
+            text: 'IR fonte (Lei nº 11.033/2004) no mês',
+            style: { color: 'black' }
           },
-          convertCurrencyReal(0),
+          convertCurrencyReal(0)
         ],
         [
           {
-            text: "IR fonte (Lei nº 11.033/2004) meses a compensar",
-            style: { color: "black" },
+            text: 'IR fonte (Lei nº 11.033/2004) nos meses anteriores',
+            style: { color: 'black' }
           },
-          convertCurrencyReal(0),
+          convertCurrencyReal(0)
         ],
         [
-          { text: "Imposto a pagar", style: { color: "black" } },
+          {
+            text: 'IR fonte (Lei nº 11.033/2004) meses a compensar',
+            style: { color: 'black' }
+          },
+          convertCurrencyReal(0)
+        ],
+        [
+          { text: 'Imposto a pagar', style: { color: 'black' } },
           {
             text: convertCurrencyReal(
               baseCalcCommon * 0.15 + baseCalcTrade * 0.2
             ),
-            style: { color: "blue", bold: true },
-          },
+            style: { color: 'blue', bold: true }
+          }
         ],
         [
-          { text: "Imposto pago", style: { color: "black" } },
-          convertCurrencyReal(baseCalcCommon * 0.15 + baseCalcTrade * 0.2),
-        ],
-      ],
-    },
-  };
-  return { title, content1, content2, content3 };
+          { text: 'Imposto pago', style: { color: 'black' } },
+          convertCurrencyReal(baseCalcCommon * 0.15 + baseCalcTrade * 0.2)
+        ]
+      ]
+    }
+  }
+  return { title, content1, content2, content3 }
 }
 
 /**
  * Monta o total das operações
  * @param {*} operation
  */
-function composeAmountOperations(operation, op) {
-  const _amountTransactionToMonth = sum(operation.transactions);
+function composeAmountOperations (operation, op) {
+  if (op.ticker === 'TAEE11') {
+    console.log('debug')
+  }
+  const _amountTransactionToMonth = sum(operation.transactions)
   const _amountLoss = operation.values
     .filter((v) => v < 0)
-    .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
   const _amountValues =
-    _amountTransactionToMonth > LIMIT_SWING_TRADE
+    _amountTransactionToMonth > LIMIT_SWING_TRADE ||
+    isUnit(op.ticker, op.classe, CLASS.ACAO)
       ? sum(operation.values)
-      : _amountLoss;
-  operation["amountTransaction"] = _amountTransactionToMonth;
-  operation["amountValues"] =
+      : _amountLoss
+  operation.amountTransaction = _amountTransactionToMonth
+  operation.amountValues =
     op.operation === TYPE_OPERATIONS_SELL.SWING_TRADE
       ? _amountValues
-      : sum(operation.values);
+      : sum(operation.values)
+}
+
+/**
+ * Monta vendas swing trade unit
+ * @param {*} yearAnalysis
+ * @param {*} indexMonth
+ * @param {*} op
+ * @param {*} SUM_SWING_TRADE_UNIT
+ * @returns
+ */
+function mountSalesSwingTradeUnit (
+  yearAnalysis,
+  indexMonth,
+  op,
+  SUM_SWING_TRADE_UNIT
+) {
+  if (
+    op.operation !== TYPE_OPERATIONS_SELL.SWING_TRADE ||
+    !isUnit(op.ticker, op.classe, CLASS.ACAO)
+  ) {
+    return null
+  }
+
+  if (!hasOwn(SUM_SWING_TRADE_UNIT, yearAnalysis)) {
+    // nao tem o ano
+    SUM_SWING_TRADE_UNIT[yearAnalysis] = {
+      [indexMonth]: {
+        [op.ticker]: {
+          transactions: [op.transaction],
+          values: [op.value],
+          name: op.name,
+          ticker: op.ticker,
+          type: op.type,
+          classe: op.classe,
+          document_number_admin: op.document_number_admin,
+          document_number_principal: op.document_number_principal
+        }
+      }
+    }
+    composeAmountOperations(
+      SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker],
+      op
+    )
+  } else {
+    if (hasOwn(SUM_SWING_TRADE_UNIT[yearAnalysis], op.ticker)) {
+      // se tem o ticker
+      SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][
+        op.ticker
+      ].transactions.push(op.transaction)
+      SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker].values.push(
+        op.value
+      )
+      composeAmountOperations(
+        SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker],
+        op
+      )
+    } else {
+      // não tem o ticker
+      SUM_SWING_TRADE_UNIT[yearAnalysis] = {
+        ...SUM_SWING_TRADE_UNIT[yearAnalysis],
+        [indexMonth]: {
+          [op.ticker]: {
+            transactions: [op.transaction],
+            values: [op.value],
+            name: op.name,
+            ticker: op.ticker,
+            type: op.type,
+            classe: op.classe,
+            document_number_admin: op.document_number_admin,
+            document_number_principal: op.document_number_principal
+          }
+        }
+      }
+      composeAmountOperations(
+        SUM_SWING_TRADE_UNIT[yearAnalysis][indexMonth][op.ticker],
+        op
+      )
+    }
+  }
 }
 
 /**
@@ -723,16 +810,16 @@ function composeAmountOperations(operation, op) {
  * @param {*} op
  * @returns
  */
-function mountSalesFiInfra(
+function mountSalesFiInfra (
   yearAnalysis,
   indexMonth,
   op,
   SUM_SWING_TRADE_FREE_99
 ) {
   if (op.operation !== TYPE_OPERATIONS_SELL.VENDA_DE_FI_INFRA) {
-    return null;
+    return null
   }
-  if (!SUM_SWING_TRADE_FREE_99.hasOwnProperty(yearAnalysis, indexMonth, op)) {
+  if (!hasOwn(SUM_SWING_TRADE_FREE_99, yearAnalysis)) {
     // nao tem o ano
     SUM_SWING_TRADE_FREE_99[yearAnalysis] = {
       [op.ticker]: {
@@ -743,24 +830,24 @@ function mountSalesFiInfra(
         type: op.type,
         classe: op.classe,
         document_number_admin: op.document_number_admin,
-        document_number_principal: op.document_number_principal,
-      },
-    };
+        document_number_principal: op.document_number_principal
+      }
+    }
     composeAmountOperations(
       SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker],
       op
-    );
+    )
   } else {
-    if (SUM_SWING_TRADE_FREE_99[yearAnalysis].hasOwnProperty(op.ticker)) {
+    if (hasOwn(SUM_SWING_TRADE_FREE_99[yearAnalysis], op.ticker)) {
       // se tem o ticker
       SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker].transactions.push(
         op.transaction
-      );
-      SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker].values.push(op.value);
+      )
+      SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker].values.push(op.value)
       composeAmountOperations(
         SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker],
         op
-      );
+      )
     } else {
       // não tem o ticker
       SUM_SWING_TRADE_FREE_99[yearAnalysis] = {
@@ -773,13 +860,13 @@ function mountSalesFiInfra(
           type: op.type,
           classe: op.classe,
           document_number_admin: op.document_number_admin,
-          document_number_principal: op.document_number_principal,
-        },
-      };
+          document_number_principal: op.document_number_principal
+        }
+      }
       composeAmountOperations(
         SUM_SWING_TRADE_FREE_99[yearAnalysis][op.ticker],
         op
-      );
+      )
     }
   }
 }
@@ -792,62 +879,128 @@ function mountSalesFiInfra(
  * @param {*} op
  * @returns
  */
-function composeOperations(
+function composeOperations (
   operations,
   indexMonth,
   indexYear,
   op,
-  SUM_SWING_TRADE_FREE_99
+  SUM_SWING_TRADE_FREE_99,
+  SUM_SWING_TRADE_UNIT
 ) {
-  mountSalesFiInfra(indexYear, indexMonth, op, SUM_SWING_TRADE_FREE_99);
-  if (!operations.hasOwnProperty(indexYear)) {
+  mountSalesFiInfra(indexYear, indexMonth, op, SUM_SWING_TRADE_FREE_99)
+  if (isUnit(op.ticker, op.classe, CLASS.ACAO)) {
+    if (!hasOwn(SUM_SWING_TRADE_UNIT, indexYear)) {
+      SUM_SWING_TRADE_UNIT[indexYear] = {
+        [indexMonth]: {
+          [op.operation]: {
+            transactions: [op.transaction],
+            values: [op.value]
+          }
+        }
+      }
+      composeAmountOperations(
+        SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+        op
+      )
+    } else {
+      if (!hasOwn(SUM_SWING_TRADE_UNIT[indexYear], indexMonth)) {
+        SUM_SWING_TRADE_UNIT[indexYear][indexMonth] = {
+          [op.operation]: {
+            transactions: [op.transaction],
+            values: [op.value]
+          }
+        }
+        composeAmountOperations(
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+          op
+        )
+      } else {
+        if (!hasOwn(SUM_SWING_TRADE_UNIT[indexYear][indexMonth], op.operation)) {
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation] = {
+            transactions: [op.transaction],
+            values: [op.value]
+          }
+          composeAmountOperations(
+            SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+            op
+          )
+        } else {
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation].transactions.push(
+            op.transaction
+          )
+          SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation].values.push(op.value)
+          composeAmountOperations(
+            SUM_SWING_TRADE_UNIT[indexYear][indexMonth][op.operation],
+            op
+          )
+        }
+      }
+    }
+    return null
+  }
+  if (!hasOwn(operations, indexYear)) {
     operations[indexYear] = {
       [indexMonth]: {
         [op.operation]: {
           transactions: [op.transaction],
-          values: [op.value],
-        },
-      },
-    };
+          values: [op.value]
+        }
+      }
+    }
     composeAmountOperations(
       operations[indexYear][indexMonth][op.operation],
       op
-    );
+    )
   } else {
-    if (!operations[indexYear].hasOwnProperty(indexMonth)) {
+    if (!hasOwn(operations[indexYear], indexMonth)) {
       operations[indexYear][indexMonth] = {
         [op.operation]: {
           transactions: [op.transaction],
-          values: [op.value],
-        },
-      };
+          values: [op.value]
+        }
+      }
       composeAmountOperations(
         operations[indexYear][indexMonth][op.operation],
         op
-      );
+      )
     } else {
-      if (!operations[indexYear][indexMonth].hasOwnProperty(op.operation)) {
+      if (!hasOwn(operations[indexYear][indexMonth], op.operation)) {
         operations[indexYear][indexMonth][op.operation] = {
           transactions: [op.transaction],
-          values: [op.value],
-        };
+          values: [op.value]
+        }
         composeAmountOperations(
           operations[indexYear][indexMonth][op.operation],
           op
-        );
+        )
       } else {
         operations[indexYear][indexMonth][op.operation].transactions.push(
           op.transaction
-        );
-        operations[indexYear][indexMonth][op.operation].values.push(op.value);
+        )
+        operations[indexYear][indexMonth][op.operation].values.push(op.value)
         composeAmountOperations(
           operations[indexYear][indexMonth][op.operation],
           op
-        );
+        )
       }
     }
   }
-  return operations;
+  return operations
+}
+
+function unionSwingTradeUnit (operations, SUM_SWING_TRADE_UNIT) {
+  map(operations, (year, indexYear) => {
+    map(year, (month, indexMonth) => {
+      if (
+        indexYear in SUM_SWING_TRADE_UNIT &&
+        indexMonth in SUM_SWING_TRADE_UNIT[indexYear]) {
+        operations[indexYear][indexMonth] = {
+          ...operations[indexYear][indexMonth],
+          [`${TYPE_OPERATIONS_SELL.SWING_TRADE} UNIT`]: SUM_SWING_TRADE_UNIT[indexYear][indexMonth][TYPE_OPERATIONS_SELL.SWING_TRADE]
+        }
+      }
+    })
+  })
 }
 
 /**
@@ -855,20 +1008,52 @@ function composeOperations(
  * @param {*} operations
  * @param {*} SUM_SWING_TRADE_FREE
  */
-function composeSwingTradeFree(operations, SUM_SWING_TRADE_FREE) {
+function composeSwingTradeFree (operations, SUM_SWING_TRADE_FREE) {
   map(operations, (year, indexYear) => {
-    let sumSwingTradeFree = 0;
+    let sumSwingTradeFree = 0
     map(year, (month) =>
       map(month, (operation, indexOp) => {
         if (indexOp === TYPE_OPERATIONS_SELL.SWING_TRADE) {
           if (operation.amountTransaction <= LIMIT_SWING_TRADE) {
-            sumSwingTradeFree += operation.amountValues;
-            SUM_SWING_TRADE_FREE[indexYear] = sumSwingTradeFree;
+            sumSwingTradeFree += operation.amountValues
+            SUM_SWING_TRADE_FREE[indexYear] = sumSwingTradeFree
           }
         }
       })
-    );
-  });
+    )
+  })
+}
+
+/**
+ * Compoe as operações de swing trade units (tributaveis)
+ * @param {*} operations
+ * @param {*} SUM_SWING_TRADE_FREE
+ * @param {*} SUM_SWING_TRADE_UNIT Ações units
+ */
+function composeSwingTradeUnit (
+  operations,
+  SUM_SWING_TRADE_FREE,
+  SUM_SWING_TRADE_UNIT = {}
+) {
+  map(operations, (year, indexYear) => {
+    let sumSwingTradeFree = 0
+    map(year, (month, indexMonth) => {
+      if (
+        indexYear in SUM_SWING_TRADE_UNIT &&
+        indexMonth in SUM_SWING_TRADE_UNIT[indexYear]
+      ) {
+        console.log('calcular units imposto')
+        map(SUM_SWING_TRADE_UNIT[indexYear][indexMonth], (opUnit) => {
+          sumSwingTradeFree += opUnit.amountValues
+          SUM_SWING_TRADE_FREE = {
+            ...SUM_SWING_TRADE_FREE,
+            [indexYear]:
+              (SUM_SWING_TRADE_FREE?.[indexYear] || 0) + sumSwingTradeFree
+          }
+        })
+      }
+    })
+  })
 }
 
 /**
@@ -876,39 +1061,39 @@ function composeSwingTradeFree(operations, SUM_SWING_TRADE_FREE) {
  * @param {*} provents
  * @returns
  */
-function composeProvents(provents) {
+function composeProvents (provents) {
   const externalProvents =
-    provents && provents.hasOwnProperty("external") ? provents.external : null;
-  if (provents && provents.hasOwnProperty("external")) {
-    delete provents.external;
+    provents && hasOwn(provents, 'external') ? provents.external : null
+  if (provents && hasOwn(provents, 'external')) {
+    delete provents.external
   }
-  const sortProvents = Object.keys(provents).sort();
-  const dividends = [];
-  const jcp = [];
-  const rendiments = [];
-  const rendimentsJCP = [];
+  const sortProvents = Object.keys(provents).sort()
+  const dividends = []
+  const jcp = []
+  const rendiments = []
+  const rendimentsJCP = []
 
   sortProvents.forEach((item) => {
     if (provents[item].amountDividend) {
       dividends.push([
-        "09",
+        '09',
         provents[item].document_number_principal,
         provents[item].name,
-        convertCurrencyReal(provents[item].amountDividend),
-      ]);
+        convertCurrencyReal(provents[item].amountDividend)
+      ])
     }
     if (provents[item].amountJcp) {
       jcp.push([
-        "10",
+        '10',
         provents[item].document_number_principal,
         provents[item].name,
-        convertCurrencyReal(provents[item].amountJcp || 0),
-      ]);
+        convertCurrencyReal(provents[item].amountJcp || 0)
+      ])
     }
 
     if (provents[item].amountRendiment) {
       rendiments.push([
-        "99",
+        '99',
         provents[item].document_number_principal,
         provents[item].name,
         `Rendimentos de ${item} - (Administradora: ${
@@ -916,26 +1101,26 @@ function composeProvents(provents) {
             ? provents[item].admin
             : provents[item].document_number_principal
         })`,
-        convertCurrencyReal(provents[item].amountRendiment || 0),
-      ]);
+        convertCurrencyReal(provents[item].amountRendiment || 0)
+      ])
     }
     if (provents[item].amountRendimentJCP) {
       rendimentsJCP.push([
-        "06",
+        '06',
         provents[item].document_number_principal,
         provents[item].name,
         `Rendimentos tributados sobre juros recebidos de (${provents[item].name})`,
-        convertCurrencyReal(provents[item].amountRendimentJCP),
-      ]);
+        convertCurrencyReal(provents[item].amountRendimentJCP)
+      ])
     }
-  });
+  })
   return {
     dividends,
     jcp,
     rendiments,
     rendimentsJCP,
-    external: externalProvents,
-  };
+    external: externalProvents
+  }
 }
 
 /**
@@ -944,56 +1129,56 @@ function composeProvents(provents) {
  * @param {*} tds
  * @returns
  */
-function composeRendimentsCdbs(cdbs, tds) {
-  const sortProvents = Object.keys(cdbs).sort();
-  const rendiments = [];
-  const rendimentsFiltered = [];
-  let agroupByDocumentNumber = {};
+function composeRendimentsCdbs (cdbs, tds) {
+  const sortProvents = Object.keys(cdbs).sort()
+  const rendiments = []
+  const rendimentsFiltered = []
+  let agroupByDocumentNumber = {}
 
   sortProvents.forEach((item) => {
-    const type = item.split("-").shift();
+    const type = item.split('-').shift()
     if (cdbs[item].amountRendiment) {
       switch (type) {
-        case "lci":
-        case "lca":
-        case "cra":
-        case "cri":
+        case 'lci':
+        case 'lca':
+        case 'cra':
+        case 'cri':
           rendimentsFiltered.push({
-            tipo: "12",
+            tipo: '12',
             document: cdbs[item].document_number_principal,
             name: cdbs[item].name,
             descricao: `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
-            valor: cdbs[item].amountRendiment,
-          });
-          break;
+            valor: cdbs[item].amountRendiment
+          })
+          break
 
         default:
           rendimentsFiltered.push({
-            tipo: "06",
+            tipo: '06',
             document: cdbs[item].document_number_principal,
             name: cdbs[item].name,
             descricao: `Rendimentos tributados sobre juros recebidos de (${cdbs[item].name})`,
-            valor: cdbs[item].amountRendiment,
-          });
-          break;
+            valor: cdbs[item].amountRendiment
+          })
+          break
       }
     }
-  });
-  agroupByDocumentNumber = groupBy(rendimentsFiltered, "document");
+  })
+  agroupByDocumentNumber = groupBy(rendimentsFiltered, 'document')
   map(agroupByDocumentNumber, (item) => {
-    const sum = sumBy(item, "valor");
+    const sum = sumBy(item, 'valor')
     rendiments.push([
       item[0].tipo,
       item[0].document,
       item[0].name,
       item[0].descricao,
-      convertCurrencyReal(sum),
-    ]);
-  });
-  rendiments.push(...tds);
+      convertCurrencyReal(sum)
+    ])
+  })
+  rendiments.push(...tds)
   return {
-    rendiments,
-  };
+    rendiments
+  }
 }
 
 /**
@@ -1001,50 +1186,50 @@ function composeRendimentsCdbs(cdbs, tds) {
  * @param {*} tds
  * @returns
  */
-function composeRendimentsTds(tds) {
-  const sortProvents = Object.keys(tds).sort();
-  const rendiments = [];
+function composeRendimentsTds (tds) {
+  const sortProvents = Object.keys(tds).sort()
+  const rendiments = []
 
   sortProvents.forEach((item) => {
-    const type = item.split("-").shift();
+    // const type = item.split('-').shift()
 
     rendiments.push([
-      "06",
+      '06',
       tds[item].document_number_principal,
       tds[item].name,
       `Rendimentos tributados sobre juros recebidos de (${tds[item].name})`,
-      convertCurrencyReal(tds[item].amountRendiment),
-    ]);
-  });
+      convertCurrencyReal(tds[item].amountRendiment)
+    ])
+  })
   return {
-    rendiments,
-  };
+    rendiments
+  }
 }
 
 const getCodesCDB = (type) => {
   switch (type) {
-    case "LCI":
-    case "LCD":
-    case "CRI":
-    case "CRA":
-    case "DEBÊNTURE":
-      return "03";
-    case "CDB":
-    case "RDB":
-      return "02";
-    case "OUTROS":
-    case "LF":
-      return "99";
+    case 'LCI':
+    case 'LCD':
+    case 'CRI':
+    case 'CRA':
+    case 'DEBÊNTURE':
+      return '03'
+    case 'CDB':
+    case 'RDB':
+      return '02'
+    case 'OUTROS':
+    case 'LF':
+      return '99'
   }
-};
+}
 
 /**
  * Compoe bens e direitos da carteira
  * @param {*} itensWalletFiltered
  * @returns
  */
-function composeBensDireitos(itensWalletFiltered) {
-  const bens = [];
+function composeBensDireitos (itensWalletFiltered) {
+  const bens = []
   itensWalletFiltered.forEach((item) => {
     bens.push([
       getCodes(item.classe).group,
@@ -1052,18 +1237,18 @@ function composeBensDireitos(itensWalletFiltered) {
         ? getCodes(item.classe).cod
         : getCodesCDB(item?.type),
       getCodes(item.classe).locale,
-      item.document_number_principal && item.document_number_principal !== ""
+      item.document_number_principal && item.document_number_principal !== ''
         ? item.document_number_principal
         : item.document_number_admin,
-      { text: item.description, style: "description" },
+      { text: item.description, style: 'description' },
       item.past_year,
       item.this_year,
       item.ticker,
-      item.classe,
-    ]);
-  });
+      item.classe
+    ])
+  })
 
-  return bens;
+  return bens
 }
 
 /**
@@ -1072,25 +1257,25 @@ function composeBensDireitos(itensWalletFiltered) {
  * @param {*} ticker
  * @returns
  */
-function sanitizeDescriptionBens(txt = "", ticker) {
-  return txt.replace(`(${ticker})`, "").trim();
+function sanitizeDescriptionBens (txt = '', ticker) {
+  return txt.replace(`(${ticker})`, '').trim()
 }
 
-function sanitizaTableBensCDB(bens = []) {
-  const newBens = [];
-  const cloneBens = cloneDeep(bens);
-  cloneBens.forEach((b, i) => {
+function sanitizaTableBensCDB (bens = []) {
+  const newBens = []
+  const cloneBens = cloneDeep(bens)
+  cloneBens.forEach((b) => {
     if (b[8] === CLASS.RENDA_FIXA_OUTROS) {
       b[4] = {
         text: sanitizeDescriptionBens(b[4].text, b[7]),
-        style: "description",
-      };
+        style: 'description'
+      }
     }
-    b.pop();
-    b.pop();
-    newBens.push(b);
-  });
-  return newBens;
+    b.pop()
+    b.pop()
+    newBens.push(b)
+  })
+  return newBens
 }
 
 /**
@@ -1100,56 +1285,56 @@ function sanitizaTableBensCDB(bens = []) {
  * @param {*} color
  * @returns
  */
-function composeHeaderTable(text = [], fillColor = "#300668", color = "white") {
-  const headers = [];
+function composeHeaderTable (text = [], fillColor = '#300668', color = 'white') {
+  const headers = []
   text.forEach((item) => {
     headers.push({
       text: item,
       fillColor,
       color,
-      style: { alignment: "center" },
-    });
-  });
-  return headers;
+      style: { alignment: 'center' }
+    })
+  })
+  return headers
 }
 
-function composerExternalDividends(docDefinition, provents) {
-  const dividendsConsolidated = {};
+function composerExternalDividends (docDefinition, provents) {
+  const dividendsConsolidated = {}
   if (
-    provents.hasOwnProperty("external") &&
-    provents["external"] &&
-    Object.keys(provents["external"]).length > 0
+    hasOwn(provents, 'external') &&
+    provents.external &&
+    Object.keys(provents.external).length > 0
   ) {
-    const table = {
-      dividends: {
-        1: { values: [], amount: 0 },
-        2: { values: [], amount: 0 },
-        3: { values: [], amount: 0 },
-        4: { values: [], amount: 0 },
-        5: { values: [], amount: 0 },
-        6: { values: [], amount: 0 },
-        7: { values: [], amount: 0 },
-        8: { values: [], amount: 0 },
-        9: { values: [], amount: 0 },
-        10: { values: [], amount: 0 },
-        11: { values: [], amount: 0 },
-        12: { values: [], amount: 0 },
-      },
-      tax: {
-        1: { values: [], amount: 0 },
-        2: { values: [], amount: 0 },
-        3: { values: [], amount: 0 },
-        4: { values: [], amount: 0 },
-        5: { values: [], amount: 0 },
-        6: { values: [], amount: 0 },
-        7: { values: [], amount: 0 },
-        8: { values: [], amount: 0 },
-        9: { values: [], amount: 0 },
-        10: { values: [], amount: 0 },
-        11: { values: [], amount: 0 },
-        12: { values: [], amount: 0 },
-      },
-    };
+    // const table = {
+    //   dividends: {
+    //     1: { values: [], amount: 0 },
+    //     2: { values: [], amount: 0 },
+    //     3: { values: [], amount: 0 },
+    //     4: { values: [], amount: 0 },
+    //     5: { values: [], amount: 0 },
+    //     6: { values: [], amount: 0 },
+    //     7: { values: [], amount: 0 },
+    //     8: { values: [], amount: 0 },
+    //     9: { values: [], amount: 0 },
+    //     10: { values: [], amount: 0 },
+    //     11: { values: [], amount: 0 },
+    //     12: { values: [], amount: 0 }
+    //   },
+    //   tax: {
+    //     1: { values: [], amount: 0 },
+    //     2: { values: [], amount: 0 },
+    //     3: { values: [], amount: 0 },
+    //     4: { values: [], amount: 0 },
+    //     5: { values: [], amount: 0 },
+    //     6: { values: [], amount: 0 },
+    //     7: { values: [], amount: 0 },
+    //     8: { values: [], amount: 0 },
+    //     9: { values: [], amount: 0 },
+    //     10: { values: [], amount: 0 },
+    //     11: { values: [], amount: 0 },
+    //     12: { values: [], amount: 0 }
+    //   }
+    // }
 
     map(provents.external, (ticker, symbol) => {
       // map(ticker.dividendPerMonth, (value, month) => {
@@ -1171,11 +1356,11 @@ function composerExternalDividends(docDefinition, provents) {
       dividendsConsolidated[symbol] = {
         lucroVenda: ticker.amountBuy,
         totalDividendos: ticker.amountDividend,
-        impostoPago: ticker.amountTax,
-      };
-    });
+        impostoPago: ticker.amountTax
+      }
+    })
 
-    const tablePdf = [];
+    const tablePdf = []
     // map(table.dividends, (mes, indexMonth) => {
     //   if (mes.values.length) {
     //     tablePdf.push([
@@ -1189,182 +1374,184 @@ function composerExternalDividends(docDefinition, provents) {
     map(dividendsConsolidated, (item, ticker) => {
       tablePdf.push([
         ticker,
-        `${convertCurrencyReal(item.lucroVenda)} + ${convertCurrencyReal(
-          item.totalDividendos
+        `${convertCurrencyReal(item?.lucroVenda || 0)} + ${convertCurrencyReal(
+          item?.totalDividendos || 0
         )}`,
-        convertCurrencyReal(item.lucroVenda + item.totalDividendos),
-        convertCurrencyReal(item.impostoPago),
-      ]);
-    });
+        convertCurrencyReal(
+          (item?.lucroVenda || 0) + (item?.totalDividendos || 0)
+        ),
+        convertCurrencyReal(item?.impostoPago || 0)
+      ])
+    })
 
     const title = {
-      pageBreak: "before",
-      text: "Dividendos recebidos no exterior",
-      style: "title",
-    };
+      pageBreak: 'before',
+      text: 'Dividendos recebidos no exterior',
+      style: 'title'
+    }
     const content1 = {
       text: [
-        "\nOs ",
+        '\nOs ',
         {
-          text: "dividendos recebidos nos Estados Unidos e/ou BDRs",
-          style: "negrito",
+          text: 'dividendos recebidos nos Estados Unidos e/ou BDRs',
+          style: 'negrito'
         },
-        " tem seu imposto de renda retido na fonte, mas devem ser declarados através do Programa Oficial de Declaração (IRPF), somando lucros em vendas com proventos/cupons recebidos no exterior.\n\n",
+        ' tem seu imposto de renda retido na fonte, mas devem ser declarados através do Programa Oficial de Declaração (IRPF), somando lucros em vendas com proventos/cupons recebidos no exterior.\n\n',
         {
-          text: "A Receita concentrou a emissão exclusivamente no programa de declaração, portanto será emitido um DARF único, somando ganhos no exterior e eventuais valores de IR gerados pelo próprio programa da declaração. O cálculo final dependerá de todas as informações preenchidas no programa.\n\n",
-        },
-        {
-          text: "A partir de 2024, será necessário informar os ganhos recebidos no exterior (vendas, dividendos, cupons) diretamente na declaração, na ficha de bens e direitos, somente nos campos da seção APLICAÇÃO FINANCEIRA.\n\n",
-          style: "negrito",
-          color: "#e13709",
+          text: 'A Receita concentrou a emissão exclusivamente no programa de declaração, portanto será emitido um DARF único, somando ganhos no exterior e eventuais valores de IR gerados pelo próprio programa da declaração. O cálculo final dependerá de todas as informações preenchidas no programa.\n\n'
         },
         {
-          text: "ATENÇÃO: A seção LUCROS E DIVIDENDOS não precisa ser preenchida, pois se refere a rendimentos de empresas offshore somente, mantenha zerada, conforme nosso informe. Nosso documento irá mostrar na tabela quais dados deverá preencher nos novos campos do exemplo abaixo: \n\n",
-          style: "negrito",
-          color: "#e13709",
+          text: 'A partir de 2024, será necessário informar os ganhos recebidos no exterior (vendas, dividendos, cupons) diretamente na declaração, na ficha de bens e direitos, somente nos campos da seção APLICAÇÃO FINANCEIRA.\n\n',
+          style: 'negrito',
+          color: '#e13709'
         },
-      ],
-    };
+        {
+          text: 'ATENÇÃO: A seção LUCROS E DIVIDENDOS não precisa ser preenchida, pois se refere a rendimentos de empresas offshore somente, mantenha zerada, conforme nosso informe. Nosso documento irá mostrar na tabela quais dados deverá preencher nos novos campos do exemplo abaixo: \n\n',
+          style: 'negrito',
+          color: '#e13709'
+        }
+      ]
+    }
 
     const content2 = {
-      style: "table",
+      style: 'table',
       table: {
-        widths: [70, "*", "*", "*"],
+        widths: [70, '*', '*', '*'],
         body: [
           composeHeaderTable([
-            "Ativo",
-            "Lucro/Prejuízo em vendas + proventos recebidos (R$)",
-            "Lucro ou Prejuízo (R$)",
-            "Imposto pago no exterior (R$)",
+            'Ativo',
+            'Lucro/Prejuízo em vendas + proventos recebidos (R$)',
+            'Lucro ou Prejuízo (R$)',
+            'Imposto pago no exterior (R$)'
           ]),
-          ...tablePdf,
-        ],
-      },
-    };
+          ...tablePdf
+        ]
+      }
+    }
 
     const content3 = {
-      image: "print9",
-      width: 505,
-    };
+      image: 'print9',
+      width: 505
+    }
 
-    docDefinition.content.push(title);
-    docDefinition.content.push(content1);
-    docDefinition.content.push(content2);
-    docDefinition.content.push(content3);
+    docDefinition.content.push(title)
+    docDefinition.content.push(content1)
+    docDefinition.content.push(content2)
+    docDefinition.content.push(content3)
   }
-  return null;
+  return null
 }
 
-function composeTaxExternal(docDefinition, provents) {
+function composeTaxExternal (docDefinition, provents) {
   if (
-    provents.hasOwnProperty("external") &&
-    provents["external"] &&
-    Object.keys(provents["external"]).length > 0
+    hasOwn(provents, 'external') &&
+    provents.external &&
+    Object.keys(provents.external).length > 0
   ) {
-    let taxAmount = 0;
-    map(provents["external"], (item) => {
-      taxAmount += item.amountTax;
-    });
+    let taxAmount = 0
+    map(provents.external, (item) => {
+      taxAmount += item.amountTax
+    })
     const title = {
-      pageBreak: "before",
-      text: "Imposto Pago/Retido (IR a compensar ou retido no exterior)",
-      style: "title",
-    };
+      pageBreak: 'before',
+      text: 'Imposto Pago/Retido (IR a compensar ou retido no exterior)',
+      style: 'title'
+    }
     const content1 = {
-      text: "\nEsta seção irá lhe demonstrar impostos já retidos no exterior para demonstração a Receita e/ou impostos retidos na fonte que podem ser compensados ao fim do ano.\n\n",
-    };
+      text: '\nEsta seção irá lhe demonstrar impostos já retidos no exterior para demonstração a Receita e/ou impostos retidos na fonte que podem ser compensados ao fim do ano.\n\n'
+    }
 
     const content2 = {
-      image: "print8",
-      width: 505,
-    };
+      image: 'print8',
+      width: 505
+    }
     const content3 = {
-      text: "\nDados a declarar",
-      style: "title",
-    };
+      text: '\nDados a declarar',
+      style: 'title'
+    }
 
     const content4 = {
-      style: "table",
+      style: 'table',
       table: {
-        widths: [340, "*"],
+        widths: [340, '*'],
         body: [
-          composeHeaderTable(["Imposto", "Valor"]),
+          composeHeaderTable(['Imposto', 'Valor']),
           [
             {
               text: [
-                { text: "02.", style: "negrito" },
-                " Imposto pago no exterior pelo titular e pelos dependentes",
-              ],
+                { text: '02.', style: 'negrito' },
+                ' Imposto pago no exterior pelo titular e pelos dependentes'
+              ]
             },
-            convertCurrencyReal(taxAmount),
-          ],
-        ],
-      },
-    };
-    docDefinition.content.push(title);
-    docDefinition.content.push(content1);
-    docDefinition.content.push(content2);
-    docDefinition.content.push(content3);
-    docDefinition.content.push(content4);
-    return null;
+            convertCurrencyReal(taxAmount)
+          ]
+        ]
+      }
+    }
+    docDefinition.content.push(title)
+    docDefinition.content.push(content1)
+    docDefinition.content.push(content2)
+    docDefinition.content.push(content3)
+    docDefinition.content.push(content4)
+    return null
   }
-  return null;
+  return null
 }
 
 /**
  * Compoe a tabela de operações em FII
  * @returns
  */
-function composeTableOperationsFII(tableOperationsFII, operationsFII, year) {
-  const table_data = [];
+function composeTableOperationsFII (tableOperationsFII, operationsFII, year) {
+  const tableData = []
   map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
     if (
-      tableOperationsFII.hasOwnProperty(year) &&
-      tableOperationsFII[year].hasOwnProperty(mes)
+      hasOwn(tableOperationsFII, year) &&
+      hasOwn(tableOperationsFII[year], mes)
     ) {
-      const value = getNode(operationsFII[year], mes);
-      let fontColor = "blue";
+      const value = getNode(operationsFII[year], mes)
+      let fontColor = 'blue'
       if (value < 0) {
-        fontColor = "red";
+        fontColor = 'red'
       }
 
-      table_data.push([
+      tableData.push([
         tableOperationsFII[year][mes][0],
         tableOperationsFII[year][mes][1] !== 0
           ? {
               text: convertCurrencyReal(getNode(operationsFII[year], mes)),
-              style: { color: fontColor, bold: true },
+              style: { color: fontColor, bold: true }
             }
           : convertCurrencyReal(0),
         mes === 1
           ? convertCurrencyReal(tableOperationsFII[year][mes][2])
           : {
               text: convertCurrencyReal(tableOperationsFII[year][mes][2]),
-              style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
+              style: { color: '#7f7f7f', fillColor: '#d3d3d3' }
             },
         {
           text: convertCurrencyReal(tableOperationsFII[year][mes][3]),
-          style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
+          style: { color: '#7f7f7f', fillColor: '#d3d3d3' }
         },
         {
           text: convertCurrencyReal(tableOperationsFII[year][mes][4]),
-          style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
+          style: { color: '#7f7f7f', fillColor: '#d3d3d3' }
         },
         {
           text: convertCurrencyReal(tableOperationsFII[year][mes][5]),
-          style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
+          style: { color: '#7f7f7f', fillColor: '#d3d3d3' }
         },
         {
           text: convertCurrencyReal(tableOperationsFII[year][mes][6]),
-          style: { color: "#7f7f7f", fillColor: "#d3d3d3" },
-        },
-      ]);
+          style: { color: '#7f7f7f', fillColor: '#d3d3d3' }
+        }
+      ])
     }
-  });
-  return table_data;
+  })
+  return tableData
 }
 
-module.exports = {
+export {
   composeOperations,
   composeProvents,
   composeRendimentsCdbs,
@@ -1380,4 +1567,6 @@ module.exports = {
   composeOperationsFII,
   composeTableOperationsFII,
   sanitizaTableBensCDB,
-};
+  composeSwingTradeUnit,
+  unionSwingTradeUnit
+}

@@ -1,10 +1,23 @@
 {
   "name": "mydashboard-utils",
-  "version": "1.0.71",
+  "version": "2.0",
   "description": "Biblioteca de utilidades e constantes myDashboard",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:esm": "esbuild index.js --bundle --platform=node --format=esm --outfile=dist/index.mjs",
+    "build:cjs": "esbuild index.js --bundle --platform=node --format=cjs --outfile=dist/index.cjs",
+    "build": "npm run build:esm && npm run build:cjs",
+    "prepare": "npm run build",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."    
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
   },
   "repository": {
     "type": "git",
@@ -19,5 +32,13 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.45"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.1",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0"
   }
 }

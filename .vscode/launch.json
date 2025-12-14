@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "mjs-test-import.mjs",
+      "program": "${workspaceFolder}/tmp/test-import.mjs",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+        {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "cjs-test-import.cjs",
+      "program": "${workspaceFolder}/tmp/test-import.cjs",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+  ]
+}

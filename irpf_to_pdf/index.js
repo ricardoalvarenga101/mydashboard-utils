@@ -1,12 +1,14 @@
-const { map, groupBy } = require("lodash");
-const {
+import lodash from 'lodash'
+import {
   composeProvents,
   composeRendimentsCdbs,
   composeRendimentsTds,
   composeOperations,
   composeSwingTradeFree,
-} = require("./composers");
-const { generatePdf } = require("./docGenerate");
+  unionSwingTradeUnit
+} from './composers.js'
+import { generatePdf } from './docGenerate.js'
+const { map, groupBy } = lodash
 // const { mockFullData2022 } = require("./mocks/fullData");
 
 /**
@@ -17,40 +19,41 @@ const { generatePdf } = require("./docGenerate");
  * @param {*} data
  * @returns
  */
-function generateIRPF(
+function generateIRPF (
   yearChosen = 2022,
-  nameChosen = "",
-  documentNumberChosen = "",
+  nameChosen = '',
+  documentNumberChosen = '',
   data = {}
 ) {
-  let operationsFull = {};
-  let itensWalletFiltered = [];
-  let provents = {};
-  let year = yearChosen;
-  let name = nameChosen.toUpperCase();
-  let document_number = documentNumberChosen;
-  let operationsFII = {};
-  let tableOperationsFII = {};
-  let lossesSalesFii = {};
-  let SUM_SWING_TRADE_FREE = {};
-  let SUM_SWING_TRADE_CRIPTO_FREE = {};
-  let SUM_SWING_TRADE_FREE_99 = {};
-  let bonifications = {};
-  let bonificationsWithFractions = {};
-  let rentals = {};
-  let reembolso = {};
+  const operationsFull = {}
+  let itensWalletFiltered = []
+  let provents = {}
+  const year = yearChosen
+  const name = nameChosen.toUpperCase()
+  const documentNumber = documentNumberChosen
+  const operationsFII = {}
+  const tableOperationsFII = {}
+  const lossesSalesFii = {}
+  const SUM_SWING_TRADE_FREE = {}
+  const SUM_SWING_TRADE_CRIPTO_FREE = {}
+  const SUM_SWING_TRADE_FREE_99 = {}
+  const SUM_SWING_TRADE_UNIT = {}
+  let bonifications = {}
+  let bonificationsWithFractions = {}
+  let rentals = {}
+  let reembolso = {}
 
-  itensWalletFiltered = data?.itensWalletFiltered;
-  provents = composeProvents(data?.provents);
-  rendimentsTD = composeRendimentsTds(data?.tds || {});
-  rendimentsCDB = composeRendimentsCdbs(
+  itensWalletFiltered = data?.itensWalletFiltered
+  provents = composeProvents(data?.provents)
+  const rendimentsTD = composeRendimentsTds(data?.tds || {})
+  const rendimentsCDB = composeRendimentsCdbs(
     data?.cdbs || {},
     rendimentsTD.rendiments
-  );
-  bonifications = data?.bonifications || {};
-  bonificationsWithFractions = data?.bonificationsWithFractions || {};
-  rentals = data?.rentals || {};
-  reembolso = data?.reembolso || {};
+  )
+  bonifications = data?.bonifications || {}
+  bonificationsWithFractions = data?.bonificationsWithFractions || {}
+  rentals = data?.rentals || {}
+  reembolso = data?.reembolso || {}
 
   // console.log("Provents", provents);
   // console.log("Bonificaçoes + fraçõe", bonificationsWithFractions);
@@ -58,7 +61,7 @@ function generateIRPF(
 
   map(data.sells, (year, indexYear) =>
     map(year, (month, indexMonth) => {
-      const filterOperations = groupBy(month.operations, (x) => x.operation);
+      const filterOperations = groupBy(month.operations, (x) => x.operation)
       map(filterOperations, (ops) => {
         map(ops, (op) => {
           composeOperations(
@@ -66,17 +69,18 @@ function generateIRPF(
             indexMonth,
             indexYear,
             op,
-            SUM_SWING_TRADE_FREE_99
-          );
-        });
-      });
+            SUM_SWING_TRADE_FREE_99,
+            SUM_SWING_TRADE_UNIT
+          )
+        })
+      })
     })
-  );
-
-  composeSwingTradeFree(operationsFull, SUM_SWING_TRADE_FREE);
-  pdfDefinition = generatePdf(
+  )
+  unionSwingTradeUnit(operationsFull, SUM_SWING_TRADE_UNIT)
+  composeSwingTradeFree(operationsFull, SUM_SWING_TRADE_FREE)
+  const pdfDefinition = generatePdf(
     name,
-    document_number,
+    documentNumber,
     year,
     itensWalletFiltered,
     provents,
@@ -92,8 +96,8 @@ function generateIRPF(
     tableOperationsFII,
     reembolso,
     rendimentsCDB
-  );
-  return pdfDefinition;
+  )
+  return pdfDefinition
 }
 // console.log(JSON.stringify(generateIRPF(2022, "Heitor", "01204488752", mockFullData2022)));
-module.exports = { generateIRPF };
+export { generateIRPF }

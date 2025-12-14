@@ -1,38 +1,38 @@
-const moment = require("moment-timezone");
-const { RENAME_TICKER_GOOGLE_SHEET, TABS } = require("..");
+import moment from 'moment-timezone'
+import { RENAME_TICKER_GOOGLE_SHEET, TABS, CLASS } from '../index.js'
 
 /**
  * Retorna a descrição do mes a partir de seu código
  * @param {Number} cod código do mês
  * @returns
  */
-function getMonths(cod) {
+function getMonths (cod) {
   const months = {
-    0: "janeiro",
-    1: "fevereiro",
-    2: "março",
-    3: "abril",
-    4: "maio",
-    5: "junho",
-    6: "julho",
-    7: "agosto",
-    8: "setembro",
-    9: "outubro",
-    10: "novembro",
-    11: "dezembro",
-  };
-  return months[cod];
+    0: 'janeiro',
+    1: 'fevereiro',
+    2: 'março',
+    3: 'abril',
+    4: 'maio',
+    5: 'junho',
+    6: 'julho',
+    7: 'agosto',
+    8: 'setembro',
+    9: 'outubro',
+    10: 'novembro',
+    11: 'dezembro'
+  }
+  return months[cod]
 }
 
 /**
  * Compoe o range de uma google sheet
  */
-function composeRanges(sheetNames, sheetRanges) {
-  const ranges = [];
+function composeRanges (sheetNames, sheetRanges) {
+  const ranges = []
   sheetNames.forEach((element, i) => {
-    ranges.push(`${element}!${sheetRanges[i]}`);
-  });
-  return ranges;
+    ranges.push(`${element}!${sheetRanges[i]}`)
+  })
+  return ranges
 }
 
 /**
@@ -48,7 +48,7 @@ function composeRanges(sheetNames, sheetRanges) {
  * @param {*} sheetName
  * @returns
  */
-async function getDataRange(
+async function getDataRange (
   lastRow,
   initialColNameForLastRow,
   initialNumberColForLastRow,
@@ -62,18 +62,18 @@ async function getDataRange(
   let rangeString =
     initialColNameForLastRow +
     initialNumberColForLastRow +
-    ":" +
+    ':' +
     initialColNameForLastRow +
-    lastRow;
-  const values = await getRange(sheetId, `${sheetName}!${rangeString}`);
+    lastRow
+  const values = await getRange(sheetId, `${sheetName}!${rangeString}`)
   rangeString =
     initialColName +
     initialColNameNumber +
-    ":" +
+    ':' +
     endColName +
-    (values.length + (sheetName === TABS.MOVIMENTACOES ? +1 : +3));
-  const dataRows = await getRange(sheetId, `${sheetName}!${rangeString}`);
-  return dataRows;
+    (values.length + (sheetName === TABS.MOVIMENTACOES ? +1 : +3))
+  const dataRows = await getRange(sheetId, `${sheetName}!${rangeString}`)
+  return dataRows
 }
 
 /**
@@ -82,15 +82,15 @@ async function getDataRange(
  * @param {*} docInfo
  * @returns
  */
-function getLastRow(sheetName, docInfo) {
-  let lastRow = 0;
+function getLastRow (sheetName, docInfo) {
+  let lastRow = 0
   for (let i = 0; i < docInfo.sheets.length; i++) {
     if (docInfo.sheets[i].properties.title === sheetName) {
-      lastRow = docInfo.sheets[i].properties.gridProperties.rowCount;
-      break;
+      lastRow = docInfo.sheets[i].properties.gridProperties.rowCount
+      break
     }
   }
-  return lastRow;
+  return lastRow
 }
 
 /**
@@ -98,11 +98,11 @@ function getLastRow(sheetName, docInfo) {
  * @param {*} dateDefault
  * @returns
  */
-function composeDateDefaultToShort(dateDefault) {
-  const year = dateDefault.split("/").pop();
-  const month = dateDefault.split("/")[1];
-  const day = dateDefault.split("/")[0];
-  return `${year}${month}${day}`;
+function composeDateDefaultToShort (dateDefault) {
+  const year = dateDefault.split('/').pop()
+  const month = dateDefault.split('/')[1]
+  const day = dateDefault.split('/')[0]
+  return `${year}${month}${day}`
 }
 
 /**
@@ -110,12 +110,12 @@ function composeDateDefaultToShort(dateDefault) {
  * @param {*} shortDate
  * @returns
  */
-function composeDateFromShortV2(shortDate) {
-  const year = shortDate.slice(0, 4);
-  const month = shortDate.slice(4, 6);
-  const day = shortDate.slice(6, 8);
+function composeDateFromShortV2 (shortDate) {
+  const year = shortDate.slice(0, 4)
+  const month = shortDate.slice(4, 6)
+  const day = shortDate.slice(6, 8)
   // 2024-11-30T03:00:00.000Z
-  return `${year}-${month}-${day}T03:00:00.000Z`;
+  return `${year}-${month}-${day}T03:00:00.000Z`
 }
 
 /**
@@ -129,17 +129,17 @@ const mountList = (result, array, withDocId = false) => {
     result.forEach((doc) => {
       const createTime = moment
         .unix(doc.createTime._seconds)
-        .format("YYYY-MM-DD");
+        .format('YYYY-MM-DD')
       if (withDocId) {
-        array.push({ ...doc.data(), docId: doc.id, createTime });
+        array.push({ ...doc.data(), docId: doc.id, createTime })
       } else {
-        array.push({ ...doc.data(), createTime });
+        array.push({ ...doc.data(), createTime })
       }
-    });
-    return array;
+    })
+    return array
   }
-  return [];
-};
+  return []
+}
 
 /**
  * Converte uma datetime unix para o padrão <YYYY/MM/DD HH:mm:ss>
@@ -147,8 +147,8 @@ const mountList = (result, array, withDocId = false) => {
  * @returns
  */
 const convertDateTime = (date) => {
-  return moment.unix(date).format("YYYY/MM/DD HH:mm:ss");
-};
+  return moment.unix(date).format('YYYY/MM/DD HH:mm:ss')
+}
 
 /**
  * Retorna o id de uma url google sheet
@@ -156,9 +156,9 @@ const convertDateTime = (date) => {
  * @returns
  */
 const getSheetId = (url) => {
-  const split = url.split("/");
-  return split[5];
-};
+  const split = url.split('/')
+  return split[5]
+}
 
 /**
  * Retorna uma classe de um ativo a partir de seu tipo
@@ -168,43 +168,43 @@ const getSheetId = (url) => {
 const getTypeByMainSearching = (type) => {
   switch (type) {
     case 13:
-      return CLASS.REIT;
+      return CLASS.REIT
 
     case 12:
-      return CLASS.STOCK;
+      return CLASS.STOCK
     case 901:
-      return CLASS.ETF_EUA;
+      return CLASS.ETF_EUA
 
     case 22:
-      return CLASS.FI_INFRA;
+      return CLASS.FI_INFRA
     case 24:
-      return CLASS.FIAGRO;
+      return CLASS.FIAGRO
     case 2:
-      return CLASS.FII;
+      return CLASS.FII
     case 1:
-      return CLASS.ACAO;
+      return CLASS.ACAO
     case 6:
-      return CLASS.ETF;
+      return CLASS.ETF
     case 4:
-      return CLASS.BDR;
+      return CLASS.BDR
     case 100:
-      return CLASS.CRIPTOMOEDA;
+      return CLASS.CRIPTOMOEDA
 
     default:
-      return null;
+      return null
   }
-};
+}
 
 /**
  * Converte um numero string para float
  * @param {*} str
  * @returns
  */
-function strToFloat(str) {
+function strToFloat (str) {
   if (str) {
-    return Number(str.replaceAll(".", "").replaceAll(",", "."));
+    return Number(str.replaceAll('.', '').replaceAll(',', '.'))
   }
-  return null;
+  return null
 }
 
 /**
@@ -214,10 +214,10 @@ function strToFloat(str) {
  */
 const renameTickerGoogleSheet = (ticker) => {
   if (ticker in RENAME_TICKER_GOOGLE_SHEET) {
-    return RENAME_TICKER_GOOGLE_SHEET[ticker];
+    return RENAME_TICKER_GOOGLE_SHEET[ticker]
   }
-  return ticker;
-};
+  return ticker
+}
 
 /**
  * Converte um numero menor igual a 9 em duas casas [09]
@@ -226,10 +226,10 @@ const renameTickerGoogleSheet = (ticker) => {
  */
 const composeNumberTwoDecimal = (number) => {
   if (number <= 9) {
-    return `0${number}`;
+    return `0${number}`
   }
-  return number;
-};
+  return number
+}
 
 /**
  * Converte um valor para R$
@@ -238,22 +238,22 @@ const composeNumberTwoDecimal = (number) => {
  * @param {boolean} isCript indica se é cripto
  * @returns
  */
-function convertCurrencyReal(
+function convertCurrencyReal (
   value,
   currency = true,
   isCript = false,
   customDecimal = 6
 ) {
   if (currency) {
-    return (value || 0).toLocaleString("pt-br", {
+    return (value || 0).toLocaleString('pt-br', {
       minimumFractionDigits: isCript ? customDecimal : 2,
-      style: "currency",
-      currency: "BRL",
-    });
+      style: 'currency',
+      currency: 'BRL'
+    })
   }
-  return value.toLocaleString("pt-br", {
-    minimumFractionDigits: isCript ? customDecimal : 2,
-  });
+  return value.toLocaleString('pt-br', {
+    minimumFractionDigits: isCript ? customDecimal : 2
+  })
 }
 
 /**
@@ -263,22 +263,22 @@ function convertCurrencyReal(
  * @param {boolean} isCript indica se é cripto
  * @returns
  */
-function convertCurrencyDolar(
+function convertCurrencyDolar (
   value,
   currency = true,
   isCript = false,
   customDecimal = 6
 ) {
   if (currency) {
-    return (value || 0).toLocaleString("en-US", {
+    return (value || 0).toLocaleString('en-US', {
       minimumFractionDigits: isCript ? customDecimal : 2,
-      style: "currency",
-      currency: "USD",
-    });
+      style: 'currency',
+      currency: 'USD'
+    })
   }
-  return value.toLocaleString("en-US", {
-    minimumFractionDigits: isCript ? customDecimal : 2,
-  });
+  return value.toLocaleString('en-US', {
+    minimumFractionDigits: isCript ? customDecimal : 2
+  })
 }
 
 /**
@@ -292,9 +292,9 @@ const mydash = () => {
    * @returns
    */
   const log = (message) => {
-    const staging = process.env.STAGING === "true" ? true : false;
-    return staging ? console.log(message) : null;
-  };
+    const staging = process.env.STAGING === 'true'
+    return staging ? console.log(message) : null
+  }
 
   /**
    * Normaliza data em formato string
@@ -302,24 +302,24 @@ const mydash = () => {
    */
   const normalizeBRDate = (stringDate) => {
     try {
-      const currentDate = moment(stringDate, "DD/MM/YYYY")
-        .tz("America/Sao_Paulo")
-        .toISOString();
-      const shortDate = moment(currentDate).format("YYYYMMDD");
-      return { currentDate, shortDate };
+      const currentDate = moment(stringDate, 'DD/MM/YYYY')
+        .tz('America/Sao_Paulo')
+        .toISOString()
+      const shortDate = moment(currentDate).format('YYYYMMDD')
+      return { currentDate, shortDate }
     } catch {
       return {
         currentDate: null,
-        shortDate: null,
-      };
+        shortDate: null
+      }
     }
-  };
+  }
   /**
    * Sanitizar código do ticker apenas para visão
    * @param {*} ticker
    * @returns
    */
-  const sanitizeTickerName = (ticker) => ticker.replace("CRYPTO.", "");
+  const sanitizeTickerName = (ticker) => ticker.replace('CRYPTO.', '')
 
   /**
    * Delay
@@ -327,18 +327,18 @@ const mydash = () => {
    * @returns
    */
   const delay = async (d = 200) => {
-    return await new Promise((res) => setTimeout(() => res("delay"), d));
-  };
+    return await new Promise((resolve) => setTimeout(() => resolve('delay'), d))
+  }
 
   return {
     log,
     normalizeBRDate,
     sanitizeTickerName,
-    delay,
-  };
-};
+    delay
+  }
+}
 
-module.exports = {
+export {
   mydash,
   strToFloat,
   getTypeByMainSearching,
@@ -354,5 +354,5 @@ module.exports = {
   renameTickerGoogleSheet,
   composeNumberTwoDecimal,
   convertCurrencyDolar,
-  convertCurrencyReal,
-};
+  convertCurrencyReal
+}
