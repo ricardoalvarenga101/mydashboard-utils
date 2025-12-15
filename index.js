@@ -166,3 +166,4 @@ export {
 // Re-exports from submodules for convenience and CJS consumers
 export { generateIRPF } from './irpf_to_pdf/index.js'
 export * from './irpf_to_pdf/mocks/fullData.js'
+export * from './functions/index.js'
