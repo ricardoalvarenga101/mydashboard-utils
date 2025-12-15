@@ -1,6 +1,5 @@
 import { build } from 'esbuild'
 import fs from 'fs'
-import path from 'path'
 
 // Entrypoints a publicar como subpaths (map keys -> desired output names)
 const entries = {
