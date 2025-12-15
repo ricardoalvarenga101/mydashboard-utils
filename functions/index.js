@@ -1,5 +1,5 @@
 import moment from 'moment-timezone'
-import { RENAME_TICKER_GOOGLE_SHEET, TABS, CLASS } from '../index.js'
+import { RENAME_TICKER_GOOGLE_SHEET, TABS, CLASS } from '../constants.js'
 
 /**
  * Retorna a descrição do mes a partir de seu código

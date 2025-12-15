@@ -9,7 +9,6 @@ import {
 } from './composers.js'
 import { generatePdf } from './docGenerate.js'
 const { map, groupBy } = lodash
-// const { mockFullData2022 } = require("./mocks/fullData");
 
 /**
  * Gerar relatório irpf
@@ -99,5 +98,5 @@ function generateIRPF (
   )
   return pdfDefinition
 }
-// console.log(JSON.stringify(generateIRPF(2022, "Heitor", "01204488752", mockFullData2022)));
+
 export { generateIRPF }

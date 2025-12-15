@@ -7,7 +7,12 @@ import {
   composeOperationsFII,
   composeTableOperationsFII
 } from './composers.js'
-import { convertCurrencyReal, getNode, hasOwn, subtractionLosses } from './utils.js'
+import {
+  convertCurrencyReal,
+  getNode,
+  hasOwn,
+  subtractionLosses
+} from './utils.js'
 import {
   CNPJ_B3,
   NAME_B3,
@@ -250,7 +255,13 @@ function renderReembolso (reembolso) {
   })
 
   // map(rentals, (item, ticker) => {
-  listReembolso.push(['99', CNPJ_B3, NAME_B3, 'Reembolso de proventos', convertCurrencyReal(sumReembolso)])
+  listReembolso.push([
+    '99',
+    CNPJ_B3,
+    NAME_B3,
+    'Reembolso de proventos',
+    convertCurrencyReal(sumReembolso)
+  ])
   // })
 
   const title = {
@@ -262,7 +273,13 @@ function renderReembolso (reembolso) {
     table: {
       widths: [30, '*', 200, '*', '*'],
       body: [
-        composeHeaderTable(['Tipo', 'CNPJ', 'Nome da fonte pagadora', 'Descrição', 'Valor']),
+        composeHeaderTable([
+          'Tipo',
+          'CNPJ',
+          'Nome da fonte pagadora',
+          'Descrição',
+          'Valor'
+        ]),
         ...listReembolso
       ]
     }
@@ -421,15 +438,16 @@ function renderCommonsOperations (docDefinition, year, operationsFull) {
       '\nAs operações de venda envolvendo ações, opções, futuros, ETF e BDR serão declaradas nessa seção e de forma mensal.Somente constam nessa seção suas vendas que foram',
       { text: ' tributadas', style: 'negrito' },
       ' fora da isenção. Para vendas isentas, faça o lançamento na seção Rendimentos Isentos conforme mencionado acima. Abaixo descrevemos todos os lançamentos que deverá fazer com base na apuração realizada na planilha de investimentos.',
-      `\n\nOperações com fundos imobiliários não entram nesta seção, caso vendeu FIIs durante o ano de ${year}, iremos demonstrar na seção "Operações Fundos Investimento Imobiliário"\n\n`
+      `\n\nOperações com fundos imobiliários não entram nesta seção, caso vendeu FIIs durante o ano de ${year}, iremos demonstrar na seção "Operações Fundos Investimento Imobiliário"\n\n`,
+      {
+        text: '\nATENÇÃO: Vendas de ações Units: independentemente do valor transacionado no mês, os ganhos auferidos podem estar sujeitos à tributação.\n',
+        style: 'negrito',
+        color: '#e13709'
+      }
     ]
   }
+
   const content4 = {
-    text: '\nATENÇÃO: Vendas de ações Units: independentemente do valor transacionado no mês, os ganhos auferidos podem estar sujeitos à tributação.\n',
-    style: 'negrito',
-    color: '#e13709'
-  }
-  const content5 = {
     image: 'print6',
     width: 505
   }
@@ -471,17 +489,35 @@ function renderCommonsOperations (docDefinition, year, operationsFull) {
       commonOperationsAnalised.push(co.content3)
       // adiciona o total transacionado no mês <BDR, ETF, SWING ACOES E DIREITOS DE SUBSCRICOES>
       let amountTransactionSum = 0
-      if (TYPE_OPERATIONS_SELL.SWING_TRADE in operationsFull[year][indexMonth]) {
-        amountTransactionSum += operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.SWING_TRADE].amountTransaction
+      if (
+        TYPE_OPERATIONS_SELL.SWING_TRADE in operationsFull[year][indexMonth]
+      ) {
+        amountTransactionSum +=
+          operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.SWING_TRADE]
+            .amountTransaction
       }
-      if (TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO in operationsFull[year][indexMonth]) {
-        amountTransactionSum += operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO].amountTransaction
+      if (
+        TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO in
+        operationsFull[year][indexMonth]
+      ) {
+        amountTransactionSum +=
+          operationsFull[year][indexMonth][
+            TYPE_OPERATIONS_SELL.DIREITOS_DE_SUBSCRICAO
+          ].amountTransaction
       }
-      if (TYPE_OPERATIONS_SELL.VENDA_DE_BDR in operationsFull[year][indexMonth]) {
-        amountTransactionSum += operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.VENDA_DE_BDR].amountTransaction
+      if (
+        TYPE_OPERATIONS_SELL.VENDA_DE_BDR in operationsFull[year][indexMonth]
+      ) {
+        amountTransactionSum +=
+          operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.VENDA_DE_BDR]
+            .amountTransaction
       }
-      if (TYPE_OPERATIONS_SELL.VENDA_DE_ETF in operationsFull[year][indexMonth]) {
-        amountTransactionSum += operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.VENDA_DE_ETF].amountTransaction
+      if (
+        TYPE_OPERATIONS_SELL.VENDA_DE_ETF in operationsFull[year][indexMonth]
+      ) {
+        amountTransactionSum +=
+          operationsFull[year][indexMonth][TYPE_OPERATIONS_SELL.VENDA_DE_ETF]
+            .amountTransaction
       }
       amountTransactions.push({
         id: co.title.text,
@@ -496,7 +532,6 @@ function renderCommonsOperations (docDefinition, year, operationsFull) {
     docDefinition.content.push(content2)
     docDefinition.content.push(content3)
     docDefinition.content.push(content4)
-    docDefinition.content.push(content5)
     docDefinition.content = [
       ...docDefinition.content,
       ...commonOperationsAnalised
@@ -548,15 +583,19 @@ function renderOperationsFII (
   map(operationsFII, (opYear, indexYear) =>
     map([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
       if (mes === 1) {
-        let sumLiquidWithNegativeOld = hasOwn(tableOperationsFII, indexYear - 1) ? tableOperationsFII[indexYear - 1][12][1] + (tableOperationsFII[indexYear - 1][12][2] * -1) : 0
-        sumLiquidWithNegativeOld = sumLiquidWithNegativeOld > 0 ? 0 : sumLiquidWithNegativeOld * -1
+        let sumLiquidWithNegativeOld = hasOwn(tableOperationsFII, indexYear - 1)
+          ? tableOperationsFII[indexYear - 1][12][1] +
+            tableOperationsFII[indexYear - 1][12][2] * -1
+          : 0
+        sumLiquidWithNegativeOld =
+          sumLiquidWithNegativeOld > 0 ? 0 : sumLiquidWithNegativeOld * -1
         const lossesOldYear = hasOwn(tableOperationsFII, indexYear - 1)
           ? sumLiquidWithNegativeOld
           : 0
         const baseCalcTax =
-            getNode(operationsFII[indexYear], mes) < 0
-              ? 0
-              : getNode(operationsFII[indexYear], mes)
+          getNode(operationsFII[indexYear], mes) < 0
+            ? 0
+            : getNode(operationsFII[indexYear], mes)
         tableOperationsFII[indexYear] = {
           [mes]: [
             MONTHS_LABEL[mes].slice(0, 3),
@@ -569,7 +608,6 @@ function renderOperationsFII (
               ? 0
               : (baseCalcTax - lossesOldYear) * 0.2
           ]
-
         }
       } else {
         const lossesOldYear = subtractionLosses(
@@ -657,10 +695,7 @@ function renderOperationsFII (
  * @returns
  */
 function renderRendimentsIsentos (provents, SUM_SWING_TRADE_FREE_99, year) {
-  if (
-    !provents.rendiments.length &&
-    !hasOwn(SUM_SWING_TRADE_FREE_99, year)
-  ) {
+  if (!provents.rendiments.length && !hasOwn(SUM_SWING_TRADE_FREE_99, year)) {
     return [{}]
   }
   const gcapInfra = [] // ganho de capital em vendas fi-infra
