@@ -52,7 +52,8 @@ var COLLECTION_NAME = {
   CHANGELOG: "changelog",
   MYDASHBOARD: "mydashboard",
   TRANSACTIONS_FIXED: "transactions_fixed",
-  BALANCER: "balancer"
+  BALANCER: "balancer",
+  WALLETS: "wallets"
 };
 var CLASS = {
   ACAO: "A\xE7\xE3o",
@@ -855,9 +856,6 @@ ${MONTHS_LABEL[monthAnalysis]} - ${yearAnalysis}`,
   return { title, content1, content2, content3 };
 }
 function composeAmountOperations(operation, op) {
-  if (op.ticker === "TAEE11") {
-    console.log("debug");
-  }
   const _amountTransactionToMonth = sum(operation.transactions);
   const _amountLoss = operation.values.filter((v) => v < 0).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   const _amountValues = _amountTransactionToMonth > LIMIT_SWING_TRADE || isUnit(op.ticker, op.classe, CLASS.ACAO) ? sum(operation.values) : _amountLoss;
@@ -12075,6 +12073,12 @@ var mydash = () => {
     delay
   };
 };
+var extractUserId = (walletId) => {
+  if (walletId && walletId.includes("-wallet-")) {
+    return walletId.split("-wallet-")[0];
+  }
+  return walletId;
+};
 export {
   CLASS,
   CLASS_EXTERNAL_LIST,
@@ -12095,6 +12099,7 @@ export {
   convertCurrencyDolar,
   convertCurrencyReal2 as convertCurrencyReal,
   convertDateTime,
+  extractUserId,
   generateIRPF,
   getDataRange,
   getLastRow,

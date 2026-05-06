@@ -1,6 +1,6 @@
 {
   "name": "mydashboard-utils",
-  "version": "2.0.4",
+  "version": "2.1.1",
   "description": "Biblioteca de utilidades e constantes myDashboard",
   "type": "module",
   "main": "dist/index.cjs",
@@ -10,7 +10,7 @@
     "build": "npm run build:esbuild",
     "prepare": "npm run build",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."    
+    "lint:fix": "eslint --fix ."
   },
   "exports": {
     ".": {

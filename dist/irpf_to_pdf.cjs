@@ -789,9 +789,6 @@ ${MONTHS_LABEL[monthAnalysis]} - ${yearAnalysis}`,
   return { title, content1, content2, content3 };
 }
 function composeAmountOperations(operation, op) {
-  if (op.ticker === "TAEE11") {
-    console.log("debug");
-  }
   const _amountTransactionToMonth = sum(operation.transactions);
   const _amountLoss = operation.values.filter((v) => v < 0).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
   const _amountValues = _amountTransactionToMonth > LIMIT_SWING_TRADE || isUnit(op.ticker, op.classe, CLASS.ACAO) ? sum(operation.values) : _amountLoss;
