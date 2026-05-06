@@ -705,9 +705,6 @@ function composeCommonOperationAndDayTrade (
  * @param {*} operation
  */
 function composeAmountOperations (operation, op) {
-  if (op.ticker === 'TAEE11') {
-    console.log('debug')
-  }
   const _amountTransactionToMonth = sum(operation.transactions)
   const _amountLoss = operation.values
     .filter((v) => v < 0)

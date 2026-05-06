@@ -36,6 +36,7 @@ __export(functions_exports, {
   convertCurrencyDolar: () => convertCurrencyDolar,
   convertCurrencyReal: () => convertCurrencyReal,
   convertDateTime: () => convertDateTime,
+  extractUserId: () => extractUserId,
   getDataRange: () => getDataRange,
   getLastRow: () => getLastRow,
   getMonths: () => getMonths,
@@ -290,6 +291,12 @@ var mydash = () => {
     delay
   };
 };
+var extractUserId = (walletId) => {
+  if (walletId && walletId.includes("-wallet-")) {
+    return walletId.split("-wallet-")[0];
+  }
+  return walletId;
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   composeDateDefaultToShort,
@@ -299,6 +306,7 @@ var mydash = () => {
   convertCurrencyDolar,
   convertCurrencyReal,
   convertDateTime,
+  extractUserId,
   getDataRange,
   getLastRow,
   getMonths,

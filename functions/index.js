@@ -338,8 +338,23 @@ const mydash = () => {
   }
 }
 
+/**
+ * Extrai o userId de um walletId composto
+ * Para carteiras filhas (ex: "abc123-wallet-2") retorna "abc123"
+ * Para carteira pai (walletId === userId) retorna o próprio valor
+ * @param {string} walletId
+ * @returns {string}
+ */
+const extractUserId = (walletId) => {
+  if (walletId && walletId.includes('-wallet-')) {
+    return walletId.split('-wallet-')[0]
+  }
+  return walletId
+}
+
 export {
   mydash,
+  extractUserId,
   strToFloat,
   getTypeByMainSearching,
   getMonths,

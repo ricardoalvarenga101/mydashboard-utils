@@ -54,7 +54,8 @@ const COLLECTION_NAME = {
   CHANGELOG: 'changelog',
   MYDASHBOARD: 'mydashboard',
   TRANSACTIONS_FIXED: 'transactions_fixed',
-  BALANCER: 'balancer'
+  BALANCER: 'balancer',
+  WALLETS: 'wallets'
 }
 
 const CLASS = {

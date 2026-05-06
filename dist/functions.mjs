@@ -242,6 +242,12 @@ var mydash = () => {
     delay
   };
 };
+var extractUserId = (walletId) => {
+  if (walletId && walletId.includes("-wallet-")) {
+    return walletId.split("-wallet-")[0];
+  }
+  return walletId;
+};
 export {
   composeDateDefaultToShort,
   composeDateFromShortV2,
@@ -250,6 +256,7 @@ export {
   convertCurrencyDolar,
   convertCurrencyReal,
   convertDateTime,
+  extractUserId,
   getDataRange,
   getLastRow,
   getMonths,
