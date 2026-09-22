@@ -242,7 +242,7 @@ function generatePdf (
     pageMargin: [0, 0],
     defaultStyle: { alignment: 'justify' },
     images: {
-      ricardoinvesting: 'https://i.ibb.co/WyLbmrt/logo-md.png',
+      ricardoinvesting: 'https://i.ibb.co/vgnLH54/launchericon-512x512.png',
       print1: 'https://i.ibb.co/HG3hwv0/print-1.png',
       print2: 'https://i.ibb.co/8zdSn3W/print-2.png',
       print3: 'https://i.ibb.co/bs0HY4n/print-3.png',

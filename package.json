@@ -1,6 +1,6 @@
 {
   "name": "mydashboard-utils",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Biblioteca de utilidades e constantes myDashboard",
   "type": "module",
   "main": "dist/index.cjs",
