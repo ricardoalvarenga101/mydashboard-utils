@@ -1,0 +1,311 @@
+{
+  "walletHistory": {
+    "2024": {
+      "1": {
+        "PETR4": {
+          "movimentation": [
+            "Compra"
+          ],
+          "ticker": "PETR4",
+          "totalAmount": 2500,
+          "totalQtd": 100,
+          "totalAmountBonification": 0,
+          "ptaxAverage": 0,
+          "ptaxList": [],
+          "pm": 25,
+          "pmBefore": 25,
+          "logourl": "https://logo/petr4.png",
+          "name": "Petrobras PN",
+          "type": "Ação",
+          "segment": "Petróleo",
+          "sector": "Petróleo e Gás",
+          "subSector": "Exploração",
+          "totalAmountWithCambio": 2500,
+          "totalAmountVariationWithCambio": 2800
+        },
+        "BOVA11": {
+          "movimentation": [
+            "Recibo de Subscrição em Andamento"
+          ],
+          "ticker": "BOVA11",
+          "totalAmount": 200,
+          "totalQtd": 10,
+          "totalAmountBonification": 0,
+          "ptaxAverage": 0,
+          "ptaxList": [],
+          "pm": 20,
+          "pmBefore": 20,
+          "logourl": "https://logo/bova11.png",
+          "name": "iShares Ibovespa",
+          "type": "ETF",
+          "segment": "ETF",
+          "sector": "Índices",
+          "subSector": null,
+          "totalAmountWithCambio": 200,
+          "totalAmountVariationWithCambio": 1200
+        },
+        "finishPosition": [],
+        "walletResume": {
+          "amountProventSubscribers": 0,
+          "totalAmountInvest": 2700,
+          "totalAmountAported": 2700,
+          "totalAmountProvents": 0,
+          "totalAmountProfitSales": 0,
+          "totalAmountBonification": 0,
+          "percEvolution": 0.07407407407407407,
+          "accumulatedProfitSales": 0
+        }
+      },
+      "2": {
+        "PETR4": {
+          "movimentation": [
+            "Compra",
+            "Bonificação em Ativos"
+          ],
+          "ticker": "PETR4",
+          "totalAmount": 2500,
+          "totalQtd": 110,
+          "totalAmountBonification": 10,
+          "ptaxAverage": 0,
+          "ptaxList": [],
+          "pm": 22.727272727272727,
+          "pmBefore": 22.727272727272727,
+          "logourl": "https://logo/petr4.png",
+          "name": "Petrobras PN",
+          "type": "Ação",
+          "segment": "Petróleo",
+          "sector": "Petróleo e Gás",
+          "subSector": "Exploração",
+          "totalAmountWithCambio": 2500,
+          "totalAmountVariationWithCambio": 3080
+        },
+        "BOVA11": {
+          "movimentation": [
+            "Recibo de Subscrição em Andamento"
+          ],
+          "ticker": "BOVA11",
+          "totalAmount": 200,
+          "totalQtd": 10,
+          "totalAmountBonification": 0,
+          "ptaxAverage": 0,
+          "ptaxList": [],
+          "pm": 20,
+          "pmBefore": 20,
+          "logourl": "https://logo/bova11.png",
+          "name": "iShares Ibovespa",
+          "type": "ETF",
+          "segment": "ETF",
+          "sector": "Índices",
+          "subSector": null,
+          "totalAmountWithCambio": 200,
+          "totalAmountVariationWithCambio": 1200
+        },
+        "finishPosition": [],
+        "walletResume": {
+          "amountProventSubscribers": 0,
+          "totalAmountInvest": 2700,
+          "totalAmountAported": 2650,
+          "totalAmountProvents": 50,
+          "totalAmountProfitSales": 0,
+          "totalAmountBonification": 0,
+          "percEvolution": 1.9245283018867922,
+          "accumulatedProfitSales": 0
+        }
+      },
+      "3": {
+        "PETR4": {
+          "movimentation": [
+            "Compra",
+            "Bonificação em Ativos",
+            "Venda"
+          ],
+          "ticker": "PETR4",
+          "totalAmount": 1363.6363636363635,
+          "totalQtd": 60,
+          "totalAmountBonification": 10,
+          "ptaxAverage": 0,
+          "ptaxList": [],
+          "pm": 22.727272727272727,
+          "pmBefore": 22.727272727272727,
+          "logourl": "https://logo/petr4.png",
+          "name": "Petrobras PN",
+          "type": "Ação",
+          "segment": "Petróleo",
+          "sector": "Petróleo e Gás",
+          "subSector": "Exploração",
+          "totalAmountWithCambio": 1363.6363636363635,
+          "totalAmountVariationWithCambio": 1680
+        },
+        "BOVA11": {
+          "movimentation": [
+            "Recibo de Subscrição em Andamento"
+          ],
+          "ticker": "BOVA11",
+          "totalAmount": 200,
+          "totalQtd": 10,
+          "totalAmountBonification": 0,
+          "ptaxAverage": 0,
+          "ptaxList": [],
+          "pm": 20,
+          "pmBefore": 20,
+          "logourl": "https://logo/bova11.png",
+          "name": "iShares Ibovespa",
+          "type": "ETF",
+          "segment": "ETF",
+          "sector": "Índices",
+          "subSector": null,
+          "totalAmountWithCambio": 200,
+          "totalAmountVariationWithCambio": 1200
+        },
+        "finishPosition": [],
+        "walletResume": {
+          "amountProventSubscribers": 0,
+          "totalAmountInvest": 1563.6363636363635,
+          "totalAmountAported": 1513.6363636363635,
+          "totalAmountProvents": 50,
+          "totalAmountProfitSales": 0,
+          "totalAmountBonification": 0,
+          "percEvolution": 3.3693693693693696,
+          "accumulatedProfitSales": 363.63636363636374
+        }
+      }
+    }
+  },
+  "walletSales": [
+    {
+      "ticker": "PETR4",
+      "movimentation": "Venda",
+      "quantity": 50,
+      "unitPrice": 30,
+      "amount": 1500,
+      "ptax": 0,
+      "original": {
+        "unitPrice": 30,
+        "quantity": 50,
+        "amount": 1500
+      },
+      "date": "2024-03-10T00:00:00.000Z",
+      "year": "2024",
+      "month": "3",
+      "shortDate": "20240310",
+      "docId": "tx-petr4-venda",
+      "pmBefore": 22.727272727272727,
+      "pmBeforeOriginal": 22.727272727272727,
+      "logourl": "https://logo/petr4.png",
+      "name": "Petrobras PN",
+      "type": "Ação",
+      "segment": "Petróleo",
+      "sector": "Petróleo e Gás",
+      "subSector": "Exploração",
+      "yearAndMonth": "20243",
+      "movimentationSales": "SWING TRADE DE AÇÃO"
+    }
+  ],
+  "walletSubscribers": [
+    {
+      "ticker": "BOVA11",
+      "movimentation": "Recibo de Subscrição em Andamento",
+      "quantity": 10,
+      "unitPrice": 20,
+      "amount": 200,
+      "ptax": 0,
+      "original": {
+        "unitPrice": 20,
+        "quantity": 10,
+        "amount": 200
+      },
+      "date": "2024-01-15T00:00:00.000Z",
+      "year": "2024",
+      "month": "1",
+      "shortDate": "20240115",
+      "docId": "tx-bova11-subscricao",
+      "pmBefore": 20,
+      "pmBeforeOriginal": 20
+    }
+  ],
+  "tickersList": [
+    "PETR4",
+    "BOVA11"
+  ],
+  "walletResume": {
+    "totalBonification": 0
+  },
+  "transactions": {
+    "PETR4": [
+      {
+        "ticker": "PETR4",
+        "movimentation": "Compra",
+        "quantity": 100,
+        "unitPrice": 25,
+        "amount": 2500,
+        "date": "2024-01-10T00:00:00.000Z",
+        "year": "2024",
+        "month": "1",
+        "shortDate": "20240110",
+        "docId": "tx-petr4-compra",
+        "logourl": "https://logo/petr4.png",
+        "name": "Petrobras PN",
+        "type": "Ação",
+        "segment": "Petróleo",
+        "sector": "Petróleo e Gás",
+        "subSector": "Exploração"
+      },
+      {
+        "ticker": "PETR4",
+        "movimentation": "Bonificação em Ativos",
+        "quantity": 10,
+        "unitPrice": 0,
+        "amount": 0,
+        "date": "2024-02-10T00:00:00.000Z",
+        "year": "2024",
+        "month": "2",
+        "shortDate": "20240210",
+        "docId": "tx-petr4-bonificacao",
+        "logourl": "https://logo/petr4.png",
+        "name": "Petrobras PN",
+        "type": "Ação",
+        "segment": "Petróleo",
+        "sector": "Petróleo e Gás",
+        "subSector": "Exploração"
+      },
+      {
+        "ticker": "PETR4",
+        "movimentation": "Venda",
+        "quantity": 50,
+        "unitPrice": 30,
+        "amount": 1500,
+        "date": "2024-03-10T00:00:00.000Z",
+        "year": "2024",
+        "month": "3",
+        "shortDate": "20240310",
+        "docId": "tx-petr4-venda",
+        "logourl": "https://logo/petr4.png",
+        "name": "Petrobras PN",
+        "type": "Ação",
+        "segment": "Petróleo",
+        "sector": "Petróleo e Gás",
+        "subSector": "Exploração"
+      }
+    ],
+    "BOVA11": [
+      {
+        "ticker": "BOVA11",
+        "movimentation": "Recibo de Subscrição em Andamento",
+        "quantity": 10,
+        "unitPrice": 20,
+        "amount": 200,
+        "date": "2024-01-15T00:00:00.000Z",
+        "year": "2024",
+        "month": "1",
+        "shortDate": "20240115",
+        "docId": "tx-bova11-subscricao",
+        "logourl": "https://logo/bova11.png",
+        "name": "iShares Ibovespa",
+        "type": "ETF",
+        "segment": "ETF",
+        "sector": "Índices",
+        "subSector": null
+      }
+    ]
+  }
+}

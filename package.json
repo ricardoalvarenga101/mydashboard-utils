@@ -1,6 +1,6 @@
 {
   "name": "mydashboard-utils",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Biblioteca de utilidades e constantes myDashboard",
   "type": "module",
   "main": "dist/index.cjs",
@@ -9,6 +9,7 @@
     "build:esbuild": "node esbuild.config.mjs",
     "build": "npm run build:esbuild",
     "prepare": "npm run build",
+    "test": "node --test test/*.test.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },
@@ -16,6 +17,10 @@
     ".": {
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs"
+    },
+    "./wallet": {
+      "import": "./dist/wallet.mjs",
+      "require": "./dist/wallet.cjs"
     },
     "./*": {
       "import": "./dist/*.mjs",
@@ -46,6 +51,7 @@
   },
   "files": [
     "dist",
+    "docs",
     "README.md"
   ]
 }

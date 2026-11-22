@@ -5,7 +5,8 @@ import fs from 'fs'
 const entries = {
   index: 'index.js',
   functions: 'functions/index.js',
-  irpf_to_pdf: 'irpf_to_pdf/index.js'
+  irpf_to_pdf: 'irpf_to_pdf/index.js',
+  wallet: 'wallet/index.js'
 }
 
 // Gera bundles ESM (.mjs) e CJS (.cjs') sem empacotar dependências grandes

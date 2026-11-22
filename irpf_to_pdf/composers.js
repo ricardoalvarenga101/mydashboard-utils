@@ -16,6 +16,7 @@ import {
   MONTHS_LABEL
 } from './vars.js'
 import { CLASS } from '../index.js'
+import { sanitizeDescriptionBens } from '../functions/index.js'
 const { sum, map, sumBy, cloneDeep, groupBy } = lodash
 
 /**
@@ -1248,16 +1249,6 @@ function composeBensDireitos (itensWalletFiltered) {
   return bens
 }
 
-/**
- * Sanitiza descrição de bens e direitos para cdbs
- * @param {*} txt
- * @param {*} ticker
- * @returns
- */
-function sanitizeDescriptionBens (txt = '', ticker) {
-  return txt.replace(`(${ticker})`, '').trim()
-}
-
 function sanitizaTableBensCDB (bens = []) {
   const newBens = []
   const cloneBens = cloneDeep(bens)
@@ -1565,5 +1556,6 @@ export {
   composeTableOperationsFII,
   sanitizaTableBensCDB,
   composeSwingTradeUnit,
-  unionSwingTradeUnit
+  unionSwingTradeUnit,
+  sanitizeDescriptionBens
 }

@@ -29,7 +29,8 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // irpf_to_pdf/index.js
 var irpf_to_pdf_exports = {};
 __export(irpf_to_pdf_exports, {
-  generateIRPF: () => generateIRPF
+  generateIRPF: () => generateIRPF,
+  sanitizeDescriptionBens: () => sanitizeDescriptionBens
 });
 module.exports = __toCommonJS(irpf_to_pdf_exports);
 var import_lodash4 = __toESM(require("lodash"), 1);
@@ -270,6 +271,9 @@ var MOVIMENTATIONS_WITHOUT_SUBSCRIBERS = [
 
 // functions/index.js
 var import_moment_timezone = __toESM(require("moment-timezone"), 1);
+function sanitizeDescriptionBens(txt = "", ticker) {
+  return txt.replace(`(${ticker})`, "").trim();
+}
 
 // irpf_to_pdf/composers.js
 var { sum, map: map2, sumBy, cloneDeep, groupBy } = import_lodash2.default;
@@ -1127,9 +1131,6 @@ function composeBensDireitos(itensWalletFiltered) {
     ]);
   });
   return bens;
-}
-function sanitizeDescriptionBens(txt = "", ticker) {
-  return txt.replace(`(${ticker})`, "").trim();
 }
 function sanitizaTableBensCDB(bens = []) {
   const newBens = [];
@@ -2260,7 +2261,8 @@ function generateIRPF(yearChosen = 2022, nameChosen = "", documentNumberChosen =
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  generateIRPF
+  generateIRPF,
+  sanitizeDescriptionBens
 });
 /**
  * @preserve

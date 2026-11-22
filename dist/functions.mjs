@@ -248,6 +248,9 @@ var extractUserId = (walletId) => {
   }
   return walletId;
 };
+function sanitizeDescriptionBens(txt = "", ticker) {
+  return txt.replace(`(${ticker})`, "").trim();
+}
 export {
   composeDateDefaultToShort,
   composeDateFromShortV2,
@@ -265,5 +268,6 @@ export {
   mountList,
   mydash,
   renameTickerGoogleSheet,
+  sanitizeDescriptionBens,
   strToFloat
 };

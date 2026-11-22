@@ -45,6 +45,7 @@ __export(functions_exports, {
   mountList: () => mountList,
   mydash: () => mydash,
   renameTickerGoogleSheet: () => renameTickerGoogleSheet,
+  sanitizeDescriptionBens: () => sanitizeDescriptionBens,
   strToFloat: () => strToFloat
 });
 module.exports = __toCommonJS(functions_exports);
@@ -297,6 +298,9 @@ var extractUserId = (walletId) => {
   }
   return walletId;
 };
+function sanitizeDescriptionBens(txt = "", ticker) {
+  return txt.replace(`(${ticker})`, "").trim();
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   composeDateDefaultToShort,
@@ -315,5 +319,6 @@ var extractUserId = (walletId) => {
   mountList,
   mydash,
   renameTickerGoogleSheet,
+  sanitizeDescriptionBens,
   strToFloat
 });

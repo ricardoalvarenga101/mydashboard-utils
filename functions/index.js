@@ -352,6 +352,16 @@ const extractUserId = (walletId) => {
   return walletId
 }
 
+/**
+ * Sanitiza descrição de bens e direitos para cdbs
+ * @param {*} txt
+ * @param {*} ticker
+ * @returns
+ */
+function sanitizeDescriptionBens (txt = '', ticker) {
+  return txt.replace(`(${ticker})`, '').trim()
+}
+
 export {
   mydash,
   extractUserId,
@@ -369,5 +379,6 @@ export {
   renameTickerGoogleSheet,
   composeNumberTwoDecimal,
   convertCurrencyDolar,
-  convertCurrencyReal
+  convertCurrencyReal,
+  sanitizeDescriptionBens
 }

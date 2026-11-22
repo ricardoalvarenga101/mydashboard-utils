@@ -237,6 +237,9 @@ var MOVIMENTATIONS_WITHOUT_SUBSCRIBERS = [
 
 // functions/index.js
 import moment from "moment-timezone";
+function sanitizeDescriptionBens(txt = "", ticker) {
+  return txt.replace(`(${ticker})`, "").trim();
+}
 
 // irpf_to_pdf/composers.js
 var { sum, map: map2, sumBy, cloneDeep, groupBy } = lodash2;
@@ -1094,9 +1097,6 @@ function composeBensDireitos(itensWalletFiltered) {
     ]);
   });
   return bens;
-}
-function sanitizeDescriptionBens(txt = "", ticker) {
-  return txt.replace(`(${ticker})`, "").trim();
 }
 function sanitizaTableBensCDB(bens = []) {
   const newBens = [];
@@ -2226,7 +2226,8 @@ function generateIRPF(yearChosen = 2022, nameChosen = "", documentNumberChosen =
   return pdfDefinition;
 }
 export {
-  generateIRPF
+  generateIRPF,
+  sanitizeDescriptionBens
 };
 /**
  * @preserve

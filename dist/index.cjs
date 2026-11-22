@@ -67,6 +67,7 @@ __export(index_exports, {
   mountList: () => mountList,
   mydash: () => mydash,
   renameTickerGoogleSheet: () => renameTickerGoogleSheet,
+  sanitizeDescriptionBens: () => sanitizeDescriptionBens,
   strToFloat: () => strToFloat
 });
 module.exports = __toCommonJS(index_exports);
@@ -410,6 +411,188 @@ var DOC_DEFINITION_OPERATIONS = {
   OPERATIONS_FII: "OPERATIONS_FII",
   OPERATIONS_COMUNS_DAYTRADE: "OPERATIONS_COMUNS_DAYTRADE"
 };
+
+// functions/index.js
+var import_moment_timezone = __toESM(require("moment-timezone"), 1);
+function getMonths(cod) {
+  const months = {
+    0: "janeiro",
+    1: "fevereiro",
+    2: "mar\xE7o",
+    3: "abril",
+    4: "maio",
+    5: "junho",
+    6: "julho",
+    7: "agosto",
+    8: "setembro",
+    9: "outubro",
+    10: "novembro",
+    11: "dezembro"
+  };
+  return months[cod];
+}
+function composeRanges(sheetNames, sheetRanges) {
+  const ranges = [];
+  sheetNames.forEach((element, i) => {
+    ranges.push(`${element}!${sheetRanges[i]}`);
+  });
+  return ranges;
+}
+async function getDataRange(lastRow, initialColNameForLastRow, initialNumberColForLastRow, initialColName, initialColNameNumber, endColName, getRange, sheetId, sheetName) {
+  let rangeString = initialColNameForLastRow + initialNumberColForLastRow + ":" + initialColNameForLastRow + lastRow;
+  const values = await getRange(sheetId, `${sheetName}!${rangeString}`);
+  rangeString = initialColName + initialColNameNumber + ":" + endColName + (values.length + (sheetName === TABS.MOVIMENTACOES ? 1 : 3));
+  const dataRows = await getRange(sheetId, `${sheetName}!${rangeString}`);
+  return dataRows;
+}
+function getLastRow(sheetName, docInfo) {
+  let lastRow = 0;
+  for (let i = 0; i < docInfo.sheets.length; i++) {
+    if (docInfo.sheets[i].properties.title === sheetName) {
+      lastRow = docInfo.sheets[i].properties.gridProperties.rowCount;
+      break;
+    }
+  }
+  return lastRow;
+}
+function composeDateDefaultToShort(dateDefault) {
+  const year = dateDefault.split("/").pop();
+  const month = dateDefault.split("/")[1];
+  const day = dateDefault.split("/")[0];
+  return `${year}${month}${day}`;
+}
+function composeDateFromShortV2(shortDate) {
+  const year = shortDate.slice(0, 4);
+  const month = shortDate.slice(4, 6);
+  const day = shortDate.slice(6, 8);
+  return `${year}-${month}-${day}T03:00:00.000Z`;
+}
+var mountList = (result, array, withDocId = false) => {
+  if (!result.empty) {
+    result.forEach((doc) => {
+      const createTime = import_moment_timezone.default.unix(doc.createTime._seconds).format("YYYY-MM-DD");
+      if (withDocId) {
+        array.push({ ...doc.data(), docId: doc.id, createTime });
+      } else {
+        array.push({ ...doc.data(), createTime });
+      }
+    });
+    return array;
+  }
+  return [];
+};
+var convertDateTime = (date) => {
+  return import_moment_timezone.default.unix(date).format("YYYY/MM/DD HH:mm:ss");
+};
+var getSheetId = (url) => {
+  const split = url.split("/");
+  return split[5];
+};
+var getTypeByMainSearching = (type) => {
+  switch (type) {
+    case 13:
+      return CLASS.REIT;
+    case 12:
+      return CLASS.STOCK;
+    case 901:
+      return CLASS.ETF_EUA;
+    case 22:
+      return CLASS.FI_INFRA;
+    case 24:
+      return CLASS.FIAGRO;
+    case 2:
+      return CLASS.FII;
+    case 1:
+      return CLASS.ACAO;
+    case 6:
+      return CLASS.ETF;
+    case 4:
+      return CLASS.BDR;
+    case 100:
+      return CLASS.CRIPTOMOEDA;
+    default:
+      return null;
+  }
+};
+function strToFloat(str) {
+  if (str) {
+    return Number(str.replaceAll(".", "").replaceAll(",", "."));
+  }
+  return null;
+}
+var renameTickerGoogleSheet = (ticker) => {
+  if (ticker in RENAME_TICKER_GOOGLE_SHEET) {
+    return RENAME_TICKER_GOOGLE_SHEET[ticker];
+  }
+  return ticker;
+};
+var composeNumberTwoDecimal = (number) => {
+  if (number <= 9) {
+    return `0${number}`;
+  }
+  return number;
+};
+function convertCurrencyReal2(value, currency = true, isCript = false, customDecimal = 6) {
+  if (currency) {
+    return (value || 0).toLocaleString("pt-br", {
+      minimumFractionDigits: isCript ? customDecimal : 2,
+      style: "currency",
+      currency: "BRL"
+    });
+  }
+  return value.toLocaleString("pt-br", {
+    minimumFractionDigits: isCript ? customDecimal : 2
+  });
+}
+function convertCurrencyDolar(value, currency = true, isCript = false, customDecimal = 6) {
+  if (currency) {
+    return (value || 0).toLocaleString("en-US", {
+      minimumFractionDigits: isCript ? customDecimal : 2,
+      style: "currency",
+      currency: "USD"
+    });
+  }
+  return value.toLocaleString("en-US", {
+    minimumFractionDigits: isCript ? customDecimal : 2
+  });
+}
+var mydash = () => {
+  const log = (message) => {
+    const staging = process.env.STAGING === "true";
+    return staging ? console.log(message) : null;
+  };
+  const normalizeBRDate = (stringDate) => {
+    try {
+      const currentDate = (0, import_moment_timezone.default)(stringDate, "DD/MM/YYYY").tz("America/Sao_Paulo").toISOString();
+      const shortDate = (0, import_moment_timezone.default)(currentDate).format("YYYYMMDD");
+      return { currentDate, shortDate };
+    } catch {
+      return {
+        currentDate: null,
+        shortDate: null
+      };
+    }
+  };
+  const sanitizeTickerName = (ticker) => ticker.replace("CRYPTO.", "");
+  const delay = async (d = 200) => {
+    return await new Promise((resolve) => setTimeout(() => resolve("delay"), d));
+  };
+  return {
+    log,
+    normalizeBRDate,
+    sanitizeTickerName,
+    delay
+  };
+};
+var extractUserId = (walletId) => {
+  if (walletId && walletId.includes("-wallet-")) {
+    return walletId.split("-wallet-")[0];
+  }
+  return walletId;
+};
+function sanitizeDescriptionBens(txt = "", ticker) {
+  return txt.replace(`(${ticker})`, "").trim();
+}
 
 // irpf_to_pdf/composers.js
 var { sum, map: map2, sumBy, cloneDeep, groupBy } = import_lodash2.default;
@@ -1267,9 +1450,6 @@ function composeBensDireitos(itensWalletFiltered) {
     ]);
   });
   return bens;
-}
-function sanitizeDescriptionBens(txt = "", ticker) {
-  return txt.replace(`(${ticker})`, "").trim();
 }
 function sanitizaTableBensCDB(bens = []) {
   const newBens = [];
@@ -11973,185 +12153,6 @@ var mockRicardo2025 = {
     }
   }
 };
-
-// functions/index.js
-var import_moment_timezone = __toESM(require("moment-timezone"), 1);
-function getMonths(cod) {
-  const months = {
-    0: "janeiro",
-    1: "fevereiro",
-    2: "mar\xE7o",
-    3: "abril",
-    4: "maio",
-    5: "junho",
-    6: "julho",
-    7: "agosto",
-    8: "setembro",
-    9: "outubro",
-    10: "novembro",
-    11: "dezembro"
-  };
-  return months[cod];
-}
-function composeRanges(sheetNames, sheetRanges) {
-  const ranges = [];
-  sheetNames.forEach((element, i) => {
-    ranges.push(`${element}!${sheetRanges[i]}`);
-  });
-  return ranges;
-}
-async function getDataRange(lastRow, initialColNameForLastRow, initialNumberColForLastRow, initialColName, initialColNameNumber, endColName, getRange, sheetId, sheetName) {
-  let rangeString = initialColNameForLastRow + initialNumberColForLastRow + ":" + initialColNameForLastRow + lastRow;
-  const values = await getRange(sheetId, `${sheetName}!${rangeString}`);
-  rangeString = initialColName + initialColNameNumber + ":" + endColName + (values.length + (sheetName === TABS.MOVIMENTACOES ? 1 : 3));
-  const dataRows = await getRange(sheetId, `${sheetName}!${rangeString}`);
-  return dataRows;
-}
-function getLastRow(sheetName, docInfo) {
-  let lastRow = 0;
-  for (let i = 0; i < docInfo.sheets.length; i++) {
-    if (docInfo.sheets[i].properties.title === sheetName) {
-      lastRow = docInfo.sheets[i].properties.gridProperties.rowCount;
-      break;
-    }
-  }
-  return lastRow;
-}
-function composeDateDefaultToShort(dateDefault) {
-  const year = dateDefault.split("/").pop();
-  const month = dateDefault.split("/")[1];
-  const day = dateDefault.split("/")[0];
-  return `${year}${month}${day}`;
-}
-function composeDateFromShortV2(shortDate) {
-  const year = shortDate.slice(0, 4);
-  const month = shortDate.slice(4, 6);
-  const day = shortDate.slice(6, 8);
-  return `${year}-${month}-${day}T03:00:00.000Z`;
-}
-var mountList = (result, array, withDocId = false) => {
-  if (!result.empty) {
-    result.forEach((doc) => {
-      const createTime = import_moment_timezone.default.unix(doc.createTime._seconds).format("YYYY-MM-DD");
-      if (withDocId) {
-        array.push({ ...doc.data(), docId: doc.id, createTime });
-      } else {
-        array.push({ ...doc.data(), createTime });
-      }
-    });
-    return array;
-  }
-  return [];
-};
-var convertDateTime = (date) => {
-  return import_moment_timezone.default.unix(date).format("YYYY/MM/DD HH:mm:ss");
-};
-var getSheetId = (url) => {
-  const split = url.split("/");
-  return split[5];
-};
-var getTypeByMainSearching = (type) => {
-  switch (type) {
-    case 13:
-      return CLASS.REIT;
-    case 12:
-      return CLASS.STOCK;
-    case 901:
-      return CLASS.ETF_EUA;
-    case 22:
-      return CLASS.FI_INFRA;
-    case 24:
-      return CLASS.FIAGRO;
-    case 2:
-      return CLASS.FII;
-    case 1:
-      return CLASS.ACAO;
-    case 6:
-      return CLASS.ETF;
-    case 4:
-      return CLASS.BDR;
-    case 100:
-      return CLASS.CRIPTOMOEDA;
-    default:
-      return null;
-  }
-};
-function strToFloat(str) {
-  if (str) {
-    return Number(str.replaceAll(".", "").replaceAll(",", "."));
-  }
-  return null;
-}
-var renameTickerGoogleSheet = (ticker) => {
-  if (ticker in RENAME_TICKER_GOOGLE_SHEET) {
-    return RENAME_TICKER_GOOGLE_SHEET[ticker];
-  }
-  return ticker;
-};
-var composeNumberTwoDecimal = (number) => {
-  if (number <= 9) {
-    return `0${number}`;
-  }
-  return number;
-};
-function convertCurrencyReal2(value, currency = true, isCript = false, customDecimal = 6) {
-  if (currency) {
-    return (value || 0).toLocaleString("pt-br", {
-      minimumFractionDigits: isCript ? customDecimal : 2,
-      style: "currency",
-      currency: "BRL"
-    });
-  }
-  return value.toLocaleString("pt-br", {
-    minimumFractionDigits: isCript ? customDecimal : 2
-  });
-}
-function convertCurrencyDolar(value, currency = true, isCript = false, customDecimal = 6) {
-  if (currency) {
-    return (value || 0).toLocaleString("en-US", {
-      minimumFractionDigits: isCript ? customDecimal : 2,
-      style: "currency",
-      currency: "USD"
-    });
-  }
-  return value.toLocaleString("en-US", {
-    minimumFractionDigits: isCript ? customDecimal : 2
-  });
-}
-var mydash = () => {
-  const log = (message) => {
-    const staging = process.env.STAGING === "true";
-    return staging ? console.log(message) : null;
-  };
-  const normalizeBRDate = (stringDate) => {
-    try {
-      const currentDate = (0, import_moment_timezone.default)(stringDate, "DD/MM/YYYY").tz("America/Sao_Paulo").toISOString();
-      const shortDate = (0, import_moment_timezone.default)(currentDate).format("YYYYMMDD");
-      return { currentDate, shortDate };
-    } catch {
-      return {
-        currentDate: null,
-        shortDate: null
-      };
-    }
-  };
-  const sanitizeTickerName = (ticker) => ticker.replace("CRYPTO.", "");
-  const delay = async (d = 200) => {
-    return await new Promise((resolve) => setTimeout(() => resolve("delay"), d));
-  };
-  return {
-    log,
-    normalizeBRDate,
-    sanitizeTickerName,
-    delay
-  };
-};
-var extractUserId = (walletId) => {
-  if (walletId && walletId.includes("-wallet-")) {
-    return walletId.split("-wallet-")[0];
-  }
-  return walletId;
-};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   CLASS,
@@ -12192,6 +12193,7 @@ var extractUserId = (walletId) => {
   mountList,
   mydash,
   renameTickerGoogleSheet,
+  sanitizeDescriptionBens,
   strToFloat
 });
 /**
