@@ -459,7 +459,7 @@ var composeTransactionsWallet = (transactions, walletSubscribers, walletResume, 
   const yearsDiff = yearsStartAtCurrent.filter(
     (x) => !yearsAvailableHistory.includes(Number(x))
   );
-  yearsDiff.map((year) => {
+  yearsDiff.forEach((year) => {
     if (!(year in walletHistory)) {
       const _indexMonth = Object.keys(walletHistory[year - 1]).pop();
       const currentYear = Number((0, import_moment_timezone2.default)().format("YYYY"));
