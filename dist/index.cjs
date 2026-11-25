@@ -50,7 +50,11 @@ __export(index_exports, {
   convertDateTime: () => convertDateTime,
   extractUserId: () => extractUserId,
   generateIRPF: () => generateIRPF,
+  getCodesCDB: () => getCodesCDB,
   getDataRange: () => getDataRange,
+  getFinishPositionsCDB: () => getFinishPositionsCDB,
+  getFullShortDates: () => getFullShortDates,
+  getLastAvailablePositionWallet: () => getLastAvailablePositionWallet,
   getLastRow: () => getLastRow,
   getMonths: () => getMonths,
   getSheetId: () => getSheetId,
@@ -211,10 +215,10 @@ var MYDASH_PREFIX = {
 };
 
 // irpf_to_pdf/index.js
-var import_lodash4 = __toESM(require("lodash"), 1);
+var import_lodash5 = __toESM(require("lodash"), 1);
 
 // irpf_to_pdf/composers.js
-var import_lodash2 = __toESM(require("lodash"), 1);
+var import_lodash3 = __toESM(require("lodash"), 1);
 
 // irpf_to_pdf/utils.js
 var import_lodash = __toESM(require("lodash"), 1);
@@ -414,6 +418,8 @@ var DOC_DEFINITION_OPERATIONS = {
 
 // functions/index.js
 var import_moment_timezone = __toESM(require("moment-timezone"), 1);
+var import_lodash2 = __toESM(require("lodash"), 1);
+var { map: map2 } = import_lodash2.default;
 function getMonths(cod) {
   const months = {
     0: "janeiro",
@@ -593,14 +599,116 @@ var extractUserId = (walletId) => {
 function sanitizeDescriptionBens(txt = "", ticker) {
   return txt.replace(`(${ticker})`, "").trim();
 }
+var getFullShortDates = (walletHistory, now = /* @__PURE__ */ new Date()) => {
+  let listFullShortDates = [];
+  if (!walletHistory) {
+    return listFullShortDates;
+  }
+  const listYears = [];
+  const _currentYear = now.getFullYear();
+  const _currentMonth = now.getMonth() + 1;
+  const _firstYear = Object.keys(walletHistory).shift();
+  const _firstMonth = Object.keys(walletHistory[_firstYear] || {}).shift();
+  for (let i = _firstYear; i <= _currentYear; i++) {
+    listYears.push(i);
+  }
+  listYears.forEach((y, key) => {
+    const _months = [
+      `${y}01`,
+      `${y}02`,
+      `${y}03`,
+      `${y}04`,
+      `${y}05`,
+      `${y}06`,
+      `${y}07`,
+      `${y}08`,
+      `${y}09`,
+      `${y}10`,
+      `${y}11`,
+      `${y}12`
+    ];
+    let _monthsFiltered = [];
+    if (key === 0) {
+      const starterDate = `${y}${_firstMonth <= 9 ? "0" + _firstMonth : _firstMonth}`;
+      if (Number(y) !== _currentYear) {
+        _monthsFiltered = _months.filter((m) => m >= starterDate);
+      } else {
+        const _shortDate = `${_currentYear}${_currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth}`;
+        _monthsFiltered = _months.filter(
+          (m) => m >= _shortDate && m <= _shortDate
+        );
+      }
+      listFullShortDates = [...listFullShortDates, ..._monthsFiltered];
+    } else {
+      if (Number(y) === _currentYear) {
+        const _shortDate = `${_currentYear}${_currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth}`;
+        _monthsFiltered = _months.filter(
+          (m) => m >= _shortDate && m <= _shortDate
+        );
+        listFullShortDates = [...listFullShortDates, ..._monthsFiltered];
+      } else {
+        listFullShortDates = [...listFullShortDates, ..._months];
+      }
+    }
+  });
+  return listFullShortDates;
+};
+var getFinishPositionsCDB = (historic) => {
+  let finishPositions = [];
+  map2(
+    historic,
+    (itemForYear) => map2(itemForYear, (itemForMonth) => {
+      if ("finishPosition" in itemForMonth) {
+        finishPositions = [
+          ...finishPositions,
+          ...itemForMonth.finishPosition
+        ];
+      }
+    })
+  );
+  return finishPositions;
+};
+var getCodesCDB = (type) => {
+  switch (type) {
+    case "LCI":
+    case "LCA":
+    case "LCD":
+    case "CRI":
+    case "CRA":
+    case "DEB\xCANTURE":
+      return "03";
+    case "CDB":
+    case "RDB":
+      return "02";
+    case "OUTROS":
+    case "LF":
+      return "99";
+  }
+};
+var getLastAvailablePositionWallet = (walletHistory = {}) => {
+  const yearsList = Object.keys(walletHistory);
+  let lastRegisterHistorycWallet = {};
+  let lastYear;
+  let lastMonth;
+  yearsList.forEach((y) => {
+    map2(walletHistory[y], (h, m) => {
+      if (h && Object.keys(h).length) {
+        lastRegisterHistorycWallet = h;
+        lastYear = y;
+        lastMonth = m;
+      }
+    });
+  });
+  return { lastRegisterHistorycWallet, lastYear, lastMonth };
+};
 
 // irpf_to_pdf/composers.js
-var { sum, map: map2, sumBy, cloneDeep, groupBy } = import_lodash2.default;
+var { sum, map: map3, sumBy, cloneDeep, groupBy } = import_lodash3.default;
 function composeOperationsFII(operations, yearAnalysis, lossesSalesFii) {
   let mountOperationsFII = 0;
   let mountLossOperationsFII = 0;
   let nameOp = "";
-  map2(operations, (op, operationName) => {
+  map3(operations, (op, operationName) => {
     switch (operationName) {
       case TYPE_OPERATIONS_SELL.VENDA_DE_FII:
         nameOp = operationName;
@@ -626,7 +734,7 @@ function composeTableCommonOperationAndDayTrade(operations) {
   const tableCommonOperationAndDayTradeProcessed = {};
   const arrayYears = Object.keys(operations);
   const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0;
-  map2(operations, (years, indexYear) => {
+  map3(operations, (years, indexYear) => {
     tableCommonOperationAndDayTradeProcessed[indexYear] = {
       1: {},
       2: {},
@@ -643,14 +751,14 @@ function composeTableCommonOperationAndDayTrade(operations) {
       accumulatedCommon: 0,
       accumulatedTrade: 0
     };
-    map2(years, (months, indexMonth) => {
+    map3(years, (months, indexMonth) => {
       const ops = {
         commonList: [],
         dayTradeList: [],
         totalCommon: 0,
         totalTrade: 0
       };
-      map2(months, (op, operationName) => {
+      map3(months, (op, operationName) => {
         switch (operationName) {
           case TYPE_OPERATIONS_SELL.SWING_TRADE:
             if (op.amountTransaction > LIMIT_SWING_TRADE || op.amountValues < 0) {
@@ -693,7 +801,7 @@ function composeTableOperationsCriptos(operations) {
   const tableOperationsCriptosProcessed = {};
   const arrayYears = Object.keys(operations);
   const firstYear = arrayYears.length > 0 ? arrayYears[0] : 0;
-  map2(operations, (years, indexYear) => {
+  map3(operations, (years, indexYear) => {
     tableOperationsCriptosProcessed[indexYear] = {
       1: {},
       2: {},
@@ -710,14 +818,14 @@ function composeTableOperationsCriptos(operations) {
       accumulatedTrade: 0,
       accumulatedCommon: 0
     };
-    map2(years, (months, indexMonth) => {
+    map3(years, (months, indexMonth) => {
       const ops = {
         commonList: [],
         dayTradeList: [],
         totalCommon: 0,
         totalTrade: 0
       };
-      map2(months, (op, operationName) => {
+      map3(months, (op, operationName) => {
         switch (operationName) {
           case TYPE_OPERATIONS_SELL.VENDA_DE_CRIPTOMOEDA:
             if (op.amountTransaction > LIMIT_SWING_TRADE) {
@@ -1272,8 +1380,8 @@ function composeOperations(operations, indexMonth, indexYear, op, SUM_SWING_TRAD
   return operations;
 }
 function unionSwingTradeUnit(operations, SUM_SWING_TRADE_UNIT) {
-  map2(operations, (year, indexYear) => {
-    map2(year, (month, indexMonth) => {
+  map3(operations, (year, indexYear) => {
+    map3(year, (month, indexMonth) => {
       if (indexYear in SUM_SWING_TRADE_UNIT && indexMonth in SUM_SWING_TRADE_UNIT[indexYear]) {
         operations[indexYear][indexMonth] = {
           ...operations[indexYear][indexMonth],
@@ -1284,11 +1392,11 @@ function unionSwingTradeUnit(operations, SUM_SWING_TRADE_UNIT) {
   });
 }
 function composeSwingTradeFree(operations, SUM_SWING_TRADE_FREE) {
-  map2(operations, (year, indexYear) => {
+  map3(operations, (year, indexYear) => {
     let sumSwingTradeFree = 0;
-    map2(
+    map3(
       year,
-      (month) => map2(month, (operation, indexOp) => {
+      (month) => map3(month, (operation, indexOp) => {
         if (indexOp === TYPE_OPERATIONS_SELL.SWING_TRADE) {
           if (operation.amountTransaction <= LIMIT_SWING_TRADE) {
             sumSwingTradeFree += operation.amountValues;
@@ -1387,7 +1495,7 @@ function composeRendimentsCdbs(cdbs, tds) {
     }
   });
   agroupByDocumentNumber = groupBy(rendimentsFiltered, "document");
-  map2(agroupByDocumentNumber, (item) => {
+  map3(agroupByDocumentNumber, (item) => {
     const sum2 = sumBy(item, "valor");
     rendiments.push([
       item[0].tipo,
@@ -1418,22 +1526,6 @@ function composeRendimentsTds(tds) {
     rendiments
   };
 }
-var getCodesCDB = (type) => {
-  switch (type) {
-    case "LCI":
-    case "LCD":
-    case "CRI":
-    case "CRA":
-    case "DEB\xCANTURE":
-      return "03";
-    case "CDB":
-    case "RDB":
-      return "02";
-    case "OUTROS":
-    case "LF":
-      return "99";
-  }
-};
 function composeBensDireitos(itensWalletFiltered) {
   const bens = [];
   itensWalletFiltered.forEach((item) => {
@@ -1482,7 +1574,7 @@ function composeHeaderTable(text = [], fillColor = "#300668", color = "white") {
 function composerExternalDividends(docDefinition, provents) {
   const dividendsConsolidated = {};
   if (hasOwn(provents, "external") && provents.external && Object.keys(provents.external).length > 0) {
-    map2(provents.external, (ticker, symbol) => {
+    map3(provents.external, (ticker, symbol) => {
       dividendsConsolidated[symbol] = {
         lucroVenda: ticker.amountBuy,
         totalDividendos: ticker.amountDividend,
@@ -1490,7 +1582,7 @@ function composerExternalDividends(docDefinition, provents) {
       };
     });
     const tablePdf = [];
-    map2(dividendsConsolidated, (item, ticker) => {
+    map3(dividendsConsolidated, (item, ticker) => {
       tablePdf.push([
         ticker,
         `${convertCurrencyReal((item == null ? void 0 : item.lucroVenda) || 0)} + ${convertCurrencyReal(
@@ -1559,7 +1651,7 @@ function composerExternalDividends(docDefinition, provents) {
 function composeTaxExternal(docDefinition, provents) {
   if (hasOwn(provents, "external") && provents.external && Object.keys(provents.external).length > 0) {
     let taxAmount = 0;
-    map2(provents.external, (item) => {
+    map3(provents.external, (item) => {
       taxAmount += item.amountTax;
     });
     const title = {
@@ -1607,7 +1699,7 @@ function composeTaxExternal(docDefinition, provents) {
 }
 function composeTableOperationsFII(tableOperationsFII, operationsFII, year) {
   const tableData = [];
-  map2([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
+  map3([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
     if (hasOwn(tableOperationsFII, year) && hasOwn(tableOperationsFII[year], mes)) {
       const value = getNode(operationsFII[year], mes);
       let fontColor = "blue";
@@ -1647,8 +1739,8 @@ function composeTableOperationsFII(tableOperationsFII, operationsFII, year) {
 }
 
 // irpf_to_pdf/renders.js
-var import_lodash3 = __toESM(require("lodash"), 1);
-var { map: map3, sumBy: sumBy2 } = import_lodash3.default;
+var import_lodash4 = __toESM(require("lodash"), 1);
+var { map: map4, sumBy: sumBy2 } = import_lodash4.default;
 function renderLow20kMonth(SUM_SWING_TRADE_FREE, year) {
   const lines = [];
   if (!hasOwn(SUM_SWING_TRADE_FREE, year)) {
@@ -1675,9 +1767,9 @@ function renderLow20kMonth(SUM_SWING_TRADE_FREE, year) {
 }
 function renderCriptoLow35kMonth(operationsFull, SUM_SWING_TRADE_CRIPTO_FREE, year) {
   const tableOperationsCripto = composeTableOperationsCriptos(operationsFull);
-  map3(tableOperationsCripto, (item, indexYear) => {
+  map4(tableOperationsCripto, (item, indexYear) => {
     const sum2 = [];
-    map3(item, (month) => {
+    map4(item, (month) => {
       if (hasOwn(month, "totalCommon")) {
         sum2.push(month.totalCommon);
       }
@@ -1767,7 +1859,7 @@ function renderBonifications(bonifications, bonificationsWithFractions) {
     return [{}];
   }
   const listBonification = [];
-  map3(bonificationsWithFractions, (item) => {
+  map4(bonificationsWithFractions, (item) => {
     listBonification.push([
       "18",
       item.cnpj,
@@ -1776,7 +1868,7 @@ function renderBonifications(bonifications, bonificationsWithFractions) {
     ]);
   });
   if (bonificationsWithFractions) {
-    map3(bonifications, (item, ticker) => {
+    map4(bonifications, (item, ticker) => {
       if (!hasOwn(bonificationsWithFractions, ticker)) {
         listBonification.push([
           "18",
@@ -1787,7 +1879,7 @@ function renderBonifications(bonifications, bonificationsWithFractions) {
       }
     });
   } else {
-    map3(bonifications, (item) => {
+    map4(bonifications, (item) => {
       listBonification.push([
         "18",
         item.cnpj,
@@ -1995,9 +2087,9 @@ Opera\xE7\xF5es com fundos imobili\xE1rios n\xE3o entram nesta se\xE7\xE3o, caso
   };
   const tableCommonOperationAndDayTrade = composeTableCommonOperationAndDayTrade(operationsFull);
   const tableCommonOperationAndDayTradeFiltered = {};
-  map3(
+  map4(
     tableCommonOperationAndDayTrade,
-    (year2, indexYear) => map3(year2, (month, indexMonth) => {
+    (year2, indexYear) => map4(year2, (month, indexMonth) => {
       if (Object.keys(month).length > 0) {
         if (hasOwn(tableCommonOperationAndDayTradeFiltered, indexYear)) {
           tableCommonOperationAndDayTradeFiltered[indexYear].push(indexMonth);
@@ -2009,7 +2101,7 @@ Opera\xE7\xF5es com fundos imobili\xE1rios n\xE3o entram nesta se\xE7\xE3o, caso
   );
   const commonOperationsAnalised = [];
   const amountTransactions = [];
-  map3(tableCommonOperationAndDayTrade[year], (month, indexMonth) => {
+  map4(tableCommonOperationAndDayTrade[year], (month, indexMonth) => {
     const co = composeCommonOperationAndDayTrade(
       month,
       year,
@@ -2061,9 +2153,9 @@ Opera\xE7\xF5es com fundos imobili\xE1rios n\xE3o entram nesta se\xE7\xE3o, caso
   }
 }
 function renderOperationsFII(operationsFull, operationsFII, lossesSalesFii, year, tableOperationsFII, docDefinition) {
-  map3(
+  map4(
     operationsFull,
-    (itemYear, indexYear) => map3(itemYear, (month, indexMonth) => {
+    (itemYear, indexYear) => map4(itemYear, (month, indexMonth) => {
       const co = composeOperationsFII(
         operationsFull[indexYear][indexMonth],
         indexYear,
@@ -2085,9 +2177,9 @@ function renderOperationsFII(operationsFull, operationsFII, lossesSalesFii, year
       1: 0
     };
   }
-  map3(
+  map4(
     operationsFII,
-    (opYear, indexYear) => map3([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
+    (opYear, indexYear) => map4([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], (mes) => {
       if (mes === 1) {
         let sumLiquidWithNegativeOld = hasOwn(tableOperationsFII, indexYear - 1) ? tableOperationsFII[indexYear - 1][12][1] + tableOperationsFII[indexYear - 1][12][2] * -1 : 0;
         sumLiquidWithNegativeOld = sumLiquidWithNegativeOld > 0 ? 0 : sumLiquidWithNegativeOld * -1;
@@ -2178,7 +2270,7 @@ function renderRendimentsIsentos(provents, SUM_SWING_TRADE_FREE_99, year) {
   }
   const gcapInfra = [];
   if (hasOwn(SUM_SWING_TRADE_FREE_99, year)) {
-    map3(SUM_SWING_TRADE_FREE_99[year], (ticker) => {
+    map4(SUM_SWING_TRADE_FREE_99[year], (ticker) => {
       gcapInfra.push([
         "99",
         ticker.document_number_principal,
@@ -2507,7 +2599,7 @@ Exemplo de outras informa\xE7\xF5es que dever\xE1 procurar para sua declara\xE7\
 }
 
 // irpf_to_pdf/index.js
-var { map: map4, groupBy: groupBy2 } = import_lodash4.default;
+var { map: map5, groupBy: groupBy2 } = import_lodash5.default;
 function generateIRPF(yearChosen = 2022, nameChosen = "", documentNumberChosen = "", data = {}) {
   const operationsFull = {};
   let itensWalletFiltered = [];
@@ -2537,12 +2629,12 @@ function generateIRPF(yearChosen = 2022, nameChosen = "", documentNumberChosen =
   bonificationsWithFractions = (data == null ? void 0 : data.bonificationsWithFractions) || {};
   rentals = (data == null ? void 0 : data.rentals) || {};
   reembolso = (data == null ? void 0 : data.reembolso) || {};
-  map4(
+  map5(
     data.sells,
-    (year2, indexYear) => map4(year2, (month, indexMonth) => {
+    (year2, indexYear) => map5(year2, (month, indexMonth) => {
       const filterOperations = groupBy2(month.operations, (x) => x.operation);
-      map4(filterOperations, (ops) => {
-        map4(ops, (op) => {
+      map5(filterOperations, (ops) => {
+        map5(ops, (op) => {
           composeOperations(
             operationsFull,
             indexMonth,
@@ -12176,7 +12268,11 @@ var mockRicardo2025 = {
   convertDateTime,
   extractUserId,
   generateIRPF,
+  getCodesCDB,
   getDataRange,
+  getFinishPositionsCDB,
+  getFullShortDates,
+  getLastAvailablePositionWallet,
   getLastRow,
   getMonths,
   getSheetId,

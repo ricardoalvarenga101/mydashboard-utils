@@ -37,7 +37,7 @@ __export(wallet_exports, {
 module.exports = __toCommonJS(wallet_exports);
 
 // wallet/wallet-business.js
-var import_lodash = __toESM(require("lodash"), 1);
+var import_lodash2 = __toESM(require("lodash"), 1);
 var import_moment_timezone2 = __toESM(require("moment-timezone"), 1);
 
 // constants.js
@@ -97,6 +97,8 @@ var MOVIMENTATIONS_WITHOUT_SUBSCRIBERS = [
 
 // functions/index.js
 var import_moment_timezone = __toESM(require("moment-timezone"), 1);
+var import_lodash = __toESM(require("lodash"), 1);
+var { map } = import_lodash.default;
 var composeNumberTwoDecimal = (number) => {
   if (number <= 9) {
     return `0${number}`;
@@ -105,7 +107,7 @@ var composeNumberTwoDecimal = (number) => {
 };
 
 // wallet/wallet-business.js
-var { map, mean, cloneDeep, sumBy, sortBy, flatMap, orderBy } = import_lodash.default;
+var { map: map2, mean, cloneDeep, sumBy, sortBy, flatMap, orderBy } = import_lodash2.default;
 function composeOperationSalesDefault(classe = null, operation = null) {
   switch (classe) {
     case CLASS.FI_INFRA:
@@ -177,7 +179,7 @@ var composeAtributesWallet = (walletHistory, dataBase, walletSales, transactions
   const _walletHistoricClone = cloneDeep(walletHistory);
   let accumulatedAmountProvents = 0;
   let accumulatedAmountProventsSubscribers = 0;
-  map(_walletHistoricClone, (itensYear, year) => {
+  map2(_walletHistoricClone, (itensYear, year) => {
     const _months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     const _monthsAvailable = Object.keys(itensYear);
     _months.forEach((m) => {
@@ -185,8 +187,8 @@ var composeAtributesWallet = (walletHistory, dataBase, walletSales, transactions
         itensYear[m] = [];
       }
     });
-    map(itensYear, (itensMonth, month) => {
-      map(itensMonth, (item, index) => {
+    map2(itensYear, (itensMonth, month) => {
+      map2(itensMonth, (item, index) => {
         var _a;
         if (index !== "finishPosition" && index !== "totalAmountBonification" && index !== "walletSales" && item) {
           let _lastUnitPrice = 1;
@@ -264,15 +266,15 @@ var composeAtributesWallet = (walletHistory, dataBase, walletSales, transactions
       }
     });
   });
-  map(_walletHistoricClone, (items, y) => {
-    map(items, (item, m) => {
+  map2(_walletHistoricClone, (items, y) => {
+    map2(items, (item, m) => {
       const _nodes = Object.keys(item);
       if (_nodes.length > 1) {
         walletHistory[y][m] = item;
       }
     });
   });
-  map(transactions, (t) => {
+  map2(transactions, (t) => {
     t.forEach((item) => {
       let detail = dataBase.filter((d) => d.symbol === item.ticker);
       if ("tickerRef" in item && item.tickerRef !== item.ticker) {
@@ -308,15 +310,15 @@ var composeTransactionsWallet = (transactions, walletSubscribers, walletResume, 
   const accumulatorTransactionsFull = {};
   const originalAccumulatorTransactionsFull = {};
   const finishPosition = [];
-  map(transactions, (y, year) => {
+  map2(transactions, (y, year) => {
     if (!(year in walletHistory)) {
       walletHistory[year] = {};
     }
-    map(y, (m, month) => {
+    map2(y, (m, month) => {
       if (!(month in walletHistory[year])) {
         walletHistory[year] = { ...walletHistory[year], [month]: [] };
       }
-      map(m, (t, ticker) => {
+      map2(m, (t, ticker) => {
         if (!(ticker in accumulatorTransactionsFull)) {
           accumulatorTransactionsFull[ticker] = {
             movimentation: [],
@@ -346,7 +348,7 @@ var composeTransactionsWallet = (transactions, walletSubscribers, walletResume, 
           ["date", "movimentation"],
           ["asc", "asc"]
         );
-        map(transactionsOrdenate, (item) => {
+        map2(transactionsOrdenate, (item) => {
           if (item.ptax) {
             accumulatorTransactionsFull[ticker].ptaxList.push(item.ptax);
           }

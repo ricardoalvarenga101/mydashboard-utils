@@ -1,5 +1,8 @@
 import moment from 'moment-timezone'
+import _lodash from 'lodash'
 import { RENAME_TICKER_GOOGLE_SHEET, TABS, CLASS } from '../constants.js'
+
+const { map } = _lodash
 
 /**
  * Retorna a descrição do mes a partir de seu código
@@ -362,6 +365,141 @@ function sanitizeDescriptionBens (txt = '', ticker) {
   return txt.replace(`(${ticker})`, '').trim()
 }
 
+/**
+ * Retorna a lista de shortdates sequencial desde o inicio dos investimentos
+ * @param {*} walletHistory
+ * @param {Date} [now] referência de data/hora (default: new Date()) — permite
+ *   golden test determinístico
+ */
+const getFullShortDates = (walletHistory, now = new Date()) => {
+  let listFullShortDates = []
+  if (!walletHistory) {
+    return listFullShortDates
+  }
+  const listYears = []
+  const _currentYear = now.getFullYear()
+  const _currentMonth = now.getMonth() + 1
+  const _firstYear = Object.keys(walletHistory).shift()
+  const _firstMonth = Object.keys(walletHistory[_firstYear] || {}).shift()
+
+  for (let i = _firstYear; i <= _currentYear; i++) {
+    listYears.push(i)
+  }
+
+  listYears.forEach((y, key) => {
+    const _months = [
+      `${y}01`,
+      `${y}02`,
+      `${y}03`,
+      `${y}04`,
+      `${y}05`,
+      `${y}06`,
+      `${y}07`,
+      `${y}08`,
+      `${y}09`,
+      `${y}10`,
+      `${y}11`,
+      `${y}12`
+    ]
+    let _monthsFiltered = []
+    if (key === 0) {
+      // primeiro ano
+      const starterDate = `${y}${
+        _firstMonth <= 9 ? '0' + _firstMonth : _firstMonth
+      }`
+      if (Number(y) !== _currentYear) {
+        _monthsFiltered = _months.filter((m) => m >= starterDate)
+      } else {
+        const _shortDate = `${_currentYear}${
+          _currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth
+        }`
+        _monthsFiltered = _months.filter(
+          (m) => m >= _shortDate && m <= _shortDate
+        )
+      }
+      listFullShortDates = [...listFullShortDates, ..._monthsFiltered]
+    } else {
+      if (Number(y) === _currentYear) {
+        const _shortDate = `${_currentYear}${
+          _currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth
+        }`
+        _monthsFiltered = _months.filter(
+          (m) => m >= _shortDate && m <= _shortDate
+        )
+        listFullShortDates = [...listFullShortDates, ..._monthsFiltered]
+      } else {
+        listFullShortDates = [...listFullShortDates, ..._months]
+      }
+    }
+  })
+
+  return listFullShortDates
+}
+
+/**
+ * Obtem as posições finalizadas dos cdbs
+ * @param {*} historic
+ */
+const getFinishPositionsCDB = (historic) => {
+  let finishPositions = []
+  map(historic, (itemForYear) =>
+    map(itemForYear, (itemForMonth) => {
+      if ('finishPosition' in itemForMonth) {
+        finishPositions = [
+          ...finishPositions,
+          ...itemForMonth.finishPosition
+        ]
+      }
+    })
+  )
+  return finishPositions
+}
+
+/**
+ * Retorna o código de classe de renda fixa (CDB) para o IRPF
+ * @param {string} type
+ * @returns
+ */
+const getCodesCDB = (type) => {
+  switch (type) {
+    case 'LCI':
+    case 'LCA':
+    case 'LCD':
+    case 'CRI':
+    case 'CRA':
+    case 'DEBÊNTURE':
+      return '03'
+    case 'CDB':
+    case 'RDB':
+      return '02'
+    case 'OUTROS':
+    case 'LF':
+      return '99'
+  }
+}
+
+/**
+ * Retorna a ultima posição valida da carteira, junto com o ano/mês desta posição
+ * @param {*} walletHistory
+ * @returns {{ lastRegisterHistorycWallet: object, lastYear: string, lastMonth: string }}
+ */
+const getLastAvailablePositionWallet = (walletHistory = {}) => {
+  const yearsList = Object.keys(walletHistory)
+  let lastRegisterHistorycWallet = {}
+  let lastYear
+  let lastMonth
+  yearsList.forEach((y) => {
+    map(walletHistory[y], (h, m) => {
+      if (h && Object.keys(h).length) {
+        lastRegisterHistorycWallet = h
+        lastYear = y
+        lastMonth = m
+      }
+    })
+  })
+  return { lastRegisterHistorycWallet, lastYear, lastMonth }
+}
+
 export {
   mydash,
   extractUserId,
@@ -380,5 +518,9 @@ export {
   composeNumberTwoDecimal,
   convertCurrencyDolar,
   convertCurrencyReal,
-  sanitizeDescriptionBens
+  sanitizeDescriptionBens,
+  getFullShortDates,
+  getFinishPositionsCDB,
+  getCodesCDB,
+  getLastAvailablePositionWallet
 }
