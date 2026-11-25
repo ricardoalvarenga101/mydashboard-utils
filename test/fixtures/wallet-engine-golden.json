@@ -1,0 +1,78 @@
+{
+  "getFullShortDates": [
+    "202403",
+    "202404",
+    "202405",
+    "202406",
+    "202407",
+    "202408",
+    "202409",
+    "202410",
+    "202411",
+    "202412",
+    "202501",
+    "202502",
+    "202503",
+    "202504",
+    "202505",
+    "202506",
+    "202507",
+    "202508",
+    "202509",
+    "202510",
+    "202511",
+    "202512",
+    "202611"
+  ],
+  "getFinishPositionsCDB": [
+    {
+      "ticker": "CDB1",
+      "year": "2024",
+      "month": "3",
+      "totalAmount": 1000
+    },
+    {
+      "ticker": "CDB2",
+      "year": "2024",
+      "month": "6",
+      "totalAmount": 500
+    },
+    {
+      "ticker": "CDB3",
+      "year": "2024",
+      "month": "6",
+      "totalAmount": 300
+    }
+  ],
+  "getCodesCDB": {
+    "LCI": "03",
+    "LCA": "03",
+    "LCD": "03",
+    "CRI": "03",
+    "CRA": "03",
+    "DEBÊNTURE": "03",
+    "CDB": "02",
+    "RDB": "02",
+    "OUTROS": "99",
+    "LF": "99"
+  },
+  "getLastAvailablePositionWallet": {
+    "lastRegisterHistorycWallet": {
+      "PETR4": {
+        "ticker": "PETR4",
+        "totalQtd": 110,
+        "totalAmount": 2700
+      },
+      "BOVA11": {
+        "ticker": "BOVA11",
+        "totalQtd": 10,
+        "totalAmount": 200
+      },
+      "walletResume": {
+        "totalAmountInvest": 2900
+      }
+    },
+    "lastYear": "2024",
+    "lastMonth": "5"
+  }
+}

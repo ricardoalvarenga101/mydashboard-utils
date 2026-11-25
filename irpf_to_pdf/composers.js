@@ -16,7 +16,10 @@ import {
   MONTHS_LABEL
 } from './vars.js'
 import { CLASS } from '../index.js'
-import { sanitizeDescriptionBens } from '../functions/index.js'
+import {
+  sanitizeDescriptionBens,
+  getCodesCDB
+} from '../functions/index.js'
 const { sum, map, sumBy, cloneDeep, groupBy } = lodash
 
 /**
@@ -1204,23 +1207,6 @@ function composeRendimentsTds (tds) {
   }
 }
 
-const getCodesCDB = (type) => {
-  switch (type) {
-    case 'LCI':
-    case 'LCD':
-    case 'CRI':
-    case 'CRA':
-    case 'DEBÊNTURE':
-      return '03'
-    case 'CDB':
-    case 'RDB':
-      return '02'
-    case 'OUTROS':
-    case 'LF':
-      return '99'
-  }
-}
-
 /**
  * Compoe bens e direitos da carteira
  * @param {*} itensWalletFiltered
@@ -1557,5 +1543,6 @@ export {
   sanitizaTableBensCDB,
   composeSwingTradeUnit,
   unionSwingTradeUnit,
-  sanitizeDescriptionBens
+  sanitizeDescriptionBens,
+  getCodesCDB
 }

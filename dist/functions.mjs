@@ -1,5 +1,6 @@
 // functions/index.js
 import moment from "moment-timezone";
+import _lodash from "lodash";
 
 // constants.js
 var RENAME_TICKER_GOOGLE_SHEET = {
@@ -72,6 +73,7 @@ var MOVIMENTATIONS_WITHOUT_SUBSCRIBERS = [
 ];
 
 // functions/index.js
+var { map } = _lodash;
 function getMonths(cod) {
   const months = {
     0: "janeiro",
@@ -251,6 +253,108 @@ var extractUserId = (walletId) => {
 function sanitizeDescriptionBens(txt = "", ticker) {
   return txt.replace(`(${ticker})`, "").trim();
 }
+var getFullShortDates = (walletHistory, now = /* @__PURE__ */ new Date()) => {
+  let listFullShortDates = [];
+  if (!walletHistory) {
+    return listFullShortDates;
+  }
+  const listYears = [];
+  const _currentYear = now.getFullYear();
+  const _currentMonth = now.getMonth() + 1;
+  const _firstYear = Object.keys(walletHistory).shift();
+  const _firstMonth = Object.keys(walletHistory[_firstYear] || {}).shift();
+  for (let i = _firstYear; i <= _currentYear; i++) {
+    listYears.push(i);
+  }
+  listYears.forEach((y, key) => {
+    const _months = [
+      `${y}01`,
+      `${y}02`,
+      `${y}03`,
+      `${y}04`,
+      `${y}05`,
+      `${y}06`,
+      `${y}07`,
+      `${y}08`,
+      `${y}09`,
+      `${y}10`,
+      `${y}11`,
+      `${y}12`
+    ];
+    let _monthsFiltered = [];
+    if (key === 0) {
+      const starterDate = `${y}${_firstMonth <= 9 ? "0" + _firstMonth : _firstMonth}`;
+      if (Number(y) !== _currentYear) {
+        _monthsFiltered = _months.filter((m) => m >= starterDate);
+      } else {
+        const _shortDate = `${_currentYear}${_currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth}`;
+        _monthsFiltered = _months.filter(
+          (m) => m >= _shortDate && m <= _shortDate
+        );
+      }
+      listFullShortDates = [...listFullShortDates, ..._monthsFiltered];
+    } else {
+      if (Number(y) === _currentYear) {
+        const _shortDate = `${_currentYear}${_currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth}`;
+        _monthsFiltered = _months.filter(
+          (m) => m >= _shortDate && m <= _shortDate
+        );
+        listFullShortDates = [...listFullShortDates, ..._monthsFiltered];
+      } else {
+        listFullShortDates = [...listFullShortDates, ..._months];
+      }
+    }
+  });
+  return listFullShortDates;
+};
+var getFinishPositionsCDB = (historic) => {
+  let finishPositions = [];
+  map(
+    historic,
+    (itemForYear) => map(itemForYear, (itemForMonth) => {
+      if ("finishPosition" in itemForMonth) {
+        finishPositions = [
+          ...finishPositions,
+          ...itemForMonth.finishPosition
+        ];
+      }
+    })
+  );
+  return finishPositions;
+};
+var getCodesCDB = (type) => {
+  switch (type) {
+    case "LCI":
+    case "LCA":
+    case "LCD":
+    case "CRI":
+    case "CRA":
+    case "DEB\xCANTURE":
+      return "03";
+    case "CDB":
+    case "RDB":
+      return "02";
+    case "OUTROS":
+    case "LF":
+      return "99";
+  }
+};
+var getLastAvailablePositionWallet = (walletHistory = {}) => {
+  const yearsList = Object.keys(walletHistory);
+  let lastRegisterHistorycWallet = {};
+  let lastYear;
+  let lastMonth;
+  yearsList.forEach((y) => {
+    map(walletHistory[y], (h, m) => {
+      if (h && Object.keys(h).length) {
+        lastRegisterHistorycWallet = h;
+        lastYear = y;
+        lastMonth = m;
+      }
+    });
+  });
+  return { lastRegisterHistorycWallet, lastYear, lastMonth };
+};
 export {
   composeDateDefaultToShort,
   composeDateFromShortV2,
@@ -260,7 +364,11 @@ export {
   convertCurrencyReal,
   convertDateTime,
   extractUserId,
+  getCodesCDB,
   getDataRange,
+  getFinishPositionsCDB,
+  getFullShortDates,
+  getLastAvailablePositionWallet,
   getLastRow,
   getMonths,
   getSheetId,

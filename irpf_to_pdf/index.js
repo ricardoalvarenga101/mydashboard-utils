@@ -6,7 +6,8 @@ import {
   composeOperations,
   composeSwingTradeFree,
   unionSwingTradeUnit,
-  sanitizeDescriptionBens
+  sanitizeDescriptionBens,
+  getCodesCDB
 } from './composers.js'
 import { generatePdf } from './docGenerate.js'
 const { map, groupBy } = lodash
@@ -100,4 +101,4 @@ function generateIRPF (
   return pdfDefinition
 }
 
-export { generateIRPF, sanitizeDescriptionBens }
+export { generateIRPF, sanitizeDescriptionBens, getCodesCDB }
