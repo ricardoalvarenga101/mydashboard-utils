@@ -635,7 +635,7 @@ var getFullShortDates = (walletHistory, now = /* @__PURE__ */ new Date()) => {
       } else {
         const _shortDate = `${_currentYear}${_currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth}`;
         _monthsFiltered = _months.filter(
-          (m) => m >= _shortDate && m <= _shortDate
+          (m) => m >= starterDate && m <= _shortDate
         );
       }
       listFullShortDates = [...listFullShortDates, ..._monthsFiltered];
@@ -643,7 +643,7 @@ var getFullShortDates = (walletHistory, now = /* @__PURE__ */ new Date()) => {
       if (Number(y) === _currentYear) {
         const _shortDate = `${_currentYear}${_currentMonth <= 9 ? `0${_currentMonth}` : _currentMonth}`;
         _monthsFiltered = _months.filter(
-          (m) => m >= _shortDate && m <= _shortDate
+          (m) => m <= _shortDate
         );
         listFullShortDates = [...listFullShortDates, ..._monthsFiltered];
       } else {
